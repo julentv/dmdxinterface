@@ -1,1 +1,2 @@
-rails generate model File name:string answer:string
+rails generate model Configuration_file name:string
+rails generate model Configuration_file_header output_data_to_ascii:boolean continuous_running:boolean standard_frame_duration:integer delay:integer time_out:integer no_feed_back:boolean default_background_color:integer default_writing_color:integer default_font_size:integer record_clock_on_time_keyword:integer
