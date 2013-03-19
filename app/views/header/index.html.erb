@@ -1,8 +1,20 @@
 <h1>Header creation page</h1>
 <h2>Here you can select the main options of the project</h2>
 
-<form name="header_form" action="#" method="POST">
-<p>File name <input type="text" id="file_name" size="25" value="File001"></p>
-<INPUT type="submit" value="Send"> <INPUT type="reset" value="Reset">
+<form name="header_form" action="header_creation" method="POST">
+    <p>File name <input type="text" id="file_name" name="file_name" size="25" value="File001"></p>
+	<p>Output to ascii <input type="checkbox" name="output_to_ascii" value="true"></p>
+	<p>Continuous reading <input type="checkbox" name="continuous_reading" value="true"></p>
+	<p>Standard frame duration <input type="text" id="standard_frame_duration_text" size="5" value="30"></p>
+	<p>Delay <input type="text" id="delay" size="5" value="30"></p>
+	<p>Time out <input type="text" id="time_out" size="5" value="30"></p>
+	<p>Video mode <input type="text" id="video_mode1" size="5" value="30"><input type="text" id="video_mode2" size="5" value="30"><input type="text" id="video_mode3" size="5" value="30">
+		<input type="text" id="video_mode4" size="5" value="30"><input type="text" id="video_mode5" size="5" value="30"></p>
+	<p>No feed back <input type="checkbox" name="no_feed_back" value="true"></p>
+	<p>Default background color <input type="text" id="default_background_color" size="5" value="30"></p>
+	<p>Default writing color <input type="text" id="Default_writing_color" size="5" value="30"></p>
+	<p>Default font size <input type="text" id="default_font_size" size="5" value="30"></p>
+	<p>Record clock on time keyword <input type="checkbox" name="record_clock" value="true"></p>
+    <INPUT type="submit" value="Send"> <INPUT type="reset" value="Reset">
 </form>
 <p><a href="file_creation">Create File</a></p>

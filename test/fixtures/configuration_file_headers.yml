@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  output_data_to_ascii: false
+  continuous_running: false
+  standard_frame_duration: 1
+  delay: 1
+  time_out: 1
+  no_feed_back: false
+  default_background_color: 1
+  default_writing_color: 1
+  default_font_size: 1
+  record_clock_on_time_keyword: 1
+
+two:
+  output_data_to_ascii: false
+  continuous_running: false
+  standard_frame_duration: 1
+  delay: 1
+  time_out: 1
+  no_feed_back: false
+  default_background_color: 1
+  default_writing_color: 1
+  default_font_size: 1
+  record_clock_on_time_keyword: 1
