@@ -1,21 +1,19 @@
 class ConfigurationFileHeader < ActiveRecord::Base
   belongs_to :configuration_file
-  attr_accessible :continuous_running, :default_background_color, :default_font_size, :default_writing_color, :delay, :no_feed_back, :output_data_to_ascii, :record_clock_on_time_keyword, :standard_frame_duration, :time_out
+  #attr_accessible :continuous_running, :default_background_color, :default_font_size, :default_writing_color, :delay, :no_feed_back, :output_data_to_ascii, :record_clock_on_time_keyword, :standard_frame_duration, :time_out
+  attr_writer :continuous_running, :default_background_color, :default_font_size, :default_writing_color, :delay, :no_feed_back, :output_data_to_ascii, :record_clock_on_time_keyword, :standard_frame_duration, :time_out
   
   def initialize()
-    @continuous_running=true
+    @continuous_running=false
     @default_background_color=255255255
     @default_font_size=17
     @default_writing_color=255255255
     @delay=169
-    @no_feed_back=true
-    @output_data_to_ascii=true
-    @record_clock_on_time_keyword=true
+    @no_feed_back=false
+    @output_data_to_ascii=false
+    @record_clock_on_time_keyword=false
     @standard_frame_duration=17
     @time_out=2500
-  end
-  def output_data_to_ascii(data)
-    @output_data_to_ascii = data
   end
   
   #this method generates the string wich is the header of the configuration file

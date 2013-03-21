@@ -1,6 +1,6 @@
 class ConfigurationFile < ActiveRecord::Base
   has_one :configuration_file_header
-  attr_writer :name
+  attr_writer :name, :configuration_file_header
   
   
   
