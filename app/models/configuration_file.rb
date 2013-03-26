@@ -1,13 +1,12 @@
 class ConfigurationFile < ActiveRecord::Base
   has_one :configuration_file_header
-  attr_writer :name, :configuration_file_header
-  
-  
-  
+  attr_accessible :name
+
   #Contructor
   def initialize(file_name)
-    @name = file_name
-    @configuration_file_header = ConfigurationFileHeader.new
+    super()
+    self.name = file_name
+    self.configuration_file_header = ConfigurationFileHeader.new(self)
   end
   def configuration_file_header
     @configuration_file_header

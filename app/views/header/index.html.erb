@@ -1,7 +1,7 @@
 <h1>Header creation page</h1>
 <h2>Here you can select the main options of the project</h2>
 
-<form name="header_form" action="header_creation" method="POST">
+<form name="header_form" action="prueba" method="POST">
     <p>File name <input type="text" id="file_name" name="file_name" size="25" value="File001"></p>
 	<p>Output to ascii <input type="checkbox" name="output_to_ascii" value="true"></p>
 	<p>Continuous running <input type="checkbox" name="continuous_running" value="true"></p>
@@ -15,6 +15,14 @@
 	<p>Default writing color <input type="number" id="default_writing_color" name="default_writing_color" size="5" value="30" min="0" max="255255255" required></p>
 	<p>Default font size <input type="number" id="default_font_size" name="default_font_size" size="5" value="30" min="0" max="999" required></p>
 	<p>Record clock on time keyword <input type="checkbox" name="record_clock" value="true"></p>
+	<div id="identify_devices_selection">
+		<h3>Response devices:</h3>
+		<p>PIO12<input type="checkbox" name="id_pio12" value="true"></p>
+		<p>Keyboard<input type="checkbox" name="keyboard" value="true"></p>
+		<p>Mouse<input type="checkbox" name="mouse" value="true"></p>
+		<p>digitalVOX<input type="checkbox" name="digitalvox" value="true"></p>
+		<p>Record vocal<input type="checkbox" name="record_vocal" value="true"></p>	
+	</div>
     <INPUT type="submit" value="Send"> <INPUT type="reset" value="Reset">
 </form>
 <p><a href="file_creation">Create File</a></p>

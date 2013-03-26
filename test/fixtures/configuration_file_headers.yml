@@ -11,6 +11,12 @@ one:
   default_writing_color: 1
   default_font_size: 1
   record_clock_on_time_keyword: 1
+  id_pio12: false
+  id_keyboard: false
+  id_mouse: false
+  id_digital_vox: false
+  id_record_vocal: false
+  configuration_file_id: 1
 
 two:
   output_data_to_ascii: false
@@ -23,3 +29,9 @@ two:
   default_writing_color: 1
   default_font_size: 1
   record_clock_on_time_keyword: 1
+  id_pio12: false
+  id_keyboard: false
+  id_mouse: false
+  id_digital_vox: false
+  id_record_vocal: false
+  configuration_file_id: 1

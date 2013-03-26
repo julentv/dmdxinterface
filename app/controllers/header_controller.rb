@@ -6,6 +6,13 @@ class HeaderController < ApplicationController
     #@conf_file.create_file
     render 'index'
   end
+  def prueba
+    @conf_file = ConfigurationFile.new("patooo")
+    @conf_file.save
+    render 'success'
+  end
+  
+  
   def header_creation
     @conf_file = ConfigurationFile.new(params[:file_name].to_s)
     
@@ -41,9 +48,25 @@ class HeaderController < ApplicationController
     if params[:default_font_size].to_s != ""
       @conf_file.configuration_file_header.default_font_size = Integer(params[:default_font_size].to_s)  
     end
-    
+    #response devices
+    if params[:id_pio12].to_s == "true"
+      @conf_file.configuration_file_header.id_pio12=true
+    end
+    if params[:keyboard].to_s == "true"
+      @conf_file.configuration_file_header.id_keyboard=true
+    end
+    if params[:mouse].to_s == "true"
+      @conf_file.configuration_file_header.id_mouse=true
+    end
+    if params[:digitalvox].to_s == "true"
+      @conf_file.configuration_file_header.id_digital_vox=true
+    end
+    if params[:record_vocal].to_s == "true"
+      @conf_file.configuration_file_header.id_record_vocal=true
+    end
     
     @conf_file.create_file
+    @conf_file.save()
     render 'success'
   end
 end

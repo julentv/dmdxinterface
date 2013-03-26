@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319170747) do
+ActiveRecord::Schema.define(:version => 20130326164144) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -24,11 +24,23 @@ ActiveRecord::Schema.define(:version => 20130319170747) do
     t.integer  "default_writing_color"
     t.integer  "default_font_size"
     t.integer  "record_clock_on_time_keyword"
+    t.boolean  "id_pio12"
+    t.boolean  "id_keyboard"
+    t.boolean  "id_mouse"
+    t.boolean  "id_digital_vox"
+    t.boolean  "id_record_vocal"
+    t.integer  "configuration_file_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
   end
 
   create_table "configuration_files", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "pruebas", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
