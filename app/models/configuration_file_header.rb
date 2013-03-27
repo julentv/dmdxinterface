@@ -29,37 +29,40 @@ class ConfigurationFileHeader < ActiveRecord::Base
   def to_s
     @header_string=""
     
-    if @continuous_running == true
+    if self.continuous_running == true
       @header_string=@header_string+"<cr>"
     end
-    if @output_data_to_ascii ==true
+    if self.output_data_to_ascii ==true
       @header_string=@header_string+" <azk>"
     end
-    @header_string=@header_string+" <fd "+@standard_frame_duration.to_s+">"
-    @header_string=@header_string+" <d "+@delay.to_s+">"
-    @header_string=@header_string+" <t "+@time_out.to_s+">"
-    if @no_feed_back
+    @header_string=@header_string+" <fd "+self.standard_frame_duration.to_s+">"
+    @header_string=@header_string+" <d "+self.delay.to_s+">"
+    @header_string=@header_string+" <t "+self.time_out.to_s+">"
+    if self.no_feed_back
       @header_string=@header_string+" <nfb>"
     end
-    @header_string=@header_string+" <dbc "+@default_background_color.to_s+">"
-    @header_string=@header_string+" <dwc "+@default_writing_color.to_s+">"
-    @header_string=@header_string+" <dfs "+@default_font_size.to_s+">"
-    if @record_clock_on_time_keyword
+    @header_string=@header_string+" <dbc "+self.default_background_color.to_s+">"
+    @header_string=@header_string+" <dwc "+self.default_writing_color.to_s+">"
+    @header_string=@header_string+" <dfs "+self.default_font_size.to_s+">"
+    
+    @header_string=@header_string+" <rcot"+self.record_clock_on_time_keyword.to_s+">"
+    if self.record_clock_on_time_keyword
+      @header_string=@header_string+" <rcot"+self.id_digital_vox.to_s+">"
       @header_string=@header_string+" <rcot>"
     end
-    if @id_digital_vox == true
+    if self.id_digital_vox == true
       @header_string=@header_string+" <id digitalVOX>"
     end
-    if @id_keyboard == true
+    if self.id_keyboard == true
       @header_string=@header_string+" <id keyboard>"
     end
-    if @id_mouse == true
+    if self.id_mouse == true
       @header_string=@header_string+" <id mouse>"
     end
-    if @id_pio12 == true
+    if self.id_pio12 == true
       @header_string=@header_string+" <id PIO12>"
     end
-    if @id_record_vocal == true
+    if self.id_record_vocal == true
       @header_string=@header_string+" <id RecordVocal>"
     end
     

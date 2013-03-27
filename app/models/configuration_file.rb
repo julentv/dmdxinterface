@@ -1,6 +1,6 @@
 class ConfigurationFile < ActiveRecord::Base
   has_one :configuration_file_header
-  attr_accessible :name
+  attr_accessible :name, :configuration_file_header
 
   #Contructor
   def initialize(file_name)
@@ -8,13 +8,10 @@ class ConfigurationFile < ActiveRecord::Base
     self.name = file_name
     self.configuration_file_header = ConfigurationFileHeader.new(self)
   end
-  def configuration_file_header
-    @configuration_file_header
-  end
   #Creation of the file
   def create_file
-    @header_string=@configuration_file_header.to_s
-    @file_name = "public/files/"+@name+".rtf"
+    @header_string=self.configuration_file_header.to_s
+    @file_name = "public/files/"+self.name+".rtf"
     File.open(@file_name, "w") do |f|     
     f.write(@header_string)   
     end
