@@ -1,5 +1,6 @@
 class ConfigurationFile < ActiveRecord::Base
   has_one :configuration_file_header
+  has_many :items
   attr_accessible :name, :configuration_file_header
 
   #Contructor

@@ -5,6 +5,7 @@ Dmdxinterface::Application.routes.draw do
   post "header/prueba"
 
   get "home/index"
+  get "home/trial"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

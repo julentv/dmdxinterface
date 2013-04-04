@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  item_number: 1
+  expected_response: MyString
+  configuration_file_id: 1
+
+two:
+  item_number: 1
+  expected_response: MyString
+  configuration_file_id: 1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326164144) do
+ActiveRecord::Schema.define(:version => 20130404141020) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -38,6 +38,13 @@ ActiveRecord::Schema.define(:version => 20130326164144) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "items", :primary_key => "item_number", :force => true do |t|
+    t.string   "expected_response"
+    t.integer  "configuration_file_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "pruebas", :force => true do |t|
