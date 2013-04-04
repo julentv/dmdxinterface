@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
+layout false
   def index
+    render 'index'
   end
   def trial
     example = Item.new(12)
