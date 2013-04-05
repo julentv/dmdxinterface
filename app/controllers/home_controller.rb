@@ -4,10 +4,11 @@ layout false
     render 'index'
   end
   def trial
-    example = Item.new(12)
-    example.item_number=11
-    example.save
+    example = Stimulus.new(0,0)
     
+    example.item.expected_response_no
+    example.item.save
+    example.save
     render 'index'
   end
 end

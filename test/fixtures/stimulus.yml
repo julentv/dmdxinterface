@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  item_id: 1
+  order: 1
+  text: MyString
+  type: 
+  top_possition: 1.5
+  left_possition: 1.5
+  channel: 
+
+two:
+  item_id: 1
+  order: 1
+  text: MyString
+  type: 
+  top_possition: 1.5
+  left_possition: 1.5
+  channel: 
