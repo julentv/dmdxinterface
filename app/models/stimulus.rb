@@ -46,4 +46,9 @@ class Stimulus < ActiveRecord::Base
     self.channel = 2
   end
   
+  #convert the stimulus to string
+  def to_s
+    
+  end
+  
 end

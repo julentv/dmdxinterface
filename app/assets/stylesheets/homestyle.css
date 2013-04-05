@@ -4,6 +4,22 @@ html, body{
 	height:100%;
 	width:100%;
 }
+/*header*/
+#dmdx-dmpart{
+	font-size:1em;
+	color:#800000;
+	font-family:"Courier New";
+	font-weight:bold;
+}
+#dmdx-dxpart{
+	font-size:1em;
+	color:#ff0000;
+	font-family:"Arial";
+	font-style:italic;
+}
+
+
+/*body*/
 #wrapper {
 	min-height:100%;
 	position:relative;
