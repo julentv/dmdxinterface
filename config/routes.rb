@@ -7,6 +7,9 @@ Dmdxinterface::Application.routes.draw do
   get "home/index"
   get "home/trial"
 
+
+  get "body/index"
+  get "body/timeline"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
