@@ -4,6 +4,9 @@ html, body{
 	height:98%;
 	width:100%;
 }
+.not-icon-ul{
+	list-style-type: none;
+}
 
 /*left pannel*/
 #left-pannel{
@@ -19,7 +22,7 @@ html, body{
 	width:100%;
 	height:400px;
 	border-style:solid;
-	
+	background-color: #E5E5E5;
 }
 #item-data{
 	margin:0 0 0 0;
@@ -29,16 +32,23 @@ html, body{
 	border-style:solid;
 	border-width:1px;
 }
+#stimulus-list{
+	border-style:solid;
+	padding:10px;
+	margin-left: 40px;
+	width:86%;
+	height:62%;
+}
 #stimulus-data{
 	margin:0 0 0 0;
 	width:40%;
 	height:99%;
-	float:right;
+	float:left;
 	border-style:solid;
 	border-width:1px;
 }
 #stimulus-addition{
-	margin:28px;
+	margin:27px;
 	width:15%;
 	height:85%;
 	float:left;
@@ -64,8 +74,28 @@ html, body{
 	border-style:solid;
 	margin:0;
 	padding:0;
+	background-color:#FFF785;
 }
-
+.control-panel-icon{
+	max-width:40px;
+	margin-right:10px;
+	padding-top:20px;
+}
+#control-panel-list
+{
+    margin:0 0 0 10px;
+	padding:0;
+}
+#control-panel-list li{
+	margin-bottom: 10px;
+	height:50px;
+	font-size:large;
+	
+}
+#control-panel-list li a{
+	color:#000000;
+	text-decoration: none;
+}
 
 .timeline-axis-text-major{
 	visibility:hidden;
