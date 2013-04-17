@@ -41,13 +41,16 @@
 				</div>
 			</div>
 			<div id="stimulus-addition">
-				<h3>New stimulus</h3>
+				<h3>Add stimulus</h3>
 				<%= image_tag("body/text.png", :class => "stimulus-type-icon") %>
 				<%= image_tag("body/bmp.png", :class => 'stimulus-type-icon') %>
 				<%= image_tag("body/jpeg.png", :class => 'stimulus-type-icon') %>
 				<%= image_tag("body/wav.png", :class => 'stimulus-type-icon') %>
 			</div>
-			<div id="stimulus-data"><h3>Stimulus Panel</h3></div>
+			<div id="stimulus-data">
+				<h3>Stimulus Panel</h3>
+				<p id="output">output</p>
+			</div>
 		</div>
 		<!-- Timeline -->
 		<div id="mytimeline"></div>	
@@ -56,7 +59,7 @@
 	<div id="right-pannel">
 		<h3>Control panel</h3>
 		<ul id="control-panel-list" class="not-icon-ul">
-		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/add.png", :class => "control-panel-icon") %><span>New item</span></li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="newItem();"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
 		</ul>
