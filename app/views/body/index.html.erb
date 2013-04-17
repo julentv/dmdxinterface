@@ -18,11 +18,11 @@
 	<div id="left-pannel">
 		<div id="item-configuration">
 			<div id="item-data">
-				<h3>Item 1</h3>
+				<h3 id="item-name-field">No Item selected</h3>
 				<ul class="not-icon-ul">
-					<li>ID: Item id</li>
+					<li>ID: <span id="item-id-field">-</span></li>
 					<li>Expected response: 
-						<select>
+						<select id="expected-response-field">
 						  <option value="+">Positive response</option>
 						  <option value="-">Negative response</option>
 						  <option value="^">No response</option>
@@ -31,7 +31,7 @@
 					</li>
 				</ul>
 				<div id="stimulus-list">
-					<p>Stimulus list:</p>
+					<p>Added stimulus number: <span id="item-stimulus-number-field">-</span></p>
 					<ol>
 						<li>Stimulus 1</li>
 						<li>Stimulus 2</li>

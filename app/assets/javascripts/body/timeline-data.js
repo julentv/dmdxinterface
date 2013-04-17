@@ -3,6 +3,7 @@ function Item (itemid){
 	this.id = itemid;
 	this.name ="Item "+itemid;
 	this.expectedResponse ='+';
+	this.stimulusArray= new Array();
 }
 
 
@@ -75,15 +76,37 @@ function newItem(){
 		'start' : start,
 		'content' : itemArray[numberOfItems].name,
 		'end' : end
-	});
-
-    //var output_element = document.getElementById("output");
-	//output_element.innerHTML =lastItem.end.toDateString();  
+	}); 
 	numberOfItems = numberOfItems + 1;
 }
 
 //function called when an item is seleted
 function onselect(){
-	var output_element = document.getElementById("output");
-	output_element.innerHTML ="selected" 
+	var selection= timeline.getSelection();
+	if(selection==""){
+		//no item selected
+		//set the fields
+		var outputNameField = document.getElementById("item-name-field");
+		var outputIdField = document.getElementById("item-id-field");
+		var outputExpectedField = document.getElementById("expected-response-field");
+		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
+		outputNameField.innerHTML = "No item selected";
+		outputIdField.innerHTML = "-";
+		outputExpectedField.value="+";
+		outputStimulusNumberField.innerHTML ="-";
+	}else{
+		//item selected
+		var itemNumber=selection[0].row;
+		
+		//set the fields
+		var outputNameField = document.getElementById("item-name-field");
+		var outputIdField = document.getElementById("item-id-field");
+		var outputExpectedField = document.getElementById("expected-response-field");
+		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
+		
+		outputNameField.innerHTML = itemArray[itemNumber].name;
+		outputIdField.innerHTML = itemArray[itemNumber].id
+		outputExpectedField.value=itemArray[itemNumber].expectedResponse;
+		outputStimulusNumberField.innerHTML = itemArray[itemNumber].stimulusArray.length;
+	}
 }
