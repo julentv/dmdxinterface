@@ -5,7 +5,14 @@ function Item (itemid){
 	this.expectedResponse ='+';
 	this.stimulusArray= new Array();
 }
-
+//stimulus class
+function Stimulus(text){
+	this.text = text;
+	this.type;
+	this.topPossition;
+	this.leftPossition;
+	this.channel;
+}
 
 
 //start of the timeline methods
@@ -19,6 +26,7 @@ var timeline;
 var data;
 var numberOfItems=1;
 var itemArray = new Array ();
+var itemNumber=-1;
 
 // Called when the Visualization API is loaded.
 function drawVisualization() {
@@ -85,7 +93,11 @@ function onselect(){
 	var selection= timeline.getSelection();
 	if(selection==""){
 		//no item selected
+		itemNumber=-1;
 		//set the fields
+		
+		var itemSaveButton = document.getElementById("item-save-button");
+		itemSaveButton.setAttribute('disabled');
 		var outputNameField = document.getElementById("item-name-field");
 		var outputIdField = document.getElementById("item-id-field");
 		var outputExpectedField = document.getElementById("expected-response-field");
@@ -96,17 +108,35 @@ function onselect(){
 		outputStimulusNumberField.innerHTML ="-";
 	}else{
 		//item selected
-		var itemNumber=selection[0].row;
+		itemNumber=selection[0].row;
 		
 		//set the fields
+		var itemSaveButton = document.getElementById("item-save-button");
+		itemSaveButton.removeAttribute("disabled");
 		var outputNameField = document.getElementById("item-name-field");
 		var outputIdField = document.getElementById("item-id-field");
 		var outputExpectedField = document.getElementById("expected-response-field");
 		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
 		
 		outputNameField.innerHTML = itemArray[itemNumber].name;
-		outputIdField.innerHTML = itemArray[itemNumber].id
+		outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+itemArray[itemNumber].id+"'>";
 		outputExpectedField.value=itemArray[itemNumber].expectedResponse;
 		outputStimulusNumberField.innerHTML = itemArray[itemNumber].stimulusArray.length;
 	}
+}
+function saveItem(){
+	//validate there is an item selected
+	if(itemNumber>=0){
+		
+		var id = document.getElementById("id-input").value;
+		var expectedResponse = document.getElementById("expected-response-field").value;
+		itemArray[itemNumber].id =id;
+		itemArray[itemNumber].expectedResponse =expectedResponse;
+		
+	}
+	
+	
+}
+function showStimulusData(){
+	
 }
