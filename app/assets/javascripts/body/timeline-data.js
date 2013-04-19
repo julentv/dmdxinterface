@@ -6,9 +6,9 @@ function Item (itemid){
 	this.stimulusArray= new Array();
 }
 //stimulus class
-function Stimulus(text){
+function Stimulus(text, type){
 	this.text = text;
-	this.type;
+	this.type =type; //text, bmp, jpg, wav
 	this.topPossition;
 	this.leftPossition;
 	this.channel;
@@ -102,10 +102,12 @@ function onselect(){
 		var outputIdField = document.getElementById("item-id-field");
 		var outputExpectedField = document.getElementById("expected-response-field");
 		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
+		var outputStimulusList = document.getElementById("stimulus-order-list");
 		outputNameField.innerHTML = "No item selected";
 		outputIdField.innerHTML = "-";
 		outputExpectedField.value="+";
 		outputStimulusNumberField.innerHTML ="-";
+		outputStimulusList.innerHTML="";
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
@@ -116,14 +118,32 @@ function onselect(){
 		var outputNameField = document.getElementById("item-name-field");
 		var outputIdField = document.getElementById("item-id-field");
 		var outputExpectedField = document.getElementById("expected-response-field");
-		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
+		
 		
 		outputNameField.innerHTML = itemArray[itemNumber].name;
 		outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+itemArray[itemNumber].id+"'>";
 		outputExpectedField.value=itemArray[itemNumber].expectedResponse;
-		outputStimulusNumberField.innerHTML = itemArray[itemNumber].stimulusArray.length;
+		
+		stimulusListGeneration();
 	}
 }
+/*
+ * Function to generate the list of stimulus in the item pannel
+ */
+function stimulusListGeneration(){
+	//the number of items
+	var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
+	outputStimulusNumberField.innerHTML = itemArray[itemNumber].stimulusArray.length;
+	//the list
+	var outputStimulusList = document.getElementById("stimulus-order-list");
+	var stimulusArray = itemArray[itemNumber].stimulusArray;
+	var content="";
+	for(i=0, ii=stimulusArray.length;i<ii;i++){
+		content=content+"<li>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
+	}
+	outputStimulusList.innerHTML=content;
+}
+
 function saveItem(){
 	//validate there is an item selected
 	if(itemNumber>=0){
@@ -144,7 +164,16 @@ function showStimulusData(){
 
 //drag an drop methods of the stimulus addition
 function dragStimulus(ev){
-	ev.dataTransfer.setData("Class",ev.target.className);
+	ev.dataTransfer.setData("class",ev.target.className);
+	if(ev.target.id == "icon-text"){
+		ev.dataTransfer.setData("type","text");
+	}else if(ev.target.id == "icon-bmp"){
+		ev.dataTransfer.setData("type", "bmp");
+	}else if(ev.target.id== "icon-jpg"){
+		ev.dataTransfer.setData("type","jpg");
+	}else if(ev.target.id== "icon-wav"){
+		ev.dataTransfer.setData("type", "wav");
+	}
 	
 }
 function allowDrop(ev)
@@ -156,12 +185,12 @@ function addStimulus(ev){
 	if(itemNumber>=0){
 		
 		//the dropped object is a stimulus icon
-		if(ev.dataTransfer.getData("Class")=="stimulus-type-icon"){
-			var outputIdField = document.getElementById("item-id-field");
-			outputIdField.innerHTML = "in";
-			
+		if(ev.dataTransfer.getData("class")=="stimulus-type-icon"){
 			//add the new stimulus to the array of the item
-			itemArray[itemNumber].stimulusArray.push(new Stimulus("Stimulus"));
+			var stimulus
+			itemArray[itemNumber].stimulusArray.push(new Stimulus("Stimulus", ev.dataTransfer.getData("type")));
+			//stimulus list generation
+			stimulusListGeneration();
 		}	
 	}else{
 		alert("You must select an item first!");

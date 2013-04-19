@@ -46,6 +46,11 @@ h3{
 	width:86%;
 	height:54%;
 }
+#stimulus-order-list{
+	max-height:78%;
+	
+	overflow-y:auto;
+}
 #stimulus-data{
 	margin:0 0 0 0;
 	width:40%;
