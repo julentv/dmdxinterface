@@ -31,9 +31,9 @@
 					</li>
 					<li><button id="item-save-button" disabled type="button" onclick="saveItem();">Save</button></li>
 				</ul>
-				<div id="stimulus-list">
+				<div id="stimulus-list" ondragover="allowDrop(event);" ondrop="addStimulus(event);">
 					<p>Added stimulus number: <span id="item-stimulus-number-field">-</span></p>
-					<ol>
+					<ol id="stimulus-list">
 						<li>Stimulus 1</li>
 						<li>Stimulus 2</li>
 						<li>Stimulus 3</li>
@@ -43,10 +43,12 @@
 			</div>
 			<div id="stimulus-addition">
 				<h3>Add stimulus</h3>
-				<%= image_tag("body/text.png", :class => "stimulus-type-icon") %>
-				<%= image_tag("body/bmp.png", :class => 'stimulus-type-icon') %>
-				<%= image_tag("body/jpeg.png", :class => 'stimulus-type-icon') %>
-				<%= image_tag("body/wav.png", :class => 'stimulus-type-icon') %>
+				
+				<img id="text-image" src="/assets/body/text.png" alt="text icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
+				<img src="/assets/body/bmp.png" alt="bmp icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
+				<img src="/assets/body/jpeg.png" alt="jpeg icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
+				<img src="/assets/body/wav.png" alt="wav icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
+				
 			</div>
 			<div id="stimulus-data">
 				<h3>No stimulus selected</h3>

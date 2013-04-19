@@ -140,3 +140,33 @@ function saveItem(){
 function showStimulusData(){
 	
 }
+
+
+//drag an drop methods of the stimulus addition
+function dragStimulus(ev){
+	ev.dataTransfer.setData("Class",ev.target.className);
+	
+}
+function allowDrop(ev)
+{
+    ev.preventDefault();
+}
+function addStimulus(ev){
+	//an item must be selected
+	if(itemNumber>=0){
+		
+		//the dropped object is a stimulus icon
+		if(ev.dataTransfer.getData("Class")=="stimulus-type-icon"){
+			var outputIdField = document.getElementById("item-id-field");
+			outputIdField.innerHTML = "in";
+			
+			//add the new stimulus to the array of the item
+			itemArray[itemNumber].stimulusArray.push(new Stimulus("Stimulus"));
+		}	
+	}else{
+		alert("You must select an item first!");
+	}
+	
+	
+	
+}
