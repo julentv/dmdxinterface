@@ -6,4 +6,7 @@ class BodyController < ApplicationController
   def timeline
     render 'timeline'
   end
+  def preview
+    render 'preview'
+  end
 end

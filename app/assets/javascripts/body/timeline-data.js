@@ -14,7 +14,6 @@ function Stimulus(text, type){
 	this.channel=0;
 }
 
-
 //start of the timeline methods
 google.load("visualization", "1");
 
@@ -27,6 +26,7 @@ var data;
 var numberOfItems=1;
 var itemArray = new Array ();
 var itemNumber=-1;
+var selectedStimulus=-1;
 
 // Called when the Visualization API is loaded.
 function drawVisualization() {
@@ -155,7 +155,7 @@ function saveItem(){
 	}
 }
 /*
- * Stimulus list interaction methods
+ * StimulusList interaction methods
  */
 function stimulusListOnMouseOver(ev){
 	ev.className="stimulus-order-list-over";
@@ -180,14 +180,14 @@ function selectStimulus(ev){
 	ev.removeAttribute("onmouseout");
 	
 	//obtain the number of the list that has been selected
-	var selectedNumber=-1;
-	for(var i=0,ii=listItems.length;i<ii && selectedNumber==-1 ;i++){
+	selectedStimulus=-1;
+	for(var i=0,ii=listItems.length;i<ii && selectedStimulus==-1 ;i++){
 		if (listItems[i].attributes.getNamedItem("onmouseover")==null){
-			selectedNumber=i;
+			selectedStimulus=i;
 		}
 	}
 	
-	var selectedStimulus = itemArray[itemNumber].stimulusArray[selectedNumber];
+	var selectedStimulus = itemArray[itemNumber].stimulusArray[selectedStimulus];
 	//stimulus pannel edition
 	showStimulusData(selectedStimulus);
 }
@@ -199,18 +199,23 @@ function showStimulusData(stimulus){
 	var stimulusTextField = document.getElementById("stimulus-text-field");
 	var stimulusTypeField = document.getElementById("stimulus-type-field");
 	var stimulusSaveButton = document.getElementById("stimulus-save-button");
+	var stimulusPannelHeader = document.getElementById("stimulus-pannel-header");
 	
-	if(stimulus!=null){
-		stimulusTextField.innerHTML=stimulus.text;
-		stimulusTypeField.value=stimulus.type;
-		stimulusSaveButton.removeAttribute("disabled");
-		
-		
-	}else{
+	
+	if(stimulus==null){
 		//empty
 		stimulusTextField.innerHTML="-";
 		stimulusTypeField.value="text";
 		stimulusSaveButton.setAttribute('disabled');
+		stimulusPannelHeader.innerHTML="No stimulus selected";
+		
+	}else{
+		//no empty
+		stimulusTextField.innerHTML=stimulus.text;
+		stimulusTypeField.value=stimulus.type;
+		stimulusSaveButton.removeAttribute("disabled");
+		stimulusPannelHeader.innerHTML="Stimulus X";
+		selectedStimulus=-1;
 	}
 	
 }
@@ -248,7 +253,10 @@ function addStimulus(ev){
 	}else{
 		alert("You must select an item first!");
 	}
-	
-	
-	
 }
+function previewWindow(){
+	open('preview','Preview','top=600,left=600,width=600,resizable=no,height=600,');
+} 
+
+	
+

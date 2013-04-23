@@ -47,7 +47,7 @@
 				
 			</div>
 			<div id="stimulus-data">
-				<h3>No stimulus selected</h3>
+				<h3 id="stimulus-pannel-header">No stimulus selected</h3>
 				<!-- <p id="output">output</p>-->
 				<ul class="not-icon-ul">
 					<li>Text: <span id="stimulus-text-field">-</span></li>
@@ -72,7 +72,7 @@
 		<ul id="control-panel-list" class="not-icon-ul">
 		<li onmouseover="this.style.cursor='pointer'" onclick="newItem();"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Play</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow();"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
 		</ul>
