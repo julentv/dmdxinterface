@@ -11,7 +11,7 @@ function Stimulus(text, type){
 	this.type =type; //text, bmp, jpg, wav
 	this.topPossition;
 	this.leftPossition;
-	this.channel;
+	this.channel=0;
 }
 
 
@@ -91,16 +91,20 @@ function newItem(){
 //function called when an item is seleted
 function onselect(){
 	var selection= timeline.getSelection();
-	if(selection==""){
-		//no item selected
-		itemNumber=-1;
-		//set the fields
-		
-		var itemSaveButton = document.getElementById("item-save-button");
-		itemSaveButton.setAttribute('disabled');
+	showStimulusData(null);
+	
+	//obtain the fields
+	var itemSaveButton = document.getElementById("item-save-button");
 		var outputNameField = document.getElementById("item-name-field");
 		var outputIdField = document.getElementById("item-id-field");
 		var outputExpectedField = document.getElementById("expected-response-field");
+	
+	if(selection==""){
+		//no item selected
+		itemNumber=-1;
+		
+		//set the fields
+		itemSaveButton.setAttribute('disabled');
 		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
 		var outputStimulusList = document.getElementById("stimulus-order-list");
 		outputNameField.innerHTML = "No item selected";
@@ -113,17 +117,12 @@ function onselect(){
 		itemNumber=selection[0].row;
 		
 		//set the fields
-		var itemSaveButton = document.getElementById("item-save-button");
-		itemSaveButton.removeAttribute("disabled");
-		var outputNameField = document.getElementById("item-name-field");
-		var outputIdField = document.getElementById("item-id-field");
-		var outputExpectedField = document.getElementById("expected-response-field");
 		
+		itemSaveButton.removeAttribute("disabled");
 		
 		outputNameField.innerHTML = itemArray[itemNumber].name;
 		outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+itemArray[itemNumber].id+"'>";
 		outputExpectedField.value=itemArray[itemNumber].expectedResponse;
-		
 		stimulusListGeneration();
 	}
 }
@@ -139,28 +138,82 @@ function stimulusListGeneration(){
 	var stimulusArray = itemArray[itemNumber].stimulusArray;
 	var content="";
 	for(i=0, ii=stimulusArray.length;i<ii;i++){
-		content=content+"<li>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
+		content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
 	}
 	outputStimulusList.innerHTML=content;
 }
-
+/*
+ * The function called when clicked the save button of the item pannel
+ */
 function saveItem(){
 	//validate there is an item selected
 	if(itemNumber>=0){
-		
 		var id = document.getElementById("id-input").value;
 		var expectedResponse = document.getElementById("expected-response-field").value;
 		itemArray[itemNumber].id =id;
 		itemArray[itemNumber].expectedResponse =expectedResponse;
-		
 	}
-	
-	
 }
-function showStimulusData(){
-	
+/*
+ * Stimulus list interaction methods
+ */
+function stimulusListOnMouseOver(ev){
+	ev.className="stimulus-order-list-over";
+}
+function stimulusListOnMouseOut(ev){
+	ev.className=ev.className.replace("stimulus-order-list-over","");
 }
 
+function selectStimulus(ev){
+	//search for the selected stimulus and unselect it
+	//ev.attributes.getNamedItem("onmouseover").value
+	//ev.attributes.getNamedItem("onmouseout").value
+	var listItems = document.getElementById("stimulus-order-list").children;
+	for(var i=0,ii=listItems.length;i<ii;i++){
+		listItems[i].setAttribute("onmouseover","stimulusListOnMouseOver(this);");
+		listItems[i].setAttribute("onmouseout","stimulusListOnMouseOut(this);");
+		listItems[i].className="";
+	}
+	//highlight the selected one
+	ev.className="stimulus-order-list-selected";
+	ev.removeAttribute("onmouseover")
+	ev.removeAttribute("onmouseout");
+	
+	//obtain the number of the list that has been selected
+	var selectedNumber=-1;
+	for(var i=0,ii=listItems.length;i<ii && selectedNumber==-1 ;i++){
+		if (listItems[i].attributes.getNamedItem("onmouseover")==null){
+			selectedNumber=i;
+		}
+	}
+	
+	var selectedStimulus = itemArray[itemNumber].stimulusArray[selectedNumber];
+	//stimulus pannel edition
+	showStimulusData(selectedStimulus);
+}
+
+/*
+ * shows the data of an stimulus in the stimulus pannel
+ */
+function showStimulusData(stimulus){
+	var stimulusTextField = document.getElementById("stimulus-text-field");
+	var stimulusTypeField = document.getElementById("stimulus-type-field");
+	var stimulusSaveButton = document.getElementById("stimulus-save-button");
+	
+	if(stimulus!=null){
+		stimulusTextField.innerHTML=stimulus.text;
+		stimulusTypeField.value=stimulus.type;
+		stimulusSaveButton.removeAttribute("disabled");
+		
+		
+	}else{
+		//empty
+		stimulusTextField.innerHTML="-";
+		stimulusTypeField.value="text";
+		stimulusSaveButton.setAttribute('disabled');
+	}
+	
+}
 
 //drag an drop methods of the stimulus addition
 function dragStimulus(ev){

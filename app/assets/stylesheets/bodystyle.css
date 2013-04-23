@@ -41,6 +41,7 @@ h3{
 }
 #stimulus-list{
 	border-style:solid;
+	cursor:default;
 	padding:10px;
 	margin-left: 40px;
 	width:86%;
@@ -48,8 +49,14 @@ h3{
 }
 #stimulus-order-list{
 	max-height:78%;
-	
 	overflow-y:auto;
+}
+.stimulus-order-list-over{
+	cursor:pointer;
+    background-color:#FFF785;
+}
+.stimulus-order-list-selected{
+    background-color:#FFFF00;
 }
 #stimulus-data{
 	margin:0 0 0 0;

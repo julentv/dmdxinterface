@@ -59,7 +59,7 @@
 						  <option value="wav">WAV</option>
 						</select>
 					</li>
-					<li><button id="stimulus-save-button" type="button" onclick="">Save Stimulus</button></li>
+					<li><button id="stimulus-save-button" disabled type="button" onclick="">Save Stimulus</button></li>
 				</ul>
 			</div>
 		</div>
@@ -71,9 +71,10 @@
 		<h3>Control panel</h3>
 		<ul id="control-panel-list" class="not-icon-ul">
 		<li onmouseover="this.style.cursor='pointer'" onclick="newItem();"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="newItem();"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New message item</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Play</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
 		</ul>
 	</div>
 	
