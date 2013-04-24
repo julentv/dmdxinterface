@@ -50,7 +50,7 @@
 				<h3 id="stimulus-pannel-header">No stimulus selected</h3>
 				<!-- <p id="output">output</p>-->
 				<ul class="not-icon-ul">
-					<li>Text: <span id="stimulus-text-field">-</span></li>
+					<li>Text: <input id="stimulus-text-field" disabled type="text" name="quantity" value="-"></li>
 					<li>Type: 
 						<select id="stimulus-type-field">
 						  <option value="text">Text</option>
@@ -59,7 +59,8 @@
 						  <option value="wav">WAV</option>
 						</select>
 					</li>
-					<li><button id="stimulus-save-button" disabled type="button" onclick="">Save Stimulus</button></li>
+					<li>Duration (seconds?tics?): <input id="stimulus-duration-field" disabled type="number" name="quantity" min="1" max="100" value=""></li>
+					<li><button id="stimulus-save-button" disabled type="button" onclick="saveStimulus();">Save Stimulus</button></li>
 				</ul>
 			</div>
 		</div>

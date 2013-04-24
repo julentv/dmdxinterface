@@ -1,13 +1,16 @@
 //Item class
-function Item (itemid){
+function Item (itemid, isMessageItem){
 	this.id = itemid;
 	this.name ="Item "+itemid;
 	this.expectedResponse ='+';
 	this.stimulusArray= new Array();
+	//message item or not
+	this.isMessageItem=isMessageItem;
 }
 //stimulus class
 function Stimulus(text, type){
 	this.text = text;
+	this.duration=1;
 	this.type =type; //text, bmp, jpg, wav
 	this.topPossition;
 	this.leftPossition;
@@ -28,11 +31,13 @@ var itemArray = new Array ();
 var itemNumber=-1;
 var selectedStimulus=-1;
 
-// Called when the Visualization API is loaded.
+/**
+ *  Called when the Visualization API is loaded.
+ */
 function drawVisualization() {
     
     //insert the first item to the array
-	itemArray[0]= new Item("0");
+	itemArray[0]= new Item("0", false);
     
 	// Create and populate a data table.
 	data = new google.visualization.DataTable();
@@ -69,10 +74,12 @@ google.visualization.events.addListener(timeline, 'select', onselect);
 	
 }
 
-//function to add a new item
+/**
+ * function to add a new item
+ */
 function newItem(){   
 	//add the item to the array of items
-	itemArray[numberOfItems]= new Item(numberOfItems);
+	itemArray[numberOfItems]= new Item(numberOfItems, false);
 	//add the item to the timeline
 	var lastItem = timeline.getItem(numberOfItems-1);
 	var start = new Date (lastItem.end.getTime());
@@ -88,7 +95,9 @@ function newItem(){
 	numberOfItems = numberOfItems + 1;
 }
 
-//function called when an item is seleted
+/**
+ * function called when an item is seleted
+ */
 function onselect(){
 	var selection= timeline.getSelection();
 	showStimulusData(null);
@@ -126,7 +135,8 @@ function onselect(){
 		stimulusListGeneration();
 	}
 }
-/*
+
+/**
  * Function to generate the list of stimulus in the item pannel
  */
 function stimulusListGeneration(){
@@ -142,7 +152,7 @@ function stimulusListGeneration(){
 	}
 	outputStimulusList.innerHTML=content;
 }
-/*
+/**
  * The function called when clicked the save button of the item pannel
  */
 function saveItem(){
@@ -154,20 +164,22 @@ function saveItem(){
 		itemArray[itemNumber].expectedResponse =expectedResponse;
 	}
 }
-/*
- * StimulusList interaction methods
- */
+
+//StimulusList interaction methods:
 function stimulusListOnMouseOver(ev){
 	ev.className="stimulus-order-list-over";
 }
+
 function stimulusListOnMouseOut(ev){
 	ev.className=ev.className.replace("stimulus-order-list-over","");
 }
 
+/**
+ * This function is called when one of the rows of the stimulus list
+ * in the item pannel is selected
+ */
 function selectStimulus(ev){
 	//search for the selected stimulus and unselect it
-	//ev.attributes.getNamedItem("onmouseover").value
-	//ev.attributes.getNamedItem("onmouseout").value
 	var listItems = document.getElementById("stimulus-order-list").children;
 	for(var i=0,ii=listItems.length;i<ii;i++){
 		listItems[i].setAttribute("onmouseover","stimulusListOnMouseOver(this);");
@@ -187,12 +199,13 @@ function selectStimulus(ev){
 		}
 	}
 	
-	var selectedStimulus = itemArray[itemNumber].stimulusArray[selectedStimulus];
+	var stimulusToShow = itemArray[itemNumber].stimulusArray[selectedStimulus];
+	
 	//stimulus pannel edition
-	showStimulusData(selectedStimulus);
+	showStimulusData(stimulusToShow);
 }
 
-/*
+/**
  * shows the data of an stimulus in the stimulus pannel
  */
 function showStimulusData(stimulus){
@@ -200,24 +213,50 @@ function showStimulusData(stimulus){
 	var stimulusTypeField = document.getElementById("stimulus-type-field");
 	var stimulusSaveButton = document.getElementById("stimulus-save-button");
 	var stimulusPannelHeader = document.getElementById("stimulus-pannel-header");
+	var stimulusDurationField = document.getElementById("stimulus-duration-field");
 	
 	
 	if(stimulus==null){
 		//empty
-		stimulusTextField.innerHTML="-";
+		stimulusTextField.value="-";
+		stimulusTextField.setAttribute('disabled');
 		stimulusTypeField.value="text";
 		stimulusSaveButton.setAttribute('disabled');
 		stimulusPannelHeader.innerHTML="No stimulus selected";
+		stimulusDurationField.setAttribute('disabled');
+		stimulusDurationField.value="";
+		selectedStimulus=-1;
 		
 	}else{
 		//no empty
-		stimulusTextField.innerHTML=stimulus.text;
+		stimulusTextField.removeAttribute("disabled");
+		stimulusTextField.value=stimulus.text;
 		stimulusTypeField.value=stimulus.type;
 		stimulusSaveButton.removeAttribute("disabled");
 		stimulusPannelHeader.innerHTML="Stimulus X";
-		selectedStimulus=-1;
+		stimulusDurationField.removeAttribute("disabled");
+		stimulusDurationField.value=stimulus.duration;
 	}
 	
+}
+/**
+ * This function is called when pressed the save button of the item pannel
+ */
+function saveStimulus(){
+	//obtain the stimulus
+	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulus]
+	//alert("Item Number: "+itemNumber+" Stimulus Number: "+selectedStimulus);
+	//obtain data
+	var stimulusTextField = document.getElementById("stimulus-text-field");
+	var stimulusTypeField = document.getElementById("stimulus-type-field");
+	var stimulusDurationField = document.getElementById("stimulus-duration-field");
+	
+	stimulus.text=stimulusTextField.value;
+	stimulus.type=stimulusTypeField.value;
+	stimulus.duration=stimulusDurationField.value;
+	
+	//reload the stimulus list of the item pannel
+	stimulusListGeneration();
 }
 
 //drag an drop methods of the stimulus addition
@@ -232,12 +271,13 @@ function dragStimulus(ev){
 	}else if(ev.target.id== "icon-wav"){
 		ev.dataTransfer.setData("type", "wav");
 	}
-	
 }
+
 function allowDrop(ev)
 {
     ev.preventDefault();
 }
+
 function addStimulus(ev){
 	//an item must be selected
 	if(itemNumber>=0){
@@ -254,6 +294,7 @@ function addStimulus(ev){
 		alert("You must select an item first!");
 	}
 }
+
 function previewWindow(){
 	open('preview','Preview','top=600,left=600,width=600,resizable=no,height=600,');
 } 
