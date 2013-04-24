@@ -49,7 +49,7 @@ function drawVisualization() {
 	var te = new Date(2010, 7, 23, 16, 30, 16); 
 
     data.addRows([
-      [new Date(t.getTime()+0), new Date(t.getTime()+5), itemArray[0].name],
+      [new Date(t.getTime()+0), new Date(t.getTime()+1), itemArray[0].name],
     ]);
 
            
@@ -85,7 +85,7 @@ function newItem(){
 	var start = new Date (lastItem.end.getTime());
 	var end = new Date (lastItem.end.getTime());
 	start.setMilliseconds(start.getMilliseconds());
-	end.setMilliseconds(end.getMilliseconds()+2);
+	end.setMilliseconds(end.getMilliseconds()+1);
 
 	timeline.addItem({
 		'start' : start,
@@ -250,15 +250,51 @@ function saveStimulus(){
 	var stimulusTextField = document.getElementById("stimulus-text-field");
 	var stimulusTypeField = document.getElementById("stimulus-type-field");
 	var stimulusDurationField = document.getElementById("stimulus-duration-field");
-	
+	var previousDuration=stimulus.duration;
 	stimulus.text=stimulusTextField.value;
 	stimulus.type=stimulusTypeField.value;
 	stimulus.duration=stimulusDurationField.value;
 	
 	//reload the stimulus list of the item pannel
 	stimulusListGeneration();
+	
+	if(previousDuration!=stimulus.duration){
+		//reorganize the timeline
+		organizeTimeLine();
+	}
 }
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function organizeTimeLine(){
+	
+	var start = new Date(timeline.getItem(0).start.getTime());
+	var end = new Date (timeline.options.min.getTime());
+	
+	
+	var lastItem = timeline.getItem(numberOfItems-1);
+	for(var i=0, ii=itemArray.length;i<ii;i++){
+		var totalTime=0;
+		var stimulusArray=itemArray[i].stimulusArray;
+		for(j=0, jj=stimulusArray.length;j<jj;j++){
+			totalTime=totalTime+parseInt(stimulusArray[j].duration);
+		}
+		var timeLineItem = timeline.getItem(i);
+		
+		if(totalTime<1){
+			end.setMilliseconds(end.getMilliseconds()+1);
+		}else{
+			end.setMilliseconds(end.getMilliseconds()+totalTime);
+		}
+		timeline.changeItem(i,{
+		'start' : start,
+		'content' : timeLineItem.content,
+		'end' : end
+		})
+		//alert(timeLineItem.end.getMilliseconds());
+		start = new Date (end.getTime());
+		end = new Date (start.getTime());
+	}
+	timeline.setSelection(new Array());
+}
 //drag an drop methods of the stimulus addition
 function dragStimulus(ev){
 	ev.dataTransfer.setData("class",ev.target.className);
