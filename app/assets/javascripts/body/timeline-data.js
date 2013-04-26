@@ -1,11 +1,11 @@
 //Item class
-function Item (itemid, isMessageItem){
+function Item (itemid, text){
 	this.id = itemid;
 	this.name ="Item "+itemid;
-	this.expectedResponse ='+';
+	this.expectedResponse ='+'; //response types: +,-,^,=
 	this.stimulusArray= new Array();
-	//message item or not
-	this.isMessageItem=isMessageItem;
+	//if!="" then is message item
+	this.text=text;
 }
 //stimulus class
 function Stimulus(text, type){
@@ -37,7 +37,7 @@ var selectedStimulus=-1;
 function drawVisualization() {
     
     //insert the first item to the array
-	itemArray[0]= new Item("0", false);
+	itemArray[0]= new Item("0", "");
     
 	// Create and populate a data table.
 	data = new google.visualization.DataTable();
@@ -79,18 +79,55 @@ google.visualization.events.addListener(timeline, 'select', onselect);
  */
 function newItem(){   
 	//add the item to the array of items
-	itemArray[numberOfItems]= new Item(numberOfItems, false);
+	itemArray[numberOfItems]= new Item(numberOfItems, "");
 	//add the item to the timeline
 	var lastItem = timeline.getItem(numberOfItems-1);
-	var start = new Date (lastItem.end.getTime());
-	var end = new Date (lastItem.end.getTime());
-	start.setMilliseconds(start.getMilliseconds());
-	end.setMilliseconds(end.getMilliseconds()+1);
+	
+	if(lastItem.end!=null){
+		//the previous item is a normal item
+		var start = new Date (lastItem.end.getTime());
+		var end = new Date (lastItem.end.getTime());
+		start.setMilliseconds(start.getMilliseconds());
+		end.setMilliseconds(end.getMilliseconds()+1);
+	}
+	else{
+		//the previous item is a message item
+		var start = new Date (lastItem.start.getTime());
+		var end = new Date (lastItem.start.getTime());
+		start.setMilliseconds(start.getMilliseconds()+1);
+		end.setMilliseconds(end.getMilliseconds()+2);
+	}
 
 	timeline.addItem({
 		'start' : start,
 		'content' : itemArray[numberOfItems].name,
 		'end' : end
+	}); 
+	numberOfItems = numberOfItems + 1;
+}
+
+/**
+ * function to add a new message item
+ */
+function newMessageItem(){
+	//add the item to the array of items
+	itemArray[numberOfItems]= new Item(0, "Message");
+	//add the item to the timeline
+	var lastItem = timeline.getItem(numberOfItems-1);
+	if(lastItem.end!=null){
+		var start = new Date (lastItem.end.getTime());
+		start.setMilliseconds(start.getMilliseconds()+1);
+	}
+	else{
+		var start = new Date (lastItem.start.getTime());
+		start.setMilliseconds(start.getMilliseconds()+1);
+	}
+	
+	
+
+	timeline.addItem({
+		'start' : start,
+		'content' : itemArray[numberOfItems].name
 	}); 
 	numberOfItems = numberOfItems + 1;
 }
@@ -104,9 +141,11 @@ function onselect(){
 	
 	//obtain the fields
 	var itemSaveButton = document.getElementById("item-save-button");
-		var outputNameField = document.getElementById("item-name-field");
-		var outputIdField = document.getElementById("item-id-field");
-		var outputExpectedField = document.getElementById("expected-response-field");
+	var outputNameField = document.getElementById("item-name-field");
+	var outputIdField = document.getElementById("item-id-field");
+	var outputExpectedField = document.getElementById("expected-response-field");
+	var stimulusNumberP = document.getElementById("stimulus-number-p");
+	var outputStimulusList = document.getElementById("stimulus-order-list");
 	
 	if(selection==""){
 		//no item selected
@@ -114,25 +153,31 @@ function onselect(){
 		
 		//set the fields
 		itemSaveButton.setAttribute('disabled');
-		var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
-		var outputStimulusList = document.getElementById("stimulus-order-list");
 		outputNameField.innerHTML = "No item selected";
 		outputIdField.innerHTML = "-";
 		outputExpectedField.value="+";
-		outputStimulusNumberField.innerHTML ="-";
+		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Added stimulus number: -</p>";
 		outputStimulusList.innerHTML="";
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
+		var selItem=itemArray[itemNumber];
+		if(selItem.text!=""){
+			itemSaveButton.removeAttribute("disabled");
+			outputNameField.innerHTML = selItem.name;
+			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
+			outputExpectedField.value='^';
+			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: "+selItem.text+"</p>";
+			outputStimulusList.innerHTML="";
+		}else{
+			//set the fields
+			itemSaveButton.removeAttribute("disabled");
+			outputNameField.innerHTML = selItem.name;
+			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
+			outputExpectedField.value=selItem.expectedResponse;
+			stimulusListGeneration();	
+		}
 		
-		//set the fields
-		
-		itemSaveButton.removeAttribute("disabled");
-		
-		outputNameField.innerHTML = itemArray[itemNumber].name;
-		outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+itemArray[itemNumber].id+"'>";
-		outputExpectedField.value=itemArray[itemNumber].expectedResponse;
-		stimulusListGeneration();
 	}
 }
 
@@ -141,8 +186,8 @@ function onselect(){
  */
 function stimulusListGeneration(){
 	//the number of items
-	var outputStimulusNumberField = document.getElementById("item-stimulus-number-field");
-	outputStimulusNumberField.innerHTML = itemArray[itemNumber].stimulusArray.length;
+	var stimulusNumberP = document.getElementById("stimulus-number-p");
+	stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Added stimulus number: "+itemArray[itemNumber].stimulusArray.length+"</p>";
 	//the list
 	var outputStimulusList = document.getElementById("stimulus-order-list");
 	var stimulusArray = itemArray[itemNumber].stimulusArray;
@@ -239,6 +284,7 @@ function showStimulusData(stimulus){
 	}
 	
 }
+
 /**
  * This function is called when pressed the save button of the item pannel
  */
@@ -255,15 +301,22 @@ function saveStimulus(){
 	stimulus.type=stimulusTypeField.value;
 	stimulus.duration=stimulusDurationField.value;
 	
-	//reload the stimulus list of the item pannel
+	//reload the stimulus list of the item pannel and remark the selected one
 	stimulusListGeneration();
+	var listItems = document.getElementById("stimulus-order-list").children;
+	var selected=listItems[selectedStimulus];
+	selectStimulus(selected);
 	
 	if(previousDuration!=stimulus.duration){
 		//reorganize the timeline
 		organizeTimeLine();
 	}
+	
 }
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/**
+ * reorganize the timeline function of the duration of the stimulus of each item.
+ */
 function organizeTimeLine(){
 	
 	var start = new Date(timeline.getItem(0).start.getTime());
@@ -272,28 +325,41 @@ function organizeTimeLine(){
 	
 	var lastItem = timeline.getItem(numberOfItems-1);
 	for(var i=0, ii=itemArray.length;i<ii;i++){
-		var totalTime=0;
-		var stimulusArray=itemArray[i].stimulusArray;
-		for(j=0, jj=stimulusArray.length;j<jj;j++){
-			totalTime=totalTime+parseInt(stimulusArray[j].duration);
-		}
 		var timeLineItem = timeline.getItem(i);
-		
-		if(totalTime<1){
-			end.setMilliseconds(end.getMilliseconds()+1);
+		var totalTime=0;
+		if(timeLineItem.end!=null){
+			
+			var stimulusArray=itemArray[i].stimulusArray;
+			for(j=0, jj=stimulusArray.length;j<jj;j++){
+				totalTime=totalTime+parseInt(stimulusArray[j].duration);
+			}
+			if(totalTime<1){
+				end.setMilliseconds(end.getMilliseconds()+1);
+			}else{
+				end.setMilliseconds(end.getMilliseconds()+totalTime);
+			}
+			timeline.changeItem(i,{
+			'start' : start,
+			'content' : timeLineItem.content,
+			'end' : end
+			})
+			//alert(timeLineItem.end.getMilliseconds());
+			start = new Date (end.getTime());
+			end = new Date (start.getTime());
+			timeline.setSelection([{row: i}]);
 		}else{
-			end.setMilliseconds(end.getMilliseconds()+totalTime);
+			start.setMilliseconds(end.getMilliseconds()+1);
+			timeline.changeItem(i,{
+			'start' : start,
+			'content' : timeLineItem.content
+			})
+			start = new Date (start.getTime());
+			start.setMilliseconds(start.getMilliseconds()+1);
+			end = new Date (start.getTime());
 		}
-		timeline.changeItem(i,{
-		'start' : start,
-		'content' : timeLineItem.content,
-		'end' : end
-		})
-		//alert(timeLineItem.end.getMilliseconds());
-		start = new Date (end.getTime());
-		end = new Date (start.getTime());
+		
 	}
-	timeline.setSelection(new Array());
+	timeline.setSelection([{row:itemNumber}]);
 }
 //drag an drop methods of the stimulus addition
 function dragStimulus(ev){
@@ -317,15 +383,20 @@ function allowDrop(ev)
 function addStimulus(ev){
 	//an item must be selected
 	if(itemNumber>=0){
-		
-		//the dropped object is a stimulus icon
-		if(ev.dataTransfer.getData("class")=="stimulus-type-icon"){
-			//add the new stimulus to the array of the item
-			var stimulus
-			itemArray[itemNumber].stimulusArray.push(new Stimulus("Stimulus", ev.dataTransfer.getData("type")));
-			//stimulus list generation
-			stimulusListGeneration();
-		}	
+		if(itemArray[itemNumber].text==""){
+			//the dropped object is a stimulus icon
+			if(ev.dataTransfer.getData("class")=="stimulus-type-icon"){
+				//add the new stimulus to the array of the item
+				var stimulus
+				itemArray[itemNumber].stimulusArray.push(new Stimulus("Stimulus", ev.dataTransfer.getData("type")));
+				//stimulus list generation
+				stimulusListGeneration();
+				organizeTimeLine();
+			}
+		}else{
+			alert("Can`t add a stimulus to a message item");
+		}
+			
 	}else{
 		alert("You must select an item first!");
 	}

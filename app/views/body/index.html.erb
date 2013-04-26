@@ -29,10 +29,14 @@
 						  <option value="=">Any response</option>
 						</select>
 					</li>
-					<li><button id="item-save-button" disabled type="button" onclick="saveItem();">Save</button></li>
+					<li>
+						<button id="item-save-button" disabled type="button" onclick="saveItem();">Save</button>
+						<button id="item-delete-button" disabled type="button" onclick="">Delete</button>
+					</li>
+					
 				</ul>
 				<div id="stimulus-list" ondragover="allowDrop(event);" ondrop="addStimulus(event);">
-					<p>Added stimulus number: <span id="item-stimulus-number-field">-</span></p>
+					<p id="stimulus-number-p">Added stimulus number: <span id="item-stimulus-number-field">-</span></p>
 					<ol id="stimulus-order-list">
 					</ol>	
 				</div>
@@ -72,7 +76,7 @@
 		<h3>Control panel</h3>
 		<ul id="control-panel-list" class="not-icon-ul">
 		<li onmouseover="this.style.cursor='pointer'" onclick="newItem();"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow();"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
