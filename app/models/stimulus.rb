@@ -1,6 +1,6 @@
 class Stimulus < ActiveRecord::Base
   belongs_to :item
-  attr_accessible :channel, :item_id, :left_possition, :order, :text, :top_possition, :type
+  attr_accessible :channel, :duration, :item_id, :left_possition, :order, :text, :top_possition, :type
   
   #validations
   validates_inclusion_of :type, :in => %w( text bmp jpg wav ), :message =>"The type must be text, bmp, jpg or wav"
@@ -16,6 +16,7 @@ class Stimulus < ActiveRecord::Base
     self.order =order
     self.text=""
     self.type="text"
+    self.duration=1
   end
   
   #types of the stimulus
@@ -50,5 +51,4 @@ class Stimulus < ActiveRecord::Base
   def to_s
     
   end
-  
 end

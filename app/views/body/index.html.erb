@@ -10,11 +10,17 @@
 	<%= javascript_include_tag "timeline.js" %>
 	<%= stylesheet_link_tag "bodystyle" %>
 	<%= stylesheet_link_tag "timeline" %>
+	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
 	<%= javascript_include_tag "body/timeline-data.js" %>
 </head>
 
 <body>
-	<h1>Body page</h1>
+	<h1>Document id=
+		<%= if @conf_file!=nil
+			@conf_file.id
+		else
+			"-"
+			end %></h1>
 	<div id="left-pannel">
 		<div id="item-configuration">
 			<div id="item-data">
@@ -79,7 +85,8 @@
 		<li onmouseover="this.style.cursor='pointer'" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow();"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='#'"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="saveDocument();"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick=""><%= image_tag("icons/download.png", :class => "control-panel-icon") %>Download the document</li>
 		</ul>
 	</div>
 	

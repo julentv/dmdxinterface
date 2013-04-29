@@ -7,7 +7,8 @@ one:
   type: 
   top_possition: 1.5
   left_possition: 1.5
-  channel: 
+  channel: 1
+  duration: 1
 
 two:
   item_id: 1
@@ -16,4 +17,5 @@ two:
   type: 
   top_possition: 1.5
   left_possition: 1.5
-  channel: 
+  channel: 1
+  duration: 1

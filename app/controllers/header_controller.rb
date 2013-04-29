@@ -67,6 +67,6 @@ class HeaderController < ApplicationController
     
     @conf_file.create_file
     @conf_file.save()
-    render 'success'
+    render 'body/index'
   end
 end

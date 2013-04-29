@@ -9,4 +9,7 @@ class BodyController < ApplicationController
   def preview
     render 'preview'
   end
+  def save
+    render :text => "Saved!"
+  end
 end

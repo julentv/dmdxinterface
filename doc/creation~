@@ -10,7 +10,7 @@ rails generate model Item item_number:integer expected_response:string configura
 - -
 
 #Model Stimulus
-rails generate model stimulus item_id:integer order:integer text:string type:string top_possition:float left_possition:float channel:int
+rails generate model stimulus item_id:integer order:integer text:string type:string top_possition:float left_possition:float channel:integer
 
 
 faltan devices y video_mode (arrays de string e integer)

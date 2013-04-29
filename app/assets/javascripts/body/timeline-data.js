@@ -163,14 +163,15 @@ function onselect(){
 		itemNumber=selection[0].row;
 		var selItem=itemArray[itemNumber];
 		if(selItem.text!=""){
+			//message field
 			itemSaveButton.removeAttribute("disabled");
 			outputNameField.innerHTML = selItem.name;
 			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 			outputExpectedField.value='^';
-			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: "+selItem.text+"</p>";
+			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: <input id='message-input' type='text' size='50' value='"+selItem.text+"'></p>";
 			outputStimulusList.innerHTML="";
 		}else{
-			//set the fields
+			//normal field
 			itemSaveButton.removeAttribute("disabled");
 			outputNameField.innerHTML = selItem.name;
 			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
@@ -204,9 +205,18 @@ function saveItem(){
 	//validate there is an item selected
 	if(itemNumber>=0){
 		var id = document.getElementById("id-input").value;
-		var expectedResponse = document.getElementById("expected-response-field").value;
-		itemArray[itemNumber].id =id;
-		itemArray[itemNumber].expectedResponse =expectedResponse;
+		var message = document.getElementById("message-input");
+		if(message!=null){
+			//message item
+			itemArray[itemNumber].id =id;
+			itemArray[itemNumber].text =message.value;
+		}else
+		{
+			//normal item
+			var expectedResponse = document.getElementById("expected-response-field").value;
+			itemArray[itemNumber].id =id;
+			itemArray[itemNumber].expectedResponse =expectedResponse;
+		}
 	}
 }
 
@@ -356,6 +366,7 @@ function organizeTimeLine(){
 			start = new Date (start.getTime());
 			start.setMilliseconds(start.getMilliseconds()+1);
 			end = new Date (start.getTime());
+			timeline.setSelection([{row: i}]);
 		}
 		
 	}
@@ -401,10 +412,32 @@ function addStimulus(ev){
 		alert("You must select an item first!");
 	}
 }
-
+/**
+ * Opens the preview Window
+ */
 function previewWindow(){
 	open('preview','Preview','top=600,left=600,width=600,resizable=no,height=600,');
 } 
 
+/**
+ * Send the information of the document to the server and receive the created document
+ */
+function saveDocument(){
+	var jsonText = JSON.stringify(itemArray[0]);
+	$.ajax({
+    url: 'save',
+    type: 'POST',
+    data: jsonText,
+    dataType: 'html',
+    async: false,
+    success: function(msg) {
+        alert(msg);
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+	});
+}
 	
 

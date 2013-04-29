@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405093241) do
+ActiveRecord::Schema.define(:version => 20130429083100) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20130405093241) do
     t.float    "top_possition"
     t.float    "left_possition"
     t.integer  "channel"
+    t.integer  "duration"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end

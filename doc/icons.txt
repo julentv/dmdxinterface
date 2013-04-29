@@ -4,3 +4,4 @@ save --> <a href="http://thenounproject.com/noun/save/#icon-No9016" target="_bla
 settings --> <a href="http://thenounproject.com/noun/settings/#icon-No11801" target="_blank">Settings</a> designed by <a href="http://thenounproject.com/Michzen" target="_blank">Michael Zenaty</a> from The Noun Project
 Play -->Designed by  Zbigniew Flakus 
 bubble --> <a href="http://thenounproject.com/noun/speech-bubble/#icon-No5914" target="_blank">Speech Bubble</a> designed by <a href="http://thenounproject.com/Nozzman" target="_blank">Bram van Rijen</a> from The Noun Project
+dowload --> <a href="http://thenounproject.com/noun/download/#icon-No435" target="_blank">Download</a>  from The Noun Project

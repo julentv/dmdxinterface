@@ -8,6 +8,7 @@ class CreateStimulus < ActiveRecord::Migration
       t.float :top_possition
       t.float :left_possition
       t.integer :channel
+      t.integer :duration
 
       t.timestamps
     end
