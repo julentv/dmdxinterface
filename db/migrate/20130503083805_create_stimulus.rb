@@ -9,6 +9,12 @@ class CreateStimulus < ActiveRecord::Migration
       t.float :left_possition
       t.integer :channel
       t.integer :duration
+      t.boolean :clear_screen
+      t.boolean :not_erase_previous
+      t.boolean :no_randomise
+      t.integer :present_in_line
+      t.boolean :is_blank_interval
+      t.boolean :synchronise_with_next
 
       t.timestamps
     end

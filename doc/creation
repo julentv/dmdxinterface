@@ -6,11 +6,11 @@ rails generate model Configuration_file name:string
 rails generate model Configuration_file_header output_data_to_ascii:boolean continuous_running:boolean standard_frame_duration:integer delay:integer time_out:integer no_feed_back:boolean default_background_color:integer default_writing_color:integer default_font_size:integer record_clock_on_time_keyword:integer id_pio12:boolean id_keyboard:boolean id_mouse:boolean id_digital_vox:boolean id_record_vocal:boolean configuration_file_id:integer
 --
 #Model Item
-rails generate model Item item_number:integer expected_response:string configuration_file_id:integer
+rails generate model Item item_number:integer expected_response:string configuration_file_id:integer start_timer_before_stimulus:integer
 - -
 
 #Model Stimulus
-rails generate model stimulus item_id:integer order:integer text:string type:string top_possition:float left_possition:float channel:integer duration:integer
+rails generate model stimulus item_id:integer order:integer text:string type:string top_possition:float left_possition:float channel:integer duration:integer clear_screen:boolean not_erase_previous:boolean no_randomise:boolean present_in_line:integer is_blank_interval:boolean synchronise_with_next:boolean
 
 
 faltan devices y video_mode (arrays de string e integer)

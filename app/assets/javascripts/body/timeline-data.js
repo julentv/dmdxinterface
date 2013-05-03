@@ -46,7 +46,7 @@ function drawVisualization() {
 	data.addColumn('string', 'content');
 
 	var t = new Date(2010, 7, 23, 16, 30, 15);
-	var te = new Date(2010, 7, 23, 16, 30, 16); 
+	var te = new Date(2010, 7, 23, 16, 30, 17); 
 
     data.addRows([
       [new Date(t.getTime()+0), new Date(t.getTime()+1), itemArray[0].name],

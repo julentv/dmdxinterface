@@ -4,8 +4,10 @@ one:
   item_number: 1
   expected_response: MyString
   configuration_file_id: 1
+  start_timer_before_stimulus: 1
 
 two:
   item_number: 1
   expected_response: MyString
   configuration_file_id: 1
+  start_timer_before_stimulus: 1

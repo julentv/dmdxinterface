@@ -9,6 +9,12 @@ one:
   left_possition: 1.5
   channel: 1
   duration: 1
+  clear_screen: false
+  not_erase_previous: false
+  no_randomise: false
+  present_in_line: 1
+  is_blank_interval: false
+  synchronise_with_next: false
 
 two:
   item_id: 1
@@ -19,3 +25,9 @@ two:
   left_possition: 1.5
   channel: 1
   duration: 1
+  clear_screen: false
+  not_erase_previous: false
+  no_randomise: false
+  present_in_line: 1
+  is_blank_interval: false
+  synchronise_with_next: false

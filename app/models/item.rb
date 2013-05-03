@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
   belongs_to :configuration_file
   has_many :stimulus
   
-  attr_accessible :configuration_file_id, :expected_response, :item_number, :message => "The item number must be possitive"
+  attr_accessible :configuration_file_id, :expected_response, :item_number, :start_timer_before_stimulus
   
   #validations
   validates_numericality_of :item_number, :greater_than_or_equal_to => 0
@@ -11,6 +11,8 @@ class Item < ActiveRecord::Base
     super()
     self.item_number=item_number
     self.expected_response ="+"
+    #starts the timer of dmdx after the selected stimulus in the item (with the simbol *)
+    self.start_timer_before_stimulus=0
   end
   
   #the next four methods change the expected response in the item
@@ -39,6 +41,5 @@ class Item < ActiveRecord::Base
     item_string
     
   end
-  
   
 end

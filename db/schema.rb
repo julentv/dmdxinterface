@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130429083100) do
+ActiveRecord::Schema.define(:version => 20130503083805) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -40,11 +40,13 @@ ActiveRecord::Schema.define(:version => 20130429083100) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "items", :primary_key => "item_number", :force => true do |t|
+  create_table "items", :force => true do |t|
+    t.integer  "item_number"
     t.string   "expected_response"
     t.integer  "configuration_file_id"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.integer  "start_timer_before_stimulus"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   create_table "pruebas", :force => true do |t|
@@ -62,8 +64,14 @@ ActiveRecord::Schema.define(:version => 20130429083100) do
     t.float    "left_possition"
     t.integer  "channel"
     t.integer  "duration"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.boolean  "clear_screen"
+    t.boolean  "not_erase_previous"
+    t.boolean  "no_randomise"
+    t.integer  "present_in_line"
+    t.boolean  "is_blank_interval"
+    t.boolean  "synchronise_with_next"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
 end
