@@ -42,10 +42,14 @@ h3{
 #stimulus-list{
 	border-style:solid;
 	cursor:default;
-	padding:10px;
+	padding:7px;
 	margin-left: 40px;
 	width:86%;
-	height:54%;
+	height:48%;
+}
+#stimulus-number-p{
+	padding:0px;
+	margin-top:5px;
 }
 #stimulus-order-list{
 	max-height:78%;
@@ -57,6 +61,12 @@ h3{
 }
 .stimulus-order-list-selected{
     background-color:#FFFF00;
+}
+.small-icon{
+	width:15px;
+	position:absolute;
+    left:65px;
+    margin-top:2px
 }
 #stimulus-data{
 	margin:0 0 0 0;

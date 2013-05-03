@@ -6,6 +6,7 @@ function Item (itemid, text){
 	this.stimulusArray= new Array();
 	//if!="" then is message item
 	this.text=text;
+	this.startTimerBeforeStimulus=0;
 }
 //stimulus class
 function Stimulus(text, type){
@@ -15,6 +16,12 @@ function Stimulus(text, type){
 	this.topPosition=0;
 	this.leftPosition=1;
 	this.channel="1";
+	this.clearScreen=true;
+	this.notErasePrevious=false;
+	this.NoRandomise=false;
+	this.presentInLine=0;
+	this.isBlankInterval=false;
+	this.synchroniseWithNext=false;
 }
 
 //start of the timeline methods
@@ -147,6 +154,7 @@ function onselect(){
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
 	var outputStimulusList = document.getElementById("stimulus-order-list");
 	
+	
 	if(selection==""){
 		//no item selected
 		itemNumber=-1;
@@ -156,8 +164,9 @@ function onselect(){
 		outputNameField.innerHTML = "No item selected";
 		outputIdField.innerHTML = "-";
 		outputExpectedField.value="+";
-		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Added stimulus number: -</p>";
+		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 		outputStimulusList.innerHTML="";
+		generateTimerSelect();
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
@@ -170,17 +179,43 @@ function onselect(){
 			outputExpectedField.value='^';
 			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: <input id='message-input' type='text' size='50' value='"+selItem.text+"'></p>";
 			outputStimulusList.innerHTML="";
+			generateTimerSelect();
 		}else{
 			//normal field
 			itemSaveButton.removeAttribute("disabled");
 			outputNameField.innerHTML = selItem.name;
 			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 			outputExpectedField.value=selItem.expectedResponse;
-			stimulusListGeneration();	
+			stimulusListGeneration();
+			generateTimerSelect();
+			
 		}
-		
 	}
 }
+
+/**
+ * Generetes the options of the select of the attribute "Start timer in stimulus:"
+ */
+function generateTimerSelect(){
+	var selectString="";
+	var timerSelect = document.getElementById("timer-selection-field");
+	if(itemNumber==-1){
+		selectString="<option value='"+0+"'>"+1+"</option>";
+		timerSelect.innerHTML=selectString;
+	}else{
+		var numberOfStimulus=itemArray[itemNumber].stimulusArray.length;
+		selectString=selectString+"<option value='"+0+"'>"+1+"</option>";
+		for(var i=1;i<numberOfStimulus;i++){
+			selectString=selectString+"<option value='"+i+"'>"+(i+1)+"</option>";
+		}
+		timerSelect.innerHTML=selectString;
+		timerSelect.value=itemArray[itemNumber].startTimerBeforeStimulus;
+	}
+	
+	
+	
+}
+
 
 /**
  * Function to generate the list of stimulus in the item pannel
@@ -188,13 +223,19 @@ function onselect(){
 function stimulusListGeneration(){
 	//the number of items
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
-	stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Added stimulus number: "+itemArray[itemNumber].stimulusArray.length+"</p>";
+	stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: "+itemArray[itemNumber].stimulusArray.length+"</p>";
 	//the list
 	var outputStimulusList = document.getElementById("stimulus-order-list");
-	var stimulusArray = itemArray[itemNumber].stimulusArray;
+	var selectedStimulus=itemArray[itemNumber];
+	var stimulusArray = selectedStimulus.stimulusArray;
 	var content="";
 	for(i=0, ii=stimulusArray.length;i<ii;i++){
-		content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
+		if(selectedStimulus.startTimerBeforeStimulus==i){
+			content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'> <img id='timer-icon' src='/assets/icons/timer.png' alt='timer icon' class='small-icon'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
+		}else{
+			content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
+		}
+		
 	}
 	outputStimulusList.innerHTML=content;
 }
@@ -205,8 +246,10 @@ function saveItem(){
 	//validate there is an item selected
 	if(itemNumber>=0){
 		var id = document.getElementById("id-input").value;
-		var message = document.getElementById("message-input");
+		var timer = document.getElementById("timer-selection-field");
+		
 		if(message!=null){
+			var message = document.getElementById("message-input");
 			//message item
 			itemArray[itemNumber].id =id;
 			itemArray[itemNumber].text =message.value;
@@ -217,6 +260,9 @@ function saveItem(){
 			itemArray[itemNumber].id =id;
 			itemArray[itemNumber].expectedResponse =expectedResponse;
 		}
+		itemArray[itemNumber].startTimerBeforeStimulus=timer.value;
+		stimulusListGeneration();
+		generateTimerSelect();
 	}
 }
 
@@ -440,6 +486,7 @@ function addStimulus(ev){
 				//stimulus list generation
 				stimulusListGeneration();
 				organizeTimeLine();
+				generateTimerSelect();
 			}
 		}else{
 			alert("Can`t add a stimulus to a message item");
