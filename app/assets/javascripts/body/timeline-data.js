@@ -36,7 +36,7 @@ var data;
 var numberOfItems=1;
 var itemArray = new Array ();
 var itemNumber=-1;
-var selectedStimulus=-1;
+var selectedStimulusNumber=-1;
 
 /**
  *  Called when the Visualization API is loaded.
@@ -59,7 +59,6 @@ function drawVisualization() {
       [new Date(t.getTime()+0), new Date(t.getTime()+1), itemArray[0].name],
     ]);
 
-           
 	// specify options
 	var options = {
 		width : "100%",
@@ -211,9 +210,6 @@ function generateTimerSelect(){
 		timerSelect.innerHTML=selectString;
 		timerSelect.value=itemArray[itemNumber].startTimerBeforeStimulus;
 	}
-	
-	
-	
 }
 
 
@@ -293,14 +289,14 @@ function selectStimulus(ev){
 	ev.removeAttribute("onmouseout");
 	
 	//obtain the number of the list that has been selected
-	selectedStimulus=-1;
-	for(var i=0,ii=listItems.length;i<ii && selectedStimulus==-1 ;i++){
+	selectedStimulusNumber=-1;
+	for(var i=0,ii=listItems.length;i<ii && selectedStimulusNumber==-1 ;i++){
 		if (listItems[i].attributes.getNamedItem("onmouseover")==null){
-			selectedStimulus=i;
+			selectedStimulusNumber=i;
 		}
 	}
 	
-	var stimulusToShow = itemArray[itemNumber].stimulusArray[selectedStimulus];
+	var stimulusToShow = itemArray[itemNumber].stimulusArray[selectedStimulusNumber];
 	
 	//stimulus pannel edition
 	showStimulusData(stimulusToShow);
@@ -328,7 +324,7 @@ function showStimulusData(stimulus){
 		stimulusPannelHeader.innerHTML="No stimulus selected";
 		stimulusDurationField.setAttribute('disabled');
 		stimulusDurationField.value="";
-		selectedStimulus=-1;
+		selectedStimulusNumber=-1;
 		specificFieldsArea.innerHTML="";
 		
 	}else{
@@ -351,7 +347,7 @@ function showStimulusData(stimulus){
  */
 function stimulusTypeChange(component){
 	var selectedValue= component.options[component.selectedIndex].value;
-	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulus]
+	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulusNumber]
 	var specificFieldsArea = document.getElementById("specific-fields-area");
 	
 	if(selectedValue=="text"){
@@ -373,8 +369,8 @@ function stimulusTypeChange(component){
  */
 function saveStimulus(){
 	//obtain the stimulus
-	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulus]
-	//alert("Item Number: "+itemNumber+" Stimulus Number: "+selectedStimulus);
+	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulusNumber]
+	//alert("Item Number: "+itemNumber+" Stimulus Number: "+selectedStimulusNumber);
 	//obtain data
 	var stimulusTypeField =document.getElementById("stimulus-type-field"); 
 	var previousDuration=stimulus.duration;
@@ -383,7 +379,7 @@ function saveStimulus(){
 	stimulus.type=stimulusTypeField.value;
 	
 	//if is an image stimulus or an audio stimulus it has more attributes
-	if(stimulusTypeField.value=="jpg" || stimulusTypeField=="bmp"){
+	if(stimulusTypeField.value=="jpg" || stimulusTypeField.value=="bmp"){
 		stimulus.topPosition=document.getElementById("top-possition-field").value;
 		stimulus.leftPosition=document.getElementById("left-possition-field").value;
 	}else if(stimulusTypeField.value=="wav"){
@@ -393,7 +389,7 @@ function saveStimulus(){
 	//reload the stimulus list of the item pannel and remark the selected one
 	stimulusListGeneration();
 	var listItems = document.getElementById("stimulus-order-list").children;
-	var selected=listItems[selectedStimulus];
+	var selected=listItems[selectedStimulusNumber];
 	selectStimulus(selected);
 	
 	if(previousDuration!=stimulus.duration){
