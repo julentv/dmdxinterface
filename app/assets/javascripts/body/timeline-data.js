@@ -227,7 +227,7 @@ function stimulusListGeneration(){
 	var content="";
 	for(i=0, ii=stimulusArray.length;i<ii;i++){
 		if(selectedStimulus.startTimerBeforeStimulus==i){
-			content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'> <img id='timer-icon' src='/assets/icons/timer.png' alt='timer icon' class='small-icon'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
+			content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'> <img id='timer-icon' src='/assets/icons/timer.png' alt='timer icon' class='small-icon'><span id='selected-stimulus-line'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</span></li>";
 		}else{
 			content=content+"<li onmouseover='stimulusListOnMouseOver(this);' onmouseout='stimulusListOnMouseOut(this);' onclick='selectStimulus(this);'>"+stimulusArray[i].text+" ,"+stimulusArray[i].type+"</li>";
 		}
