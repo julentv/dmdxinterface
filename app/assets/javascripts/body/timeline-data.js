@@ -15,11 +15,11 @@ function Stimulus(text, type){
 	this.type =type; //text, bmp, jpg, wav
 	this.topPosition=0;
 	this.leftPosition=1;
-	this.channel="1";
+	this.channel="2";
 	this.clearScreen=true;
 	this.notErasePrevious=false;
 	this.NoRandomise=false;
-	this.presentInLine=0;
+	this.presentInLine=5;
 	this.isBlankInterval=false;
 	this.synchroniseWithNext=false;
 }
@@ -312,7 +312,13 @@ function showStimulusData(stimulus){
 	var stimulusPannelHeader = document.getElementById("stimulus-pannel-header");
 	var stimulusDurationField = document.getElementById("stimulus-duration-field");
 	var specificFieldsArea = document.getElementById("specific-fields-area");
-	
+	//desde aqui
+	var stimulusLine = document.getElementById("stimulus-present-line");
+	var clearScreen = document.getElementById("clear_screen");
+	var notErase = document.getElementById("not_erase");
+	var noRandomize = document.getElementById("no_randomise");
+	var isBlank = document.getElementById("is_blank");
+	var synchronize = document.getElementById("synchronise");
 	
 	if(stimulus==null){
 		//empty
@@ -326,6 +332,14 @@ function showStimulusData(stimulus){
 		stimulusDurationField.value="";
 		selectedStimulusNumber=-1;
 		specificFieldsArea.innerHTML="";
+		//desde aqui
+		stimulusLine.setAttribute('disabled');
+	    clearScreen.setAttribute('disabled');
+	    notErase.setAttribute('disabled');
+	    noRandomize.setAttribute('disabled');
+	    isBlank.setAttribute('disabled');
+	    synchronize.setAttribute('disabled');
+		
 		
 	}else{
 		//no empty
@@ -338,6 +352,20 @@ function showStimulusData(stimulus){
 		stimulusDurationField.removeAttribute("disabled");
 		stimulusDurationField.value=stimulus.duration;
 		stimulusTypeChange(stimulusTypeField);
+		//desde aqui
+		stimulusLine.removeAttribute("disabled");
+	    clearScreen.removeAttribute("disabled");
+	    notErase.removeAttribute("disabled");
+	    noRandomize.removeAttribute("disabled");
+	    isBlank.removeAttribute("disabled");
+	    synchronize.removeAttribute("disabled");
+		stimulusLine.value=stimulus.presentInLine;
+		clearScreen.checked=stimulus.clearScreen;
+	    notErase.checked=stimulus.notErasePrevious;
+	    noRandomize.checked=stimulus.NoRandomise;
+	    isBlank.checked=stimulus.isBlankInterval;
+	    synchronize.checked=stimulus.synchroniseWithNext;
+		
 	}
 	
 }
@@ -370,13 +398,20 @@ function stimulusTypeChange(component){
 function saveStimulus(){
 	//obtain the stimulus
 	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulusNumber]
-	//alert("Item Number: "+itemNumber+" Stimulus Number: "+selectedStimulusNumber);
 	//obtain data
 	var stimulusTypeField =document.getElementById("stimulus-type-field"); 
 	var previousDuration=stimulus.duration;
+	
 	stimulus.text=document.getElementById("stimulus-text-field").value;
 	stimulus.duration=document.getElementById("stimulus-duration-field").value;
 	stimulus.type=stimulusTypeField.value;
+	
+	stimulus.presentInLine=document.getElementById("stimulus-present-line").value;
+	stimulus.clearScreen=document.getElementById("clear_screen").checked;
+	stimulus.notErasePrevious=document.getElementById("not_erase").checked;
+	stimulus.NoRandomise=document.getElementById("no_randomise").checked;
+	stimulus.isBlankInterval=document.getElementById("is_blank").checked;
+	stimulus.synchroniseWithNext=document.getElementById("synchronise").checked;
 	
 	//if is an image stimulus or an audio stimulus it has more attributes
 	if(stimulusTypeField.value=="jpg" || stimulusTypeField.value=="bmp"){

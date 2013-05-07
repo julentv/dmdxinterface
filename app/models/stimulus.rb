@@ -59,4 +59,3 @@ class Stimulus < ActiveRecord::Base
   end
 end
 
-end
