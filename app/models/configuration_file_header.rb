@@ -45,9 +45,7 @@ class ConfigurationFileHeader < ActiveRecord::Base
     @header_string=@header_string+" <dwc "+self.default_writing_color.to_s+">"
     @header_string=@header_string+" <dfs "+self.default_font_size.to_s+">"
     
-    @header_string=@header_string+" <rcot"+self.record_clock_on_time_keyword.to_s+">"
-    if self.record_clock_on_time_keyword
-      @header_string=@header_string+" <rcot"+self.id_digital_vox.to_s+">"
+    if self.record_clock_on_time_keyword!=0
       @header_string=@header_string+" <rcot>"
     end
     if self.id_digital_vox == true
@@ -65,7 +63,6 @@ class ConfigurationFileHeader < ActiveRecord::Base
     if self.id_record_vocal == true
       @header_string=@header_string+" <id RecordVocal>"
     end
-    
     
     @header_string
   end

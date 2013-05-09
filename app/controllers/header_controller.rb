@@ -1,5 +1,12 @@
 class HeaderController < ApplicationController
+  layout false
   def index
+    if params[:id]==nil
+      @conf_file=nil
+    else
+      @conf_file=ConfigurationFile.find(params[:id])
+    end
+    
   end
   def file_creation
     #@conf_file = ConfigurationFile.new("file001")
@@ -67,6 +74,7 @@ class HeaderController < ApplicationController
     
     @conf_file.create_file
     @conf_file.save()
-    render 'body/index'
+    redirect_to '/body/index'
+    #render 'index'
   end
 end

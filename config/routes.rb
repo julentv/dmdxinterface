@@ -11,6 +11,7 @@ Dmdxinterface::Application.routes.draw do
   get "body/index"
   get "body/timeline"
   get "body/preview"
+  get "body/settings"
   post "body/save"
   # The priority is based upon order of creation:
   # first created -> highest priority.
