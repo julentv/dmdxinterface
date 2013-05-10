@@ -1,4 +1,5 @@
 class BodyController < ApplicationController
+  require 'json'
   layout false
   def index
     @conf_file=ConfigurationFile.find(1)
@@ -11,7 +12,12 @@ class BodyController < ApplicationController
     render 'preview'
   end
   def save
-    render :text => "Saved!"
+    @conf_file=ConfigurationFile.find(params[:id])
+    string = params[:json_data]
+    parsed = JSON.parse(string)
+    #conf_file.items.delete
+    #@conf_file=create_file_from_json(parsed)
+    render :text => parsed.to_s
   end
   def settings
     if params[:id]==nil

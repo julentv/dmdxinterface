@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
   belongs_to :configuration_file
-  has_many :stimulus
+  has_many :stimulus, :dependent => :delete_all
   
   attr_accessible :configuration_file_id, :expected_response, :item_number, :start_timer_before_stimulus
   
@@ -39,7 +39,11 @@ class Item < ActiveRecord::Base
     item_string=item_string+" ;"
     
     item_string
-    
+  end
+  def create_from_json(json_ob)
+    self.item_number=json_ob[:id]
+    self.expected_response=json_ob[:expectedResponse]
+    self.start_timer_before_stimulus=json_ob[:startTimerBeforeStimulus]
   end
   
 end

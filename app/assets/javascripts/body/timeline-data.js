@@ -543,12 +543,13 @@ function previewWindow(){
  * Send the information of the document to the server and receive the created document
  */
 function saveDocument(){
-	var jsonText = JSON.stringify(itemArray[0]);
+	var jsonText ={id:1,json_data : JSON.stringify(itemArray)};
+    //var text={json_data : JSON.stringify({"one": "Singular sensation","two": "Beady little eyes","three": "Little birds pitch by my doorstep"})};
+	//alert(jsonText);
 	$.ajax({
     url: 'save',
     type: 'POST',
     data: jsonText,
-    dataType: 'html',
     async: false,
     success: function(msg) {
         alert(msg);
