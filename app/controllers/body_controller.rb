@@ -15,9 +15,11 @@ class BodyController < ApplicationController
     @conf_file=ConfigurationFile.find(params[:id])
     string = params[:json_data]
     parsed = JSON.parse(string)
-    #conf_file.items.delete
+    #@conf_file.items<<Item.new(111)
+    #@conf_file.deleteItems
     #@conf_file=create_file_from_json(parsed)
-    render :text => parsed.to_s
+    
+    render :text => @conf_file.items[0].stimulus.size
   end
   def settings
     if params[:id]==nil
