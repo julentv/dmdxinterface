@@ -18,7 +18,7 @@ function Stimulus(text, type){
 	this.channel="2";
 	this.clearScreen=true;
 	this.notErasePrevious=false;
-	this.NoRandomise=false;
+	this.noRandomise=false;
 	this.presentInLine=5;
 	this.isBlankInterval=false;
 	this.synchroniseWithNext=false;
@@ -362,7 +362,7 @@ function showStimulusData(stimulus){
 		stimulusLine.value=stimulus.presentInLine;
 		clearScreen.checked=stimulus.clearScreen;
 	    notErase.checked=stimulus.notErasePrevious;
-	    noRandomize.checked=stimulus.NoRandomise;
+	    noRandomize.checked=stimulus.noRandomise;
 	    isBlank.checked=stimulus.isBlankInterval;
 	    synchronize.checked=stimulus.synchroniseWithNext;
 		
@@ -409,7 +409,7 @@ function saveStimulus(){
 	stimulus.presentInLine=document.getElementById("stimulus-present-line").value;
 	stimulus.clearScreen=document.getElementById("clear_screen").checked;
 	stimulus.notErasePrevious=document.getElementById("not_erase").checked;
-	stimulus.NoRandomise=document.getElementById("no_randomise").checked;
+	stimulus.noRandomise=document.getElementById("no_randomise").checked;
 	stimulus.isBlankInterval=document.getElementById("is_blank").checked;
 	stimulus.synchroniseWithNext=document.getElementById("synchronise").checked;
 	

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503083805) do
+ActiveRecord::Schema.define(:version => 20130514151102) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20130503083805) do
     t.integer  "item_id"
     t.integer  "order"
     t.string   "text"
-    t.string   "type"
+    t.string   "stimulus_type"
     t.float    "top_possition"
     t.float    "left_possition"
     t.integer  "channel"

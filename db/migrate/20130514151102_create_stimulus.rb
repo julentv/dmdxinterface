@@ -4,7 +4,7 @@ class CreateStimulus < ActiveRecord::Migration
       t.integer :item_id
       t.integer :order
       t.string :text
-      t.string :type
+      t.string :stimulus_type
       t.float :top_possition
       t.float :left_possition
       t.integer :channel
