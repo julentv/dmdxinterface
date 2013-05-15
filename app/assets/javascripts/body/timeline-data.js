@@ -7,6 +7,7 @@ function Item (itemid, text){
 	//if!="" then is message item
 	this.text=text;
 	this.startTimerBeforeStimulus=0;
+	this.noRandomise=false;
 }
 //stimulus class
 function Stimulus(text, type){
@@ -18,7 +19,6 @@ function Stimulus(text, type){
 	this.channel="2";
 	this.clearScreen=true;
 	this.notErasePrevious=false;
-	this.noRandomise=false;
 	this.presentInLine=5;
 	this.isBlankInterval=false;
 	this.synchroniseWithNext=false;
@@ -44,7 +44,7 @@ var selectedStimulusNumber=-1;
 function drawVisualization() {
     
     //insert the first item to the array
-	itemArray[0]= new Item("0", "");
+	itemArray[0]= new Item("1", "");
     
 	// Create and populate a data table.
 	data = new google.visualization.DataTable();
@@ -130,7 +130,6 @@ function newMessageItem(){
 	}
 	
 	
-
 	timeline.addItem({
 		'start' : start,
 		'content' : itemArray[numberOfItems].name
@@ -152,8 +151,10 @@ function onselect(){
 	var outputExpectedField = document.getElementById("expected-response-field");
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
 	var outputStimulusList = document.getElementById("stimulus-order-list");
+	var noRandomize = document.getElementById("no_randomise");
 	
 	
+	    
 	if(selection==""){
 		//no item selected
 		itemNumber=-1;
@@ -165,11 +166,15 @@ function onselect(){
 		outputExpectedField.value="+";
 		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 		outputStimulusList.innerHTML="";
+		noRandomize.checked=false;
+		noRandomize.setAttribute('disabled');
 		generateTimerSelect();
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
 		var selItem=itemArray[itemNumber];
+		noRandomize.removeAttribute("disabled");
+		noRandomize.checked=selItem.noRandomise;
 		if(selItem.text!=""){
 			//message field
 			itemSaveButton.removeAttribute("disabled");
@@ -243,22 +248,24 @@ function saveItem(){
 	if(itemNumber>=0){
 		var id = document.getElementById("id-input").value;
 		var timer = document.getElementById("timer-selection-field");
-		
+		var message = document.getElementById("message-input");
+		var selItem=itemArray[itemNumber]
+		selItem.noRandomise=document.getElementById("no_randomise").checked;
 		if(message!=null){
-			var message = document.getElementById("message-input");
 			//message item
-			itemArray[itemNumber].id =id;
-			itemArray[itemNumber].text =message.value;
+			selItem.id =id;
+			selItem.text =message.value;
 		}else
 		{
 			//normal item
 			var expectedResponse = document.getElementById("expected-response-field").value;
-			itemArray[itemNumber].id =id;
-			itemArray[itemNumber].expectedResponse =expectedResponse;
+			selItem.id =id;
+			selItem.expectedResponse =expectedResponse;
+			selItem.startTimerBeforeStimulus=timer.value;
+			stimulusListGeneration();
+			generateTimerSelect();
 		}
-		itemArray[itemNumber].startTimerBeforeStimulus=timer.value;
-		stimulusListGeneration();
-		generateTimerSelect();
+		
 	}
 }
 
@@ -316,7 +323,6 @@ function showStimulusData(stimulus){
 	var stimulusLine = document.getElementById("stimulus-present-line");
 	var clearScreen = document.getElementById("clear_screen");
 	var notErase = document.getElementById("not_erase");
-	var noRandomize = document.getElementById("no_randomise");
 	var isBlank = document.getElementById("is_blank");
 	var synchronize = document.getElementById("synchronise");
 	
@@ -336,7 +342,7 @@ function showStimulusData(stimulus){
 		stimulusLine.setAttribute('disabled');
 	    clearScreen.setAttribute('disabled');
 	    notErase.setAttribute('disabled');
-	    noRandomize.setAttribute('disabled');
+	    
 	    isBlank.setAttribute('disabled');
 	    synchronize.setAttribute('disabled');
 		
@@ -356,13 +362,11 @@ function showStimulusData(stimulus){
 		stimulusLine.removeAttribute("disabled");
 	    clearScreen.removeAttribute("disabled");
 	    notErase.removeAttribute("disabled");
-	    noRandomize.removeAttribute("disabled");
 	    isBlank.removeAttribute("disabled");
 	    synchronize.removeAttribute("disabled");
 		stimulusLine.value=stimulus.presentInLine;
 		clearScreen.checked=stimulus.clearScreen;
 	    notErase.checked=stimulus.notErasePrevious;
-	    noRandomize.checked=stimulus.noRandomise;
 	    isBlank.checked=stimulus.isBlankInterval;
 	    synchronize.checked=stimulus.synchroniseWithNext;
 		
@@ -409,7 +413,7 @@ function saveStimulus(){
 	stimulus.presentInLine=document.getElementById("stimulus-present-line").value;
 	stimulus.clearScreen=document.getElementById("clear_screen").checked;
 	stimulus.notErasePrevious=document.getElementById("not_erase").checked;
-	stimulus.noRandomise=document.getElementById("no_randomise").checked;
+	
 	stimulus.isBlankInterval=document.getElementById("is_blank").checked;
 	stimulus.synchroniseWithNext=document.getElementById("synchronise").checked;
 	

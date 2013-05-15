@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130514151102) do
+ActiveRecord::Schema.define(:version => 20130515104516) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(:version => 20130514151102) do
     t.integer  "start_timer_before_stimulus"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.string   "text"
+    t.boolean  "no_randomise"
   end
 
   create_table "pruebas", :force => true do |t|
@@ -66,7 +68,6 @@ ActiveRecord::Schema.define(:version => 20130514151102) do
     t.integer  "duration"
     t.boolean  "clear_screen"
     t.boolean  "not_erase_previous"
-    t.boolean  "no_randomise"
     t.integer  "present_in_line"
     t.boolean  "is_blank_interval"
     t.boolean  "synchronise_with_next"

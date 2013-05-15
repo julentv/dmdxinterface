@@ -1,6 +1,6 @@
 class Stimulus < ActiveRecord::Base
   belongs_to :item
-  attr_accessible :channel, :clear_screen, :duration, :is_blank_interval, :item_id, :left_possition, :no_randomise, :not_erase_previous, :order, :present_in_line, :stimulus_type, :synchronise_with_next, :text, :top_possition
+  attr_accessible :channel, :clear_screen, :duration, :is_blank_interval, :item_id, :left_possition, :not_erase_previous, :order, :present_in_line, :stimulus_type, :synchronise_with_next, :text, :top_possition
  #validations
   validates_inclusion_of :stimulus_type, :in => %w( text bmp jpg wav ), :message =>"The type must be text, bmp, jpg or wav"
   validates_inclusion_of :channel, :in => 0..2, :message =>"The channel must be between 0 and 2 (left, right, both)"
@@ -18,7 +18,6 @@ class Stimulus < ActiveRecord::Base
     self.duration=1
     self.clear_screen=true
     self.not_erase_previous=false
-    self.no_randomise=false
     self.present_in_line=0
     self.is_blank_interval=false
     self.synchronise_with_next=false
@@ -62,7 +61,6 @@ class Stimulus < ActiveRecord::Base
     self.duration=json_ob["duration"]
     self.clear_screen=json_ob["clearScreen"]
     self.not_erase_previous=json_ob["notErasePrevious"]
-    self.no_randomise=json_ob["noRandomise"]
     self.present_in_line=json_ob["presentInLine"]
     self.is_blank_interval=json_ob["isBlankInterval"]
     self.synchronise_with_next=json_ob["synchroniseWithNext"]
