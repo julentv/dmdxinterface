@@ -71,7 +71,14 @@ class Stimulus < ActiveRecord::Base
   
   #convert the stimulus to string
   def to_s
+    stimulusText=' "Stimulus'+self.order.to_s+'"'
     
+    
+    #add symbol "/" at the end of the stimulus or not
+    if self.clear_screen
+      stimulusText=stimulusText+" /"
+    end
+    stimulusText
   end
 end
 

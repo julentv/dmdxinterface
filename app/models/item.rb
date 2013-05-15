@@ -33,10 +33,17 @@ class Item < ActiveRecord::Base
     #item string example: + 1 * "RABIES" /;
     item_string=""
     item_string=item_string+self.expected_response
-    item_string=item_string+" "+self.item_number.to_s+ " *"
+    item_string=item_string+self.item_number.to_s
+    j=self.stimulus.size-1
+    for i in 0..j
+      if i==start_timer_before_stimulus
+        item_string=item_string+" *"
+      end
+      item_string=item_string+self.stimulus[i].to_s
+    end
     
     #always end with a ";"
-    item_string=item_string+" /;"
+    item_string=item_string+";"
     
     item_string
   end
