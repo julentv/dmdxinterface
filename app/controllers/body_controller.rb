@@ -20,7 +20,12 @@ class BodyController < ApplicationController
     #add the new stimulus
     @conf_file.create_file_from_json(parsed)
     
-    render :text => "saved!!"
+    render :text => parsed
+  end
+  def download
+    @conf_file=ConfigurationFile.find(params[:id])
+    @conf_file.createFile()
+    render :text => "downloaded!"
   end
   def settings
     if params[:id]==nil

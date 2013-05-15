@@ -33,10 +33,10 @@ class Item < ActiveRecord::Base
     #item string example: + 1 * "RABIES" /;
     item_string=""
     item_string=item_string+self.expected_response
-    item_string=item_string+" "+self.item_number+ " *"
+    item_string=item_string+" "+self.item_number.to_s+ " *"
     
     #always end with a ";"
-    item_string=item_string+" ;"
+    item_string=item_string+" /;"
     
     item_string
   end

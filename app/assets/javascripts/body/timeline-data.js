@@ -542,8 +542,8 @@ function previewWindow(){
 /**
  * Send the information of the document to the server and receive the created document
  */
-function saveDocument(){
-	var jsonText ={id:1,json_data : JSON.stringify(itemArray)};
+function saveDocument(docId){
+	var jsonText ={id:docId,json_data : JSON.stringify(itemArray)};
     //var text={json_data : JSON.stringify({"one": "Singular sensation","two": "Beady little eyes","three": "Little birds pitch by my doorstep"})};
 	//alert(jsonText);
 	$.ajax({
@@ -560,5 +560,20 @@ function saveDocument(){
       }
 	});
 }
-	
+function downloadDocument(docId){
+	var jsonText ={id:docId};
+	$.ajax({
+    url: 'download',
+    type: 'POST',
+    data: jsonText,
+    async: false,
+    success: function(msg) {
+        alert(msg);
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+	});
+}
 

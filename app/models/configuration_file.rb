@@ -13,10 +13,19 @@ class ConfigurationFile < ActiveRecord::Base
   #Creation of the file
   def createFile
     @header_string=self.configuration_file_header.to_s
+    @bodyString=self.createBodyString
     @file_name = "public/files/"+self.name+".rtf"
     File.open(@file_name, "w") do |f|     
-    f.write(@header_string)   
+    f.write(@header_string+"\n"+@bodyString)   
     end
+  end
+  
+  def createBodyString
+    bodyString=""
+    self.items.each do |item|
+      bodyString=bodyString+item.to_s+"\n"
+    end
+    bodyString
   end
   
   #NOT USED!!
