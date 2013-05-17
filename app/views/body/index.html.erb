@@ -35,7 +35,7 @@
 						  <option value="=">Any response</option>
 						</select>
 					</li>
-					<li>¿No randomise? (on item): <input id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></li>
+					<li>No randomise: <input id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></li>
 					<li>Start timer in stimulus: 
 						<select id="timer-selection-field">
 						  <option value='0'>1</option>
@@ -43,6 +43,7 @@
 					</li>
 					<li>
 						<button id="item-save-button" disabled type="button" onclick="saveItem();">Save</button>
+						<button id="item-duplicate-button" disabled type="button" onclick="duplicateItem();">Duplicate</button>
 						<button id="item-delete-button" disabled type="button" onclick="">Delete</button>
 					</li>
 					
@@ -96,7 +97,7 @@
 	<div id="right-pannel">
 		<h3>Control panel</h3>
 		<ul id="control-panel-list" class="not-icon-ul">
-		<li onmouseover="this.style.cursor='pointer'" onclick="newItem();"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="newItem(null);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow();"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
 		<% if @conf_file!=nil %>

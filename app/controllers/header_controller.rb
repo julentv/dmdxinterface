@@ -72,7 +72,7 @@ class HeaderController < ApplicationController
       @conf_file.configuration_file_header.id_record_vocal=true
     end
     
-    @conf_file.create_file
+    @conf_file.createFile
     @conf_file.save()
     redirect_to '/body/index'
     #render 'index'

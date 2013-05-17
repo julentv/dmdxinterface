@@ -8,6 +8,23 @@ function Item (itemid, text){
 	this.text=text;
 	this.startTimerBeforeStimulus=0;
 	this.noRandomise=false;
+	
+	//creates a duplicate of the item
+	this.duplicate = function(){
+		var duplicatedItem= new Item(this.id, this.text);
+		duplicatedItem.expectedResponse=this.expectedResponse;
+		duplicatedItem.text=this.text;
+		duplicatedItem.startTimerBeforeStimulus=this.startTimerBeforeStimulus;
+		duplicatedItem.noRandomise=this.noRandomise;
+		arrayOfStimulus=new Array();
+		
+		//duplicate stimulus
+		for(var i =0,ii=this.stimulusArray.length;i<ii;i++){
+			arrayOfStimulus.push(this.stimulusArray[i].duplicate());
+		}
+		duplicatedItem.stimulusArray=arrayOfStimulus;
+		return (duplicatedItem);
+	}
 }
 //stimulus class
 function Stimulus(text, type){
@@ -22,6 +39,22 @@ function Stimulus(text, type){
 	this.presentInLine=5;
 	this.isBlankInterval=false;
 	this.synchroniseWithNext=false;
+	
+	//creates a duplicate of the stimulus
+	this.duplicate = function(){
+		var duplicatedStimulus= new Stimulus(this.text, this.type);
+		duplicatedStimulus.duration=this.duration;		
+		duplicatedStimulus.topPosition=this.topPosition;		
+		duplicatedStimulus.leftPosition=this.leftPosition;
+		duplicatedStimulus.channel=this.channel;
+		duplicatedStimulus.clearScreen=this.clearScreen;
+		duplicatedStimulus.notErasePrevious=this.notErasePrevious;
+		duplicatedStimulus.presentInLine=this.presentInLine;
+		duplicatedStimulus.isBlankInterval=this.isBlankInterval;
+		duplicatedStimulus.synchroniseWithNext=this.synchroniseWithNext;
+		
+		return (duplicatedStimulus);
+	}
 }
 
 //start of the timeline methods
@@ -83,12 +116,17 @@ google.visualization.events.addListener(timeline, 'select', onselect);
 /**
  * function to add a new item
  */
-function newItem(){   
+function newItem(itemToAdd){   
 	//add the item to the array of items
-	itemArray[numberOfItems]= new Item(numberOfItems, "");
+	if(itemToAdd==null){
+		itemArray[numberOfItems]= new Item(numberOfItems, "");
+	}else{
+		itemArray[numberOfItems]=itemToAdd;
+	}
+	
+	
 	//add the item to the timeline
 	var lastItem = timeline.getItem(numberOfItems-1);
-	
 	if(lastItem.end!=null){
 		//the previous item is a normal item
 		var start = new Date (lastItem.end.getTime());
@@ -115,9 +153,14 @@ function newItem(){
 /**
  * function to add a new message item
  */
-function newMessageItem(){
+function newMessageItem(itemToAdd){
 	//add the item to the array of items
-	itemArray[numberOfItems]= new Item(0, "Message");
+	if(itemToAdd==null){
+		itemArray[numberOfItems]= new Item(0, "Message");
+	}else{
+		itemArray[numberOfItems]=itemToAdd;
+	}
+	
 	//add the item to the timeline
 	var lastItem = timeline.getItem(numberOfItems-1);
 	if(lastItem.end!=null){
@@ -146,28 +189,31 @@ function onselect(){
 	
 	//obtain the fields
 	var itemSaveButton = document.getElementById("item-save-button");
+	var duplicateItemButton = document.getElementById("item-duplicate-button");
 	var outputNameField = document.getElementById("item-name-field");
 	var outputIdField = document.getElementById("item-id-field");
 	var outputExpectedField = document.getElementById("expected-response-field");
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
 	var outputStimulusList = document.getElementById("stimulus-order-list");
 	var noRandomize = document.getElementById("no_randomise");
+	var timerSelect = document.getElementById("timer-selection-field");
 	
-	
-	    
 	if(selection==""){
+		
 		//no item selected
 		itemNumber=-1;
-		
 		//set the fields
 		itemSaveButton.setAttribute('disabled');
+		duplicateItemButton.setAttribute('disabled');
 		outputNameField.innerHTML = "No item selected";
 		outputIdField.innerHTML = "-";
+		outputExpectedField.setAttribute('disabled');
 		outputExpectedField.value="+";
 		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 		outputStimulusList.innerHTML="";
 		noRandomize.checked=false;
 		noRandomize.setAttribute('disabled');
+		timerSelect.setAttribute('disabled');
 		generateTimerSelect();
 	}else{
 		//item selected
@@ -175,23 +221,28 @@ function onselect(){
 		var selItem=itemArray[itemNumber];
 		noRandomize.removeAttribute("disabled");
 		noRandomize.checked=selItem.noRandomise;
+		itemSaveButton.removeAttribute("disabled");
+		duplicateItemButton.removeAttribute("disabled");
 		if(selItem.text!=""){
 			//message field
-			itemSaveButton.removeAttribute("disabled");
 			outputNameField.innerHTML = selItem.name;
 			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 			outputExpectedField.value='^';
 			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: <input id='message-input' type='text' size='50' value='"+selItem.text+"'></p>";
 			outputStimulusList.innerHTML="";
+			timerSelect.setAttribute('disabled');
+			outputExpectedField.setAttribute('disabled');
 			generateTimerSelect();
 		}else{
 			//normal field
-			itemSaveButton.removeAttribute("disabled");
 			outputNameField.innerHTML = selItem.name;
 			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 			outputExpectedField.value=selItem.expectedResponse;
+			outputExpectedField.removeAttribute("disabled");
+			timerSelect.removeAttribute("disabled");
 			stimulusListGeneration();
 			generateTimerSelect();
+			
 			
 		}
 	}
@@ -240,6 +291,24 @@ function stimulusListGeneration(){
 	}
 	outputStimulusList.innerHTML=content;
 }
+
+/**
+ * Creates a new item with same attribute values of the selected one
+ */
+function duplicateItem(){
+	if(itemNumber>=0){
+		var selItem=itemArray[itemNumber];
+		//add the duplicate of the item
+		if(selItem.text==""){
+			newItem(selItem.duplicate());
+			organizeTimeLine();
+		}else{
+			newMessageItem(selItem.duplicate());
+		}
+		
+	}
+}
+
 /**
  * The function called when clicked the save button of the item pannel
  */
@@ -249,7 +318,7 @@ function saveItem(){
 		var id = document.getElementById("id-input").value;
 		var timer = document.getElementById("timer-selection-field");
 		var message = document.getElementById("message-input");
-		var selItem=itemArray[itemNumber]
+		var selItem=itemArray[itemNumber];
 		selItem.noRandomise=document.getElementById("no_randomise").checked;
 		if(message!=null){
 			//message item
