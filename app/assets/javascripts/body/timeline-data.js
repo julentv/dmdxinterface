@@ -119,7 +119,7 @@ google.visualization.events.addListener(timeline, 'select', onselect);
 function newItem(itemToAdd){   
 	//add the item to the array of items
 	if(itemToAdd==null){
-		itemArray[numberOfItems]= new Item(numberOfItems, "");
+		itemArray[numberOfItems]= new Item(numberOfItems+1, "");
 	}else{
 		itemArray[numberOfItems]=itemToAdd;
 	}
@@ -190,6 +190,8 @@ function onselect(){
 	//obtain the fields
 	var itemSaveButton = document.getElementById("item-save-button");
 	var duplicateItemButton = document.getElementById("item-duplicate-button");
+	var deleteItemButton = document.getElementById("item-delete-button");
+	
 	var outputNameField = document.getElementById("item-name-field");
 	var outputIdField = document.getElementById("item-id-field");
 	var outputExpectedField = document.getElementById("expected-response-field");
@@ -214,6 +216,7 @@ function onselect(){
 		noRandomize.checked=false;
 		noRandomize.setAttribute('disabled');
 		timerSelect.setAttribute('disabled');
+		deleteItemButton.setAttribute('disabled');
 		generateTimerSelect();
 	}else{
 		//item selected
@@ -223,6 +226,7 @@ function onselect(){
 		noRandomize.checked=selItem.noRandomise;
 		itemSaveButton.removeAttribute("disabled");
 		duplicateItemButton.removeAttribute("disabled");
+		deleteItemButton.removeAttribute("disabled");
 		if(selItem.text!=""){
 			//message field
 			outputNameField.innerHTML = selItem.name;
@@ -305,7 +309,22 @@ function duplicateItem(){
 		}else{
 			newMessageItem(selItem.duplicate());
 		}
+	}
+}
+
+function deleteItem(){
+	if(itemNumber>=0){
+		if(itemArray.length>1){
+			itemArray.splice(itemNumber, 1);
+			timeline.deleteItem(itemNumber);
+			numberOfItems=numberOfItems-1;
+			organizeTimeLine();
+		}else{
+			alert("The document must have at least one item.");
+		}
 		
+	}else{
+		alert("No item selected!");
 	}
 }
 
@@ -512,7 +531,7 @@ function saveStimulus(){
  */
 function organizeTimeLine(){
 	
-	var start = new Date(timeline.getItem(0).start.getTime());
+	var start = new Date(timeline.options.min.getTime());
 	var end = new Date (timeline.options.min.getTime());
 	
 	
@@ -541,7 +560,13 @@ function organizeTimeLine(){
 			end = new Date (start.getTime());
 			timeline.setSelection([{row: i}]);
 		}else{
-			start.setMilliseconds(end.getMilliseconds()+1);
+			//message item
+			if(i>0 && timeline.getItem(i-1).end!=null){
+				start.setMilliseconds(end.getMilliseconds()+1);
+			}else{
+				start.setMilliseconds(end.getMilliseconds());
+			}
+			
 			timeline.changeItem(i,{
 			'start' : start,
 			'content' : timeLineItem.content
