@@ -111,7 +111,7 @@ function drawVisualization() {
 	
 google.visualization.events.addListener(timeline, 'select', onselect);
 google.visualization.events.addListener(timeline, 'delete', deleteItem);
-google.visualization.events.addListener(timeline, 'change', onDrag);
+google.visualization.events.addListener(timeline, 'change', onItemDrag);
 	
 }
 
@@ -185,8 +185,37 @@ function newMessageItem(itemToAdd){
  * This function is called when an item is moved (draged) on the timeline
  * manages the order of the item after been draged.
  */
-function onDrag(){
+function onItemDrag(){
 	timeline.cancelChange();
+	var itemNumber=timeline.getSelection()[0].row;
+	var movedItem=itemArray[itemNumber]
+	var itemStartData = timeline.getItem(itemNumber).start.getMilliseconds();
+
+	var found=false;
+	var counter=0;
+	for(var i=0, ii=itemArray.length;i<ii&&!found;i++){
+		if(itemArray[i].stimulusArray.length==0){
+			counter=counter+1;
+		}else{
+			for(var stimulus in itemArray[i].stimulusArray){
+				counter=counter+stimulus.duration;	
+			}
+		}
+		
+		if(counter>=itemStartData){
+			found=true;
+			
+			if(i!=itemNumber){
+				itemArray.splice(itemNumber, 1);
+				itemArray.splice(i, 0,movedItem);
+				organizeTimeLine();
+				alert(itemStartData+"-i-"+ i );
+			}
+			
+		}
+	}
+	
+	
 }
 
 
