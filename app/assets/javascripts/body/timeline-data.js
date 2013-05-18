@@ -96,7 +96,7 @@ function drawVisualization() {
 	var options = {
 		width : "100%",
 		height : "300px",
-		editable : false,
+		editable : true,
 		style : "box",
 		intervalMax : 100,
 		min : t,
@@ -110,6 +110,8 @@ function drawVisualization() {
 	timeline.draw(data, options);
 	
 google.visualization.events.addListener(timeline, 'select', onselect);
+google.visualization.events.addListener(timeline, 'delete', deleteItem);
+google.visualization.events.addListener(timeline, 'change', onDrag);
 	
 }
 
@@ -179,6 +181,14 @@ function newMessageItem(itemToAdd){
 	}); 
 	numberOfItems = numberOfItems + 1;
 }
+/**
+ * This function is called when an item is moved (draged) on the timeline
+ * manages the order of the item after been draged.
+ */
+function onDrag(){
+	timeline.cancelChange();
+}
+
 
 /**
  * function called when an item is seleted
@@ -313,6 +323,7 @@ function duplicateItem(){
 }
 
 function deleteItem(){
+	timeline.cancelDelete();
 	if(itemNumber>=0){
 		if(itemArray.length>1){
 			itemArray.splice(itemNumber, 1);
