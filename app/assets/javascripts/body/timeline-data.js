@@ -186,35 +186,70 @@ function newMessageItem(itemToAdd){
  * manages the order of the item after been draged.
  */
 function onItemDrag(){
-	timeline.cancelChange();
 	var itemNumber=timeline.getSelection()[0].row;
 	var movedItem=itemArray[itemNumber]
 	var itemStartData = timeline.getItem(itemNumber).start.getMilliseconds();
-
 	var found=false;
 	var counter=0;
-	for(var i=0, ii=itemArray.length;i<ii&&!found;i++){
-		if(itemArray[i].stimulusArray.length==0){
-			counter=counter+1;
-		}else{
-			for(var stimulus in itemArray[i].stimulusArray){
-				counter=counter+stimulus.duration;	
+	if(timeline.getItem(itemNumber).start<=timeline.options.min.getTime()){
+		//moving to the left the maximum
+		itemArray.splice(itemNumber, 1);
+		itemNumber=0;
+		itemArray.splice(itemNumber, 0,movedItem);
+		timeline.setSelection([{row:itemNumber}]);
+		onselect();
+		organizeTimeLine();
+	}else{
+		//normal movements
+		for(var i=0, ii=itemArray.length;i<ii&&!found;i++){
+			if(itemNumber!=i){
+				counter=counter+1;
+			}
+			var counter2=0;
+			for(j=0,jj=itemArray[i].stimulusArray.length;j<jj;j++){
+				counter2=counter2+parseInt(itemArray[i].stimulusArray[j].duration);
+			}		
+			if(counter2>0){
+				counter2=counter2-1;
+			}
+			
+			itemStartData=itemStartData-parseInt(counter2);
+			
+			if(counter>=itemStartData){
+				
+				found=true;
+				itemArray.splice(itemNumber, 1);
+				if(i<itemNumber){
+					//move to the left
+					
+					itemNumber=i+1;
+					itemArray.splice(itemNumber, 0,movedItem);
+					timeline.setSelection([{row:itemNumber}]);
+					onselect();
+					organizeTimeLine();
+				}else if(i>itemNumber){
+					//move to the right
+					itemNumber=i;
+					itemArray.splice(itemNumber, 0,movedItem);
+					timeline.setSelection([{row:itemNumber}]);
+					onselect();
+					organizeTimeLine();
+				}else{
+					timeline.cancelChange();
+				}
+				//if i==itemNumber do not  do anything
 			}
 		}
-		
-		if(counter>=itemStartData){
-			found=true;
-			
-			if(i!=itemNumber){
-				itemArray.splice(itemNumber, 1);
-				itemArray.splice(i, 0,movedItem);
-				organizeTimeLine();
-				alert(itemStartData+"-i-"+ i );
-			}
-			
+		//move to the right the maximum
+		if(counter<itemStartData){
+			itemArray.splice(itemNumber, 1);
+			itemNumber=itemArray.length;
+			itemArray.splice(itemNumber, 0,movedItem);
+			timeline.setSelection([{row:itemNumber}]);
+			onselect();
+			organizeTimeLine();
 		}
 	}
-	
 	
 }
 
@@ -587,15 +622,16 @@ function organizeTimeLine(){
 			}
 			if(totalTime<1){
 				end.setMilliseconds(end.getMilliseconds()+1);
+				//alert(itemArray[i].name+" - tot: "+totalTime);
 			}else{
 				end.setMilliseconds(end.getMilliseconds()+totalTime);
+				//alert(itemArray[i].name+" - tot: "+totalTime);
 			}
 			timeline.changeItem(i,{
 			'start' : start,
-			'content' : timeLineItem.content,
+			'content' : itemArray[i].name,
 			'end' : end
 			})
-			//alert(timeLineItem.end.getMilliseconds());
 			start = new Date (end.getTime());
 			end = new Date (start.getTime());
 			timeline.setSelection([{row: i}]);
@@ -606,7 +642,6 @@ function organizeTimeLine(){
 			}else{
 				start.setMilliseconds(end.getMilliseconds());
 			}
-			
 			timeline.changeItem(i,{
 			'start' : start,
 			'content' : timeLineItem.content
