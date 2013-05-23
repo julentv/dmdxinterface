@@ -108,48 +108,57 @@ function drawVisualization() {
 
 	// Draw our timeline with the created data and options
 	timeline.draw(data, options);
-	
+
+google.visualization.events.addListener(timeline, 'add', newItem);	
 google.visualization.events.addListener(timeline, 'select', onselect);
 google.visualization.events.addListener(timeline, 'delete', deleteItem);
 google.visualization.events.addListener(timeline, 'change', onItemDrag);
 	
 }
-
+function cancelAutoAddition(){
+	
+}
 /**
  * function to add a new item
  */
-function newItem(itemToAdd){   
-	//add the item to the array of items
+function newItem(itemToAdd){
 	if(itemToAdd==null){
-		itemArray[numberOfItems]= new Item(numberOfItems+1, "");
+		//if no called from the new item button
+		timeline.cancelAdd();
 	}else{
-		itemArray[numberOfItems]=itemToAdd;
+		//add the item to the array of items
+		if(itemToAdd==-1){
+			itemArray[numberOfItems]= new Item(numberOfItems+1, "");
+		}else{
+			itemArray[numberOfItems]=itemToAdd;
+		}
+		
+		
+		//add the item to the timeline
+		var lastItem = timeline.getItem(numberOfItems-1);
+		if(lastItem.end!=null){
+			//the previous item is a normal item
+			var start = new Date (lastItem.end.getTime());
+			var end = new Date (lastItem.end.getTime());
+			start.setMilliseconds(start.getMilliseconds());
+			end.setMilliseconds(end.getMilliseconds()+1);
+		}
+		else{
+			//the previous item is a message item
+			var start = new Date (lastItem.start.getTime());
+			var end = new Date (lastItem.start.getTime());
+			start.setMilliseconds(start.getMilliseconds()+1);
+			end.setMilliseconds(end.getMilliseconds()+2);
+		}
+	
+		timeline.addItem({
+			'start' : start,
+			'content' : itemArray[numberOfItems].name,
+			'end' : end
+		}); 
+		numberOfItems = numberOfItems + 1;
 	}
 	
-	
-	//add the item to the timeline
-	var lastItem = timeline.getItem(numberOfItems-1);
-	if(lastItem.end!=null){
-		//the previous item is a normal item
-		var start = new Date (lastItem.end.getTime());
-		var end = new Date (lastItem.end.getTime());
-		start.setMilliseconds(start.getMilliseconds());
-		end.setMilliseconds(end.getMilliseconds()+1);
-	}
-	else{
-		//the previous item is a message item
-		var start = new Date (lastItem.start.getTime());
-		var end = new Date (lastItem.start.getTime());
-		start.setMilliseconds(start.getMilliseconds()+1);
-		end.setMilliseconds(end.getMilliseconds()+2);
-	}
-
-	timeline.addItem({
-		'start' : start,
-		'content' : itemArray[numberOfItems].name,
-		'end' : end
-	}); 
-	numberOfItems = numberOfItems + 1;
 }
 
 /**
@@ -218,10 +227,10 @@ function onItemDrag(){
 			if(counter>=itemStartData){
 				
 				found=true;
-				itemArray.splice(itemNumber, 1);
+				
 				if(i<itemNumber){
 					//move to the left
-					
+					itemArray.splice(itemNumber, 1);
 					itemNumber=i+1;
 					itemArray.splice(itemNumber, 0,movedItem);
 					timeline.setSelection([{row:itemNumber}]);
@@ -229,15 +238,17 @@ function onItemDrag(){
 					organizeTimeLine();
 				}else if(i>itemNumber){
 					//move to the right
+					itemArray.splice(itemNumber, 1);
 					itemNumber=i;
 					itemArray.splice(itemNumber, 0,movedItem);
 					timeline.setSelection([{row:itemNumber}]);
 					onselect();
 					organizeTimeLine();
 				}else{
+					//if i==itemNumber do nothing
 					timeline.cancelChange();
 				}
-				//if i==itemNumber do not  do anything
+				
 			}
 		}
 		//move to the right the maximum

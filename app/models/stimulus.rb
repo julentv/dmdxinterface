@@ -69,7 +69,28 @@ class Stimulus < ActiveRecord::Base
   
   #convert the stimulus to string
   def to_s
-    stimulusText=' "Stimulus'+self.order.to_s+'"'
+    stimulusText='"'+self.text+'"'
+    
+    if self.stimulus_type=="wav"
+        #is sound
+        if self.synchronise_with_next==true
+          stimulusText='<svp start> '+stimulusText
+        end
+      stimulusText='<'+self.stimulus_type+'> '+stimulusText
+      
+    else 
+      if self.stimulus_type=="bmp"||self.stimulus_type=="jpg"
+        #is image
+        stimulusText=' <'+self.stimulus_type+' '+self.top_possition.to_s+', '+self.left_possition.to_s+'> '+stimulusText        
+      else
+        #is text
+        #add line
+        stimulusText="<Line "+self.present_in_line.to_s+"> "+stimulusText
+      end
+      #add the duration of the stimulus (NOT FOR AUDIO STIMULUS?????)
+      stimulusText=stimulusText+' <% '+self.duration.to_s+'>'
+    end
+    
     
     
     #add symbol "/" at the end of the stimulus or not
