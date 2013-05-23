@@ -45,7 +45,10 @@ class Item < ActiveRecord::Base
         end
         item_string=item_string+self.stimulus[i].to_s
       end
-      
+      if item_string[item_string.length-1]==","
+        #erase the last coma if exists
+        item_string=item_string[0,item_string.length-1]
+      end
       #always end with a ";"
     else
       item_string='0 '+'"'+self.text+'"'
@@ -58,6 +61,7 @@ class Item < ActiveRecord::Base
     end
     item_string
   end
+  
   def create_from_json(json_ob)
     self.item_number=json_ob["id"]
     self.expected_response=json_ob["expectedResponse"]
