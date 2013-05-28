@@ -134,15 +134,14 @@ function newItem(itemToAdd){
 		timeline.cancelAdd();
 	}else{
 		//add the item to the array of items
+		var lastItem = timeline.getItem(calculateLastItem());
 		if(itemToAdd==-1){
-			itemArray[numberOfItems]= new Item(numberOfItems+1, "");
+			itemArray.push(new Item(numberOfItems+1, ""));
 		}else{
-			itemArray[numberOfItems]=itemToAdd;
+			itemArray.push(itemToAdd);
 		}
 		
-		
 		//add the item to the timeline
-		var lastItem = timeline.getItem(numberOfItems-1);
 		if(lastItem.end!=null){
 			//the previous item is a normal item
 			var start = new Date (lastItem.end.getTime());
@@ -173,14 +172,14 @@ function newItem(itemToAdd){
  */
 function newMessageItem(itemToAdd){
 	//add the item to the array of items
+	var lastItem = timeline.getItem(calculateLastItem());
 	if(itemToAdd==null){
-		itemArray[numberOfItems]= new Item(0, "Message");
+		itemArray.push(new Item(0, "Message"));
 	}else{
-		itemArray[numberOfItems]=itemToAdd;
+		itemArray.push(itemToAdd);
 	}
 	
 	//add the item to the timeline
-	var lastItem = timeline.getItem(numberOfItems-1);
 	if(lastItem.end!=null){
 		var start = new Date (lastItem.end.getTime());
 		start.setMilliseconds(start.getMilliseconds()+1);
@@ -199,13 +198,41 @@ function newMessageItem(itemToAdd){
 }
 
 /**
+ * function that returns the position of the last item of the timeline
+ * -excludes the loops-
+ */
+function calculateLastItem(){
+	var position=0;
+	for(var i=timeline.getData().length-1;i>0&&position==0;i--){
+		if(timeline.getData()[i].className!="loopBox"){
+			position=i;
+		}
+	}
+	console.log("The las item is: "+position);
+	return position;
+}
+
+/**
  * Function to add new loops
  */
 function addLoop(){
-	var newloop= new Loop(itemArray[0]);
+	//the first item of the loop
+	var firstItemNumber=0;
+	var newloop= new Loop(itemArray[firstItemNumber]);
 	loopArray.push(newloop);
 	var dataContent="<img src='/assets/icons/loop.png' style='width:32px; height:32px; vertical-align: middle'> Loop";
 	
+	var firstItem = timeline.getItem(firstItemNumber);
+	var start = new Date (firstItem.start.getTime());
+	var end = new Date (firstItem.start.getTime());
+	start.setMilliseconds(start.getMilliseconds());
+	end.setMilliseconds(end.getMilliseconds()+1);
+	timeline.addItem({
+		'start' : start,
+		'content' : dataContent,
+		'end' : end,
+		'className':'loopBox'
+	}); 
 }
 
 /**
@@ -324,37 +351,60 @@ function onselect(){
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
-		var selItem=itemArray[itemNumber];
-		noRandomize.removeAttribute("disabled");
-		noRandomize.checked=selItem.noRandomise;
-		itemSaveButton.removeAttribute("disabled");
-		duplicateItemButton.removeAttribute("disabled");
-		deleteItemButton.removeAttribute("disabled");
-		if(selItem.text!=""){
-			//message field
-			outputNameField.innerHTML = selItem.name;
-			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
-			outputExpectedField.value='^';
-			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: <input id='message-input' type='text' size='50' value='"+selItem.text+"'></p>";
-			outputStimulusList.innerHTML="";
-			timerSelect.setAttribute('disabled');
-			outputExpectedField.setAttribute('disabled');
-			generateTimerSelect();
+		var numberOfLoops=calculateNumberOfLoopsBefore(itemNumber);
+		if(timeline.getData()[itemNumber].className=="loopBox"){
+			//is a loop
+			//console.log();
+			
 		}else{
-			//normal field
-			outputNameField.innerHTML = selItem.name;
-			outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
-			outputExpectedField.value=selItem.expectedResponse;
-			outputExpectedField.removeAttribute("disabled");
-			timerSelect.removeAttribute("disabled");
-			stimulusListGeneration();
-			generateTimerSelect();
-			
-			
+			//not a loop
+			//count the number of loops between 0 and row and deduct from itemNumber to calculate the selected item
+			itemNumber=itemNumber-numberOfLoops
+			var selItem=itemArray[itemNumber];
+			noRandomize.removeAttribute("disabled");
+			noRandomize.checked=selItem.noRandomise;
+			itemSaveButton.removeAttribute("disabled");
+			duplicateItemButton.removeAttribute("disabled");
+			deleteItemButton.removeAttribute("disabled");
+			if(selItem.text!=""){
+				//message field
+				outputNameField.innerHTML = selItem.name;
+				outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
+				outputExpectedField.value='^';
+				stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: <input id='message-input' type='text' size='50' value='"+selItem.text+"'></p>";
+				outputStimulusList.innerHTML="";
+				timerSelect.setAttribute('disabled');
+				outputExpectedField.setAttribute('disabled');
+				//generateTimerSelect();
+			}else{
+				//normal field
+				outputNameField.innerHTML = selItem.name;
+				outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
+				outputExpectedField.value=selItem.expectedResponse;
+				outputExpectedField.removeAttribute("disabled");
+				timerSelect.removeAttribute("disabled");
+				stimulusListGeneration();
+				generateTimerSelect();
+				
+			}
 		}
+		
 	}
 }
-
+/**
+ * Calculates the number of loop items in the timeline before the finalNumber attribute
+ * The method doesn't count the item in the position == finalNumber
+ */
+function calculateNumberOfLoopsBefore(finalNumber){
+	var numberOfLoops=0;
+	for(var i=0;i<finalNumber;i++){
+		if(timeline.getData()[i].className=="loopBox"){
+			numberOfLoops=numberOfLoops+1;
+		}
+	}
+	console.log("The number of loops until the position: "+finalNumber+" is"+numberOfLoops);
+	return numberOfLoops;
+}
 /**
  * Generetes the options of the select of the attribute "Start timer in stimulus:"
  */
