@@ -138,3 +138,11 @@ h3{
  /*change this field by the duration unit ?????*/
 	visibility:hidden;
 }
+
+/* TimeLine styles */
+div.loopBox {
+	background-color:rgba(0,255,0,0.1);
+	border-color: green;
+	height: 40px;
+	overflow: hidden;
+}

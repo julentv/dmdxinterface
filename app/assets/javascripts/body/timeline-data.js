@@ -56,6 +56,11 @@ function Stimulus(text, type){
 		return (duplicatedStimulus);
 	}
 }
+function Loop (firstItem){
+	this.firstItem=firstItem;
+	this.numberOfItems=0;
+	this.numberOfIterations=0;
+}
 
 //start of the timeline methods
 google.load("visualization", "1");
@@ -68,6 +73,7 @@ var timeline;
 var data;
 var numberOfItems=1;
 var itemArray = new Array ();
+var loopArray = new Array ();
 var itemNumber=-1;
 var selectedStimulusNumber=-1;
 
@@ -80,17 +86,20 @@ function drawVisualization() {
 	itemArray[0]= new Item("1", "");
     
 	// Create and populate a data table.
-	data = new google.visualization.DataTable();
-	data.addColumn('datetime', 'start');
-	data.addColumn('datetime', 'end');
-	data.addColumn('string', 'content');
+	// data = new google.visualization.DataTable();
+	// data.addColumn('datetime', 'start');
+	// data.addColumn('datetime', 'end');
+	// data.addColumn('string', 'content');
 
 	var t = new Date(2010, 7, 23, 16, 30, 15);
 	var te = new Date(2010, 7, 23, 16, 30, 17); 
 
-    data.addRows([
-      [new Date(t.getTime()+0), new Date(t.getTime()+1), itemArray[0].name],
-    ]);
+    // data.addRows([
+      // [new Date(t.getTime()+0), new Date(t.getTime()+1), itemArray[0].name],
+    // ]);
+    
+    data = [{ 'start':new Date(t.getTime()+0), 'end':new Date(t.getTime()+1),'content':itemArray[0].name}];
+    
 
 	// specify options
 	var options = {
@@ -100,7 +109,8 @@ function drawVisualization() {
 		style : "box",
 		intervalMax : 100,
 		min : t,
-		max : te
+		max : te,
+		cluster: true
 	};
 
 	// Instantiate our timeline object.
@@ -113,9 +123,6 @@ google.visualization.events.addListener(timeline, 'add', newItem);
 google.visualization.events.addListener(timeline, 'select', onselect);
 google.visualization.events.addListener(timeline, 'delete', deleteItem);
 google.visualization.events.addListener(timeline, 'change', onItemDrag);
-	
-}
-function cancelAutoAddition(){
 	
 }
 /**
@@ -190,6 +197,17 @@ function newMessageItem(itemToAdd){
 	}); 
 	numberOfItems = numberOfItems + 1;
 }
+
+/**
+ * Function to add new loops
+ */
+function addLoop(){
+	var newloop= new Loop(itemArray[0]);
+	loopArray.push(newloop);
+	var dataContent="<img src='/assets/icons/loop.png' style='width:32px; height:32px; vertical-align: middle'> Loop";
+	
+}
+
 /**
  * This function is called when an item is moved (draged) on the timeline
  * manages the order of the item after been draged.
@@ -625,7 +643,7 @@ function organizeTimeLine(){
 	for(var i=0, ii=itemArray.length;i<ii;i++){
 		var timeLineItem = timeline.getItem(i);
 		var totalTime=0;
-		if(timeLineItem.end!=null){
+		if(itemArray[i].text==""){
 			
 			var stimulusArray=itemArray[i].stimulusArray;
 			for(j=0, jj=stimulusArray.length;j<jj;j++){
@@ -655,7 +673,8 @@ function organizeTimeLine(){
 			}
 			timeline.changeItem(i,{
 			'start' : start,
-			'content' : timeLineItem.content
+			'content' : "Item 0",
+			'end' : null
 			})
 			start = new Date (start.getTime());
 			start.setMilliseconds(start.getMilliseconds()+1);

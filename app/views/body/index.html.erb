@@ -8,10 +8,13 @@
 	
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<%= javascript_include_tag "timeline.js" %>
-	<%= stylesheet_link_tag "bodystyle" %>
-	<%= stylesheet_link_tag "timeline" %>
+	
 	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
 	<%= javascript_include_tag "body/timeline-data.js" %>
+	<%= stylesheet_link_tag "timeline" %>
+	<%= stylesheet_link_tag "bodystyle" %>
+	
+	
 </head>
 
 <body>
@@ -28,7 +31,7 @@
 				<ul class="not-icon-ul">
 					<li>ID: <span id="item-id-field">-</span></li>
 					<li>Expected response: 
-						<select id="expected-response-field">
+						<select disabled id="expected-response-field">
 						  <option value="+">Positive response</option>
 						  <option value="-">Negative response</option>
 						  <option value="^">No response</option>
@@ -37,7 +40,7 @@
 					</li>
 					<li>No randomise: <input id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></li>
 					<li>Start timer in stimulus: 
-						<select id="timer-selection-field">
+						<select disabled id="timer-selection-field">
 						  <option value='0'>1</option>
 						</select>
 					</li>
@@ -99,6 +102,7 @@
 		<ul id="control-panel-list" class="not-icon-ul">
 		<li onmouseover="this.style.cursor='pointer'" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="addLoop();"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %>New loop</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow();"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
 		<% if @conf_file!=nil %>
 			<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='settings?id=<%= @conf_file.id %>'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
