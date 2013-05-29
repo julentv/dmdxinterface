@@ -59,7 +59,8 @@ function Stimulus(text, type){
 function Loop (firstItem){
 	this.firstItem=firstItem;
 	this.numberOfItems=0;
-	this.numberOfIterations=0;
+	this.numberOfIterations=1;
+	//not possible to duplicate
 }
 
 //start of the timeline methods
@@ -76,6 +77,7 @@ var itemArray = new Array ();
 var loopArray = new Array ();
 var itemNumber=-1;
 var selectedStimulusNumber=-1;
+var selectedLoopNumber=-1;
 
 /**
  *  Called when the Visualization API is loaded.
@@ -323,8 +325,12 @@ function onselect(){
 	var deleteItemButton = document.getElementById("item-delete-button");
 	
 	var outputNameField = document.getElementById("item-name-field");
-	var outputIdField = document.getElementById("item-id-field");
-	var outputExpectedField = document.getElementById("expected-response-field");
+	//var outputIdField = document.getElementById("item-id-field");
+	var outputIdField = document.getElementById("id-list-line");
+	
+	//var outputExpectedField = document.getElementById("expected-response-field");
+	var outputExpectedField = document.getElementById("expected-response-list-line");
+	
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
 	var outputStimulusList = document.getElementById("stimulus-order-list");
 	var noRandomize = document.getElementById("no_randomise");
@@ -334,13 +340,13 @@ function onselect(){
 		
 		//no item selected
 		itemNumber=-1;
+		selectedLoopNumber=-1;
 		//set the fields
 		itemSaveButton.setAttribute('disabled');
 		duplicateItemButton.setAttribute('disabled');
 		outputNameField.innerHTML = "No item selected";
-		outputIdField.innerHTML = "-";
-		outputExpectedField.setAttribute('disabled');
-		outputExpectedField.value="+";
+		outputIdField.innerHTML = "ID: <span id='item-id-field'>-</span>";
+		outputExpectedField.innerHTML="Expected response: <select disabled id='expected-response-field'><option value='+'>Positive response</option><option value='-'>Negative response</option><option value='^'>No response</option><option value='='>Any response</option></select>";
 		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 		outputStimulusList.innerHTML="";
 		noRandomize.checked=false;
@@ -354,34 +360,46 @@ function onselect(){
 		var numberOfLoops=calculateNumberOfLoopsBefore(itemNumber);
 		if(timeline.getData()[itemNumber].className=="loopBox"){
 			//is a loop
-			//console.log();
-			
+			console.log("inside loop");
+			selectedLoopNumber=numberOfLoops;
+			itemNumber=-1;
+			var selectedLoop=loopArray[selectedLoopNumber];
+			//fields setting
+			outputNameField.innerHTML="Loop";
+			duplicateItemButton.setAttribute('disabled');
+			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='text' size='10' value='"+selectedLoop.numberOfItems+"'>";
+			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='quantity' min='1' value='"+selectedLoop.numberOfIterations+"'>";
+			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
+			outputStimulusList.innerHTML="";
+			noRandomize.checked=false;
+			noRandomize.setAttribute('disabled');
+			timerSelect.setAttribute('disabled');
 		}else{
 			//not a loop
 			//count the number of loops between 0 and row and deduct from itemNumber to calculate the selected item
-			itemNumber=itemNumber-numberOfLoops
+			itemNumber=itemNumber-numberOfLoops;
+			selectedLoopNumber=-1;
 			var selItem=itemArray[itemNumber];
 			noRandomize.removeAttribute("disabled");
 			noRandomize.checked=selItem.noRandomise;
 			itemSaveButton.removeAttribute("disabled");
 			duplicateItemButton.removeAttribute("disabled");
 			deleteItemButton.removeAttribute("disabled");
+			outputNameField.innerHTML = selItem.name;
+			outputIdField.innerHTML = "ID: "+"<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
+			
 			if(selItem.text!=""){
 				//message field
-				outputNameField.innerHTML = selItem.name;
-				outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 				outputExpectedField.value='^';
 				stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Text: <input id='message-input' type='text' size='50' value='"+selItem.text+"'></p>";
 				outputStimulusList.innerHTML="";
 				timerSelect.setAttribute('disabled');
-				outputExpectedField.setAttribute('disabled');
+				outputExpectedField.innerHTML="Expected response: <select disabled id='expected-response-field'><option value='+'>Positive response</option><option value='-'>Negative response</option><option value='^'>No response</option><option value='='>Any response</option></select>";
 				//generateTimerSelect();
 			}else{
 				//normal field
-				outputNameField.innerHTML = selItem.name;
-				outputIdField.innerHTML = "<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
-				outputExpectedField.value=selItem.expectedResponse;
-				outputExpectedField.removeAttribute("disabled");
+				outputExpectedField.innerHTML="Expected response: <select id='expected-response-field'><option value='+'>Positive response</option><option value='-'>Negative response</option><option value='^'>No response</option><option value='='>Any response</option></select>";
+				document.getElementById("expected-response-field").value=selItem.expectedResponse;
 				timerSelect.removeAttribute("disabled");
 				stimulusListGeneration();
 				generateTimerSelect();
