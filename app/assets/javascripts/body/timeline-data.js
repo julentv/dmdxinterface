@@ -242,72 +242,88 @@ function addLoop(){
  * manages the order of the item after been draged.
  */
 function onItemDrag(){
-	var itemNumber=timeline.getSelection()[0].row;
-	var movedItem=itemArray[itemNumber]
-	var itemStartData = timeline.getItem(itemNumber).start.getMilliseconds();
-	var found=false;
-	var counter=0;
-	if(timeline.getItem(itemNumber).start<=timeline.options.min.getTime()){
-		//moving to the left the maximum
-		itemArray.splice(itemNumber, 1);
-		itemNumber=0;
-		itemArray.splice(itemNumber, 0,movedItem);
-		timeline.setSelection([{row:itemNumber}]);
-		onselect();
-		organizeTimeLine();
+	var selectedRow=timeline.getSelection()[0].row;
+	var itemNumber=selectedRow;
+	var numberOfLoops=calculateNumberOfLoopsBefore(itemNumber);
+	if(timeline.getData()[itemNumber].className=="loopBox"){
+		//is a loop
+		itemNumber=-1;
+		//calculate the item that is the first of the loop
+		
 	}else{
-		//normal movements
-		for(var i=0, ii=itemArray.length;i<ii&&!found;i++){
-			if(itemNumber!=i){
-				counter=counter+1;
-			}
-			var counter2=0;
-			for(j=0,jj=itemArray[i].stimulusArray.length;j<jj;j++){
-				counter2=counter2+parseInt(itemArray[i].stimulusArray[j].duration);
-			}		
-			if(counter2>0){
-				counter2=counter2-1;
-			}
-			
-			itemStartData=itemStartData-parseInt(counter2);
-			
-			if(counter>=itemStartData){
-				
-				found=true;
-				
-				if(i<itemNumber){
-					//move to the left
-					itemArray.splice(itemNumber, 1);
-					itemNumber=i+1;
-					itemArray.splice(itemNumber, 0,movedItem);
-					timeline.setSelection([{row:itemNumber}]);
-					onselect();
-					organizeTimeLine();
-				}else if(i>itemNumber){
-					//move to the right
-					itemArray.splice(itemNumber, 1);
-					itemNumber=i;
-					itemArray.splice(itemNumber, 0,movedItem);
-					timeline.setSelection([{row:itemNumber}]);
-					onselect();
-					organizeTimeLine();
-				}else{
-					//if i==itemNumber do nothing
-					timeline.cancelChange();
-				}
-				
-			}
-		}
-		//move to the right the maximum
-		if(counter<itemStartData){
+		//not a loop
+		itemNumber=itemNumber-numberOfLoops;
+		var movedItem=itemArray[itemNumber]
+		var itemStartData = timeline.getItem(selectedRow).start.getMilliseconds();
+		var found=false;
+		var counter=0;
+		if(timeline.getItem(selectedRow).start<=timeline.options.min.getTime()){
+			//moving to the left the maximum
 			itemArray.splice(itemNumber, 1);
-			itemNumber=itemArray.length;
+			itemNumber=0;
 			itemArray.splice(itemNumber, 0,movedItem);
 			timeline.setSelection([{row:itemNumber}]);
 			onselect();
 			organizeTimeLine();
+		}else{
+			//normal movements
+			for(var i=0, ii=itemArray.length;i<ii&&!found;i++){
+				if(itemNumber!=i){
+					//not to count the self item (the one been moved)
+					counter=counter+1;
+				}
+				
+				//contains the duration of the item
+				var counter2=0;
+				for(j=0,jj=itemArray[i].stimulusArray.length;j<jj;j++){
+					counter2=counter2+parseInt(itemArray[i].stimulusArray[j].duration);
+				}		
+				if(counter2>0){
+					counter2=counter2-1;
+				}
+				
+				//obtain the new possition of the item
+				itemStartData=itemStartData-parseInt(counter2);
+				
+				if(counter>=itemStartData){
+					
+					found=true;
+					
+					if(i<itemNumber){
+						//move to the left
+						itemArray.splice(itemNumber, 1);
+						itemNumber=i+1;
+						itemArray.splice(itemNumber, 0,movedItem);
+						timeline.setSelection([{row:itemNumber}]);
+						onselect();
+						organizeTimeLine();
+					}else if(i>itemNumber){
+						//move to the right
+						itemArray.splice(itemNumber, 1);
+						itemNumber=i;
+						itemArray.splice(itemNumber, 0,movedItem);
+						timeline.setSelection([{row:itemNumber}]);
+						onselect();
+						organizeTimeLine();
+					}else{
+						//if i==itemNumber do nothing
+						timeline.cancelChange();
+					}
+					
+				}
+			}
+			//move to the right the maximum
+			if(counter<itemStartData){
+				itemArray.splice(itemNumber, 1);
+				itemNumber=itemArray.length;
+				itemArray.splice(itemNumber, 0,movedItem);
+				timeline.setSelection([{row:itemNumber}]);
+				onselect();
+				organizeTimeLine();
+			}
 		}
 	}
+	
 	
 }
 
@@ -526,6 +542,9 @@ function saveItem(){
 			generateTimerSelect();
 		}
 		
+	}else if(selectedLoopNumber>=0){
+		//is a loop       -----continue here!
+		
 	}
 }
 
@@ -705,50 +724,60 @@ function organizeTimeLine(){
 	
 	var start = new Date(timeline.options.min.getTime());
 	var end = new Date (timeline.options.min.getTime());
+	//is a loop?
+	//timeline.getData()[itemNumber].className=="loopBox"
 	
-	
-	var lastItem = timeline.getItem(numberOfItems-1);
+	//var lastItem = timeline.getItem(numberOfItems-1);
 	for(var i=0, ii=itemArray.length;i<ii;i++){
-		var timeLineItem = timeline.getItem(i);
-		var totalTime=0;
-		if(itemArray[i].text==""){
+		if(timeline.getData()[i].className=="loopBox"){
+			//if is a loop, erase it
+			timeline.deleteItem(i);
+			i=i-1;
 			
-			var stimulusArray=itemArray[i].stimulusArray;
-			for(j=0, jj=stimulusArray.length;j<jj;j++){
-				totalTime=totalTime+parseInt(stimulusArray[j].duration);
-			}
-			if(totalTime<1){
-				end.setMilliseconds(end.getMilliseconds()+1);
-				//alert(itemArray[i].name+" - tot: "+totalTime);
-			}else{
-				end.setMilliseconds(end.getMilliseconds()+totalTime);
-				//alert(itemArray[i].name+" - tot: "+totalTime);
-			}
-			timeline.changeItem(i,{
-			'start' : start,
-			'content' : itemArray[i].name,
-			'end' : end
-			})
-			start = new Date (end.getTime());
-			end = new Date (start.getTime());
-			timeline.setSelection([{row: i}]);
 		}else{
-			//message item
-			if(i>0 && timeline.getItem(i-1).end!=null){
-				start.setMilliseconds(end.getMilliseconds()+1);
+			//not a loop, act normally
+			var timeLineItem = timeline.getItem(i);
+			var totalTime=0;
+			if(itemArray[i].text==""){
+				
+				var stimulusArray=itemArray[i].stimulusArray;
+				for(j=0, jj=stimulusArray.length;j<jj;j++){
+					totalTime=totalTime+parseInt(stimulusArray[j].duration);
+				}
+				if(totalTime<1){
+					end.setMilliseconds(end.getMilliseconds()+1);
+					//alert(itemArray[i].name+" - tot: "+totalTime);
+				}else{
+					end.setMilliseconds(end.getMilliseconds()+totalTime);
+					//alert(itemArray[i].name+" - tot: "+totalTime);
+				}
+				timeline.changeItem(i,{
+				'start' : start,
+				'content' : itemArray[i].name,
+				'end' : end
+				})
+				start = new Date (end.getTime());
+				end = new Date (start.getTime());
+				timeline.setSelection([{row: i}]);
 			}else{
-				start.setMilliseconds(end.getMilliseconds());
+				//message item
+				if(i>0 && timeline.getItem(i-1).end!=null){
+					start.setMilliseconds(end.getMilliseconds()+1);
+				}else{
+					start.setMilliseconds(end.getMilliseconds());
+				}
+				timeline.changeItem(i,{
+				'start' : start,
+				'content' : "Item 0",
+				'end' : null
+				})
+				start = new Date (start.getTime());
+				start.setMilliseconds(start.getMilliseconds()+1);
+				end = new Date (start.getTime());
+				timeline.setSelection([{row: i}]);
 			}
-			timeline.changeItem(i,{
-			'start' : start,
-			'content' : "Item 0",
-			'end' : null
-			})
-			start = new Date (start.getTime());
-			start.setMilliseconds(start.getMilliseconds()+1);
-			end = new Date (start.getTime());
-			timeline.setSelection([{row: i}]);
 		}
+		
 		
 	}
 	timeline.setSelection([{row:itemNumber}]);
