@@ -341,10 +341,7 @@ function onselect(){
 	var deleteItemButton = document.getElementById("item-delete-button");
 	
 	var outputNameField = document.getElementById("item-name-field");
-	//var outputIdField = document.getElementById("item-id-field");
 	var outputIdField = document.getElementById("id-list-line");
-	
-	//var outputExpectedField = document.getElementById("expected-response-field");
 	var outputExpectedField = document.getElementById("expected-response-list-line");
 	
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
@@ -374,22 +371,24 @@ function onselect(){
 		//item selected
 		itemNumber=selection[0].row;
 		var numberOfLoops=calculateNumberOfLoopsBefore(itemNumber);
+		itemSaveButton.removeAttribute("disabled");
 		if(timeline.getData()[itemNumber].className=="loopBox"){
 			//is a loop
-			console.log("inside loop");
 			selectedLoopNumber=numberOfLoops;
+			console.log("loop position-->"+selectedLoopNumber);
 			itemNumber=-1;
 			var selectedLoop=loopArray[selectedLoopNumber];
 			//fields setting
 			outputNameField.innerHTML="Loop";
 			duplicateItemButton.setAttribute('disabled');
-			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='text' size='10' value='"+selectedLoop.numberOfItems+"'>";
+			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='number' min='0' value='"+selectedLoop.numberOfItems+"'>";
 			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='quantity' min='1' value='"+selectedLoop.numberOfIterations+"'>";
 			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 			outputStimulusList.innerHTML="";
 			noRandomize.checked=false;
 			noRandomize.setAttribute('disabled');
 			timerSelect.setAttribute('disabled');
+			deleteItemButton.setAttribute('disabled');
 		}else{
 			//not a loop
 			//count the number of loops between 0 and row and deduct from itemNumber to calculate the selected item
@@ -398,7 +397,6 @@ function onselect(){
 			var selItem=itemArray[itemNumber];
 			noRandomize.removeAttribute("disabled");
 			noRandomize.checked=selItem.noRandomise;
-			itemSaveButton.removeAttribute("disabled");
 			duplicateItemButton.removeAttribute("disabled");
 			deleteItemButton.removeAttribute("disabled");
 			outputNameField.innerHTML = selItem.name;
@@ -545,6 +543,11 @@ function saveItem(){
 	}else if(selectedLoopNumber>=0){
 		//is a loop       -----continue here!
 		
+		var selectedLoop=loopArray[selectedLoopNumber];
+		//var seloop=loopArray[selectedLoopNumber];
+		console.log(document.getElementById("id-input").value);
+		selectedLoop.numberOfItems=document.getElementById("id-input").value;
+		selectedLoop.numberOfIterations=document.getElementById("loop-number-iterations").value;
 	}
 }
 
