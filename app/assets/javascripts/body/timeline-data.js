@@ -60,7 +60,7 @@ function Stimulus(text, type){
 function Loop (firstItem){
 	//the order of the first item in the loop
 	this.firstItem=firstItem;
-	this.numberOfItems=0;
+	this.numberOfItems=1;
 	this.numberOfIterations=1;
 	//not possible to duplicate
 }
@@ -114,7 +114,8 @@ function drawVisualization() {
 		intervalMax : 100,
 		min : t,
 		max : te,
-		cluster: true
+		cluster: true,
+		eventMargin: 5
 	};
 
 	// Instantiate our timeline object.
@@ -212,7 +213,6 @@ function calculateLastItem(){
 			position=i;
 		}
 	}
-	console.log("The las item is: "+position);
 	return position;
 }
 
@@ -256,18 +256,16 @@ function onItemDrag(){
 		
 		for(var i=0, ii=timeline.getData().length;i<ii&&startItemFound==-1;i++){
 			//look for the item in which the loop starts
-			console.log("item start data-->"+itemStartData+"__and__"+timeline.getItem(i).start.getMilliseconds());
 			if(itemStartData<=timeline.getItem(i).start.getMilliseconds()&&timeline.getData()[i].className!="loopBox"){
 				startItemFound=i;
-				console.log("inside-->"+i);
 			}
 		}
 		if(startItemFound==-1){
 			//the item has not been found, so is bigger than the bigest item
 			startItemFound=itemArray.length-1;
-			
 		}
-		console.log("item start-->"+startItemFound);
+		loopArray[numberOfLoops].firstItem=startItemFound;
+		organizeTimeLine();
 	}else{
 		//not a loop
 		itemNumber=itemNumber-numberOfLoops;
@@ -371,8 +369,8 @@ function onselect(){
 	
 	
 	if(selection==""){
-		
 		//no item selected
+		
 		itemNumber=-1;
 		selectedLoopNumber=-1;
 		//set the fields
@@ -384,10 +382,9 @@ function onselect(){
 		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 		outputStimulusList.innerHTML="";
 		deleteItemButton.setAttribute('disabled');
-		generateTimerSelect();
 		noRandomizeLine.innerHTML="No randomise: <input id='no_randomise' type='checkbox' name='no_randomise' disabled value='true'>";
 		startTimerLine.innerHTML="Start timer in stimulus:<select disabled id='timer-selection-field'><option value='0'>1</option></select>";
-		
+		generateTimerSelect();
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
@@ -396,13 +393,12 @@ function onselect(){
 		if(timeline.getData()[itemNumber].className=="loopBox"){
 			//is a loop
 			selectedLoopNumber=numberOfLoops;
-			console.log("loop position-->"+selectedLoopNumber);
 			itemNumber=-1;
 			var selectedLoop=loopArray[selectedLoopNumber];
 			//fields setting
 			outputNameField.innerHTML="Loop";
 			duplicateItemButton.setAttribute('disabled');
-			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='number' min='0' value='"+selectedLoop.numberOfItems+"'>";
+			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='number' min='1' value='"+selectedLoop.numberOfItems+"'>";
 			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='first-item-possition' min='1' value='"+selectedLoop.numberOfIterations+"'>";
 			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 			outputStimulusList.innerHTML="";
@@ -458,7 +454,6 @@ function calculateNumberOfLoopsBefore(finalNumber){
 			numberOfLoops=numberOfLoops+1;
 		}
 	}
-	console.log("The number of loops until the position: "+finalNumber+" is"+numberOfLoops);
 	return numberOfLoops;
 }
 /**
@@ -575,9 +570,12 @@ function saveItem(){
 		var firstpos=document.getElementById("possition-first-item").value-1;
 		if(firstpos<0){
 			selectedLoop.firstItem=0;
-		}else if(firstpos<itemArray.length){
-			selectedLoop.firstItem=itemArray.length;
+		}else if(firstpos>=itemArray.length){
+			selectedLoop.firstItem=itemArray.length-1;
+		}else{
+			selectedLoop.firstItem=firstpos;
 		}
+		organizeTimeLine();
 	}
 }
 
@@ -631,7 +629,6 @@ function showStimulusData(stimulus){
 	var stimulusPannelHeader = document.getElementById("stimulus-pannel-header");
 	var stimulusDurationField = document.getElementById("stimulus-duration-field");
 	var specificFieldsArea = document.getElementById("specific-fields-area");
-	//desde aqui
 	var stimulusLine = document.getElementById("stimulus-present-line");
 	var clearScreen = document.getElementById("clear_screen");
 	var notErase = document.getElementById("not_erase");
@@ -650,7 +647,6 @@ function showStimulusData(stimulus){
 		stimulusDurationField.value="";
 		selectedStimulusNumber=-1;
 		specificFieldsArea.innerHTML="";
-		//desde aqui
 		stimulusLine.setAttribute('disabled');
 	    clearScreen.setAttribute('disabled');
 	    notErase.setAttribute('disabled');
@@ -670,7 +666,6 @@ function showStimulusData(stimulus){
 		stimulusDurationField.removeAttribute("disabled");
 		stimulusDurationField.value=stimulus.duration;
 		stimulusTypeChange(stimulusTypeField);
-		//desde aqui
 		stimulusLine.removeAttribute("disabled");
 	    clearScreen.removeAttribute("disabled");
 	    notErase.removeAttribute("disabled");
@@ -769,7 +764,7 @@ function organizeTimeLine(){
 			
 		}else{
 			//not a loop, act normally
-			var timeLineItem = timeline.getItem(i);
+			//var timeLineItem = timeline.getItem(i);
 			var totalTime=0;
 			if(itemArray[i].text==""){
 				
@@ -810,9 +805,31 @@ function organizeTimeLine(){
 				timeline.setSelection([{row: i}]);
 			}
 		}
-		
-		
 	}
+	//from itemArray.length erase all
+	for(var i=timeline.getData().length-1,ii=itemArray.length;i>=ii;i--){
+		timeline.deleteItem(i);
+	}
+	//add the loops
+	
+	for(var i=0, ii=loopArray.length;i<ii;i++){
+		var dataContent="<img src='/assets/icons/loop.png' style='width:32px; height:32px; vertical-align: middle'> Loop";
+		var firstItemNumber=loopArray[i].firstItem;
+		var lastItemNumber=(parseInt(firstItemNumber)+parseInt(loopArray[i].numberOfItems))-1;
+		if(lastItemNumber>=timeline.getData().length){
+			lastItemNumber=timeline.getData().length-1;
+		}
+		console.log("first item"+firstItemNumber+"lastItem"+lastItemNumber);
+		var start = new Date (timeline.getItem(firstItemNumber).start.getTime());
+		var end = new Date (timeline.getItem(lastItemNumber).end.getTime());
+		timeline.addItem({
+			'start' : start,
+			'content' : dataContent,
+			'end' : end,
+			'className':'loopBox'
+		}); 
+	}
+	//?? this will change ??
 	timeline.setSelection([{row:itemNumber}]);
 }
 
