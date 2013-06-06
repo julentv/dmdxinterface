@@ -56,7 +56,9 @@ function Stimulus(text, type){
 		return (duplicatedStimulus);
 	}
 }
+//loop class
 function Loop (firstItem){
+	//the order of the first item in the loop
 	this.firstItem=firstItem;
 	this.numberOfItems=0;
 	this.numberOfIterations=1;
@@ -220,7 +222,7 @@ function calculateLastItem(){
 function addLoop(){
 	//the first item of the loop
 	var firstItemNumber=0;
-	var newloop= new Loop(itemArray[firstItemNumber]);
+	var newloop= new Loop(firstItemNumber);
 	loopArray.push(newloop);
 	var dataContent="<img src='/assets/icons/loop.png' style='width:32px; height:32px; vertical-align: middle'> Loop";
 	
@@ -346,8 +348,11 @@ function onselect(){
 	
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
 	var outputStimulusList = document.getElementById("stimulus-order-list");
-	var noRandomize = document.getElementById("no_randomise");
-	var timerSelect = document.getElementById("timer-selection-field");
+	
+	
+	var noRandomizeLine = document.getElementById("no-randomise-line");
+	var startTimerLine = document.getElementById("start-timer-stimulus-line");
+	
 	
 	if(selection==""){
 		
@@ -362,11 +367,11 @@ function onselect(){
 		outputExpectedField.innerHTML="Expected response: <select disabled id='expected-response-field'><option value='+'>Positive response</option><option value='-'>Negative response</option><option value='^'>No response</option><option value='='>Any response</option></select>";
 		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 		outputStimulusList.innerHTML="";
-		noRandomize.checked=false;
-		noRandomize.setAttribute('disabled');
-		timerSelect.setAttribute('disabled');
 		deleteItemButton.setAttribute('disabled');
 		generateTimerSelect();
+		noRandomizeLine.innerHTML="No randomise: <input id='no_randomise' type='checkbox' name='no_randomise' disabled value='true'>";
+		startTimerLine.innerHTML="Start timer in stimulus:<select disabled id='timer-selection-field'><option value='0'>1</option></select>";
+		
 	}else{
 		//item selected
 		itemNumber=selection[0].row;
@@ -382,16 +387,19 @@ function onselect(){
 			outputNameField.innerHTML="Loop";
 			duplicateItemButton.setAttribute('disabled');
 			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='number' min='0' value='"+selectedLoop.numberOfItems+"'>";
-			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='quantity' min='1' value='"+selectedLoop.numberOfIterations+"'>";
+			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='first-item-possition' min='1' value='"+selectedLoop.numberOfIterations+"'>";
 			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 			outputStimulusList.innerHTML="";
-			noRandomize.checked=false;
-			noRandomize.setAttribute('disabled');
-			timerSelect.setAttribute('disabled');
 			deleteItemButton.setAttribute('disabled');
+			noRandomizeLine.innerHTML="Possition of the first item: <input id='possition-first-item' type='number' name='first-item-possition' min='1' max='"+itemArray.length+"' value='"+(selectedLoop.firstItem+1)+"'>";
+			startTimerLine.innerHTML="";
 		}else{
 			//not a loop
 			//count the number of loops between 0 and row and deduct from itemNumber to calculate the selected item
+			noRandomizeLine.innerHTML="No randomise: <input id='no_randomise' type='checkbox' name='no_randomise' value='true'>";
+			startTimerLine.innerHTML="Start timer in stimulus:<select disabled id='timer-selection-field'><option value='0'>1</option></select>";
+			var timerSelect = document.getElementById("timer-selection-field");
+			var noRandomize = document.getElementById("no_randomise");
 			itemNumber=itemNumber-numberOfLoops;
 			selectedLoopNumber=-1;
 			var selItem=itemArray[itemNumber];
@@ -541,13 +549,19 @@ function saveItem(){
 		}
 		
 	}else if(selectedLoopNumber>=0){
-		//is a loop       -----continue here!
+		//is a loop
 		
 		var selectedLoop=loopArray[selectedLoopNumber];
 		//var seloop=loopArray[selectedLoopNumber];
-		console.log(document.getElementById("id-input").value);
+		//console.log(document.getElementById("id-input").value);
 		selectedLoop.numberOfItems=document.getElementById("id-input").value;
 		selectedLoop.numberOfIterations=document.getElementById("loop-number-iterations").value;
+		var firstpos=document.getElementById("possition-first-item").value-1;
+		if(firstpos<0){
+			selectedLoop.firstItem=0;
+		}else if(firstpos<itemArray.length){
+			selectedLoop.firstItem=itemArray.length;
+		}
 	}
 }
 
