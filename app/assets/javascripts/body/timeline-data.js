@@ -893,7 +893,7 @@ function previewWindow(){
  * Send the information of the document to the server and receive the created document
  */
 function saveDocument(docId){
-	var jsonText ={id:docId,json_data : JSON.stringify(itemArray)};
+	var jsonText ={id:docId,items:JSON.stringify(itemArray),loops:JSON.stringify(loopArray)};
     //var text={json_data : JSON.stringify({"one": "Singular sensation","two": "Beady little eyes","three": "Little birds pitch by my doorstep"})};
 	//alert(jsonText);
 	$.ajax({

@@ -13,14 +13,16 @@ class BodyController < ApplicationController
   end
   def save
     @conf_file=ConfigurationFile.find(params[:id])
-    string = params[:json_data]
-    parsed = JSON.parse(string)
-    #erase the existing stimulus of the item
+    string = params[:items]
+    loops = JSON.parse(params[:loops])
+    items = JSON.parse(string)
+    #erase the existing items and loops of the configuration file
     @conf_file.items.clear
-    #add the new stimulus
-    @conf_file.create_file_from_json(parsed)
+    @conf_file.loops.clear
+    #add the new items and loops
+    @conf_file.create_file_from_json(items, loops)
     
-    render :text => parsed
+    render :text => items
   end
   def download
     @conf_file=ConfigurationFile.find(params[:id])

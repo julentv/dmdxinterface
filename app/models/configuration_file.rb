@@ -1,6 +1,7 @@
 class ConfigurationFile < ActiveRecord::Base
   has_one :configuration_file_header
   has_many :items, :dependent => :destroy
+  has_many :loops, :dependent => :destroy
   attr_accessible :name, :configuration_file_header, :items
 
   #Contructor
@@ -37,14 +38,23 @@ class ConfigurationFile < ActiveRecord::Base
   end
  
   #create the model objects fron json object
-  def create_file_from_json(json_ob)
+  def create_file_from_json(jsonItems, jsonLoops)
+    #loops
+    j=jsonLoops.size-1
+    for i in 0..j
+      loop=Loop.new()
+      loop.create_from_json(jsonLoops[i])
+      self.loops<<loop
+    end
     
-    j=json_ob.size-1
+    #items
+    j=jsonItems.size-1
     for i in 0..j
       item=Item.new(i)
-      item.create_from_json(json_ob[i])
+      item.create_from_json(jsonItems[i])
       self.items<<item
     end
+    
     
     #create the file
     #@file_name = "public/files/"+self.name+".rtf"

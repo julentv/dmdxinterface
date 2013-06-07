@@ -16,6 +16,8 @@ rails generate migration AddNoRandomizeToItem
 rails generate model stimulus item_id:integer order:integer text:string stimulus_type:string top_possition:float left_possition:float channel:integer duration:integer clear_screen:boolean not_erase_previous:boolean no_randomise:boolean present_in_line:integer is_blank_interval:boolean synchronise_with_next:boolean
 
 rails generate migration RemoveNoRandomizeFromStimulus
-
+--
+#Model loop
+rails generate model loop first_item:integer number_of_items:integer number_of_iterations:integer configuration_file_id:integer
 
 faltan devices y video_mode (arrays de string e integer)

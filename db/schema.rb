@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515104516) do
+ActiveRecord::Schema.define(:version => 20130607084518) do
 
   create_table "configuration_file_headers", :force => true do |t|
     t.boolean  "output_data_to_ascii"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(:version => 20130515104516) do
     t.datetime "updated_at",                  :null => false
     t.string   "text"
     t.boolean  "no_randomise"
+  end
+
+  create_table "loops", :force => true do |t|
+    t.integer  "first_item"
+    t.integer  "number_of_items"
+    t.integer  "number_of_iterations"
+    t.integer  "configuration_file_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "pruebas", :force => true do |t|

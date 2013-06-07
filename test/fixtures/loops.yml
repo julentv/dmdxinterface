@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  first_item: 1
+  number_of_items: 1
+  number_of_iterations: 1
+  configuration_file_id: 1
+
+two:
+  first_item: 1
+  number_of_items: 1
+  number_of_iterations: 1
+  configuration_file_id: 1
