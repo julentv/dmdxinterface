@@ -15,6 +15,7 @@ class ConfigurationFile < ActiveRecord::Base
   def createFile
     @header_string=self.configuration_file_header.to_s
     @bodyString=self.createBodyString
+    @bodyString=@bodyString[0, @bodyString.size-2]
     @file_name = "public/files/"+self.name+".rtf"
     File.open(@file_name, "w") do |f|     
     f.write(@header_string+"\n"+@bodyString)   
@@ -23,8 +24,42 @@ class ConfigurationFile < ActiveRecord::Base
   
   def createBodyString
     bodyString=""
-    self.items.each do |item|
-      bodyString=bodyString+item.to_s+"\n"
+    #two-dimensional arrays that will contain the strings corresponding to the loops.
+    loopsBeforeString=Array.new()
+    loopsAfterString=Array.new()
+    j=self.loops.size-1
+    
+    for i in 0..j
+      newArray=Array.new
+      newArray.push(self.loops[i].first_item)
+      newArray.push(self.loops[i].to_s_before(i))
+      loopsBeforeString.push(newArray)
+      
+      lastItem=loops[i].first_item+loops[i].number_of_items-1
+      if lastItem>=self.items.size
+      lastItem = self.items.size-1
+      end
+      newArray=Array.new
+      newArray.push(lastItem)
+      newArray.push(self.loops[i].to_s_after)
+      loopsAfterString.push(newArray)
+    end
+    
+    loopsBeforeString=loopsBeforeString.sort{|x,y| x[0] <=> y[0]}
+    loopsAfterString=loopsAfterString.sort{|x,y| x[0] <=> y[0]}
+    
+    j=items.size
+    for i in 0..j
+      while !loopsBeforeString.empty?&&loopsBeforeString[0][0]==i do
+        bodyString=bodyString+loopsBeforeString[0][1]
+        loopsBeforeString.delete_at(0)
+      end
+      bodyString=bodyString+items[i].to_s+"\n"
+      
+      while !loopsAfterString.empty? && loopsAfterString[0][0]==i do
+        bodyString=bodyString+loopsAfterString[0][1]
+        loopsAfterString.delete_at(0)
+      end
     end
     bodyString
   end
