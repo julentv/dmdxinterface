@@ -5,6 +5,7 @@ Dmdxinterface::Application.routes.draw do
   post "header/prueba"
 
   get "home/index"
+  get "home/help"
   get "home/trial"
 
 

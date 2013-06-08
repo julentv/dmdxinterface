@@ -3,6 +3,9 @@ layout false
   def index
     render 'index'
   end
+  def help
+    render 'help'
+  end
   def trial
     example = Stimulus.new(0,0)
     
