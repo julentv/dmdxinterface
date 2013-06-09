@@ -27,33 +27,40 @@
 	<section id="content">
 		<section>
 			<h1 id="configuration-page-title">1. Configuration page</h1>
+			<p>In this page, the global options of the experiment can be chosen. These options are indicated in the configuration file as a headline. Here, those options are explained one by one.</p>
 			<section>
 				<h2 id="main-options-title">1.1 Main Options</h2>
-				<p>Here are included the most basic configuration options of the file. Those options are explaind below.</p>
+				<p>Here are included the most basic configuration options of the experiment. Those options are explaind below.</p>
 				<ul>
 					<li><strong>File name:</strong> Is the name that the file will have</li>
-					<li><strong>Output to ascii:</strong> explain</li>
-					<li><strong>Continuous running:</strong> explain</li>
-					<li><strong>Standard frame duration:</strong> explain</li>
-					<li><strong>Delay:</strong> explain</li>
-					<li><strong>Time out:</strong> explain</li>
-					<li><strong>Video mode:</strong> explain</li>
-					<li><strong>No feed back:</strong> explain</li>
-					<li><strong>Default background color:</strong> explain</li>
-					<li><strong>Default writing color:</strong> explain</li>
-					<li><strong>Default font size:</strong> explain</li>
-					<li><strong>Record clock on time keyword:</strong> explain</li>
+					<li><strong>Output to ascii:</strong> Indicates if is wanted to output the data of the experiment to an Ascii text file.</li>
+					<li><strong>Continuous running:</strong> Without this option, DMDX will pause after each item and wait for the subject to request the next item.</li>
+					<li><strong>Standard frame duration:</strong> This option indicates how long to display each stimulus for. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
+					<li><strong>Delay:</strong> Indicates the delay from end of one item to the start of the next item. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
+					<li><strong>Time out:</strong> This option tells DMDX how lon to wait for subjects to make a response. Measured in <u>milliseconds</u>.</li>
+					<li><strong>Video mode:</strong> The parameters of this field indicates the following: <ol>
+						<li>Number of pixels horizontally</li>
+						<li>Number of pixels vertically</li>
+						<li>Number of scan lines</li>
+						<li>Number of bits of colour</li>
+						<li>Refresh rate</li>
+					</ol></li>
+					<li><strong>No feed back:</strong> Indicates not to provide feedback on subjects response times and errors. Without this option, DMDX will display messages during the experiment, what can be too distracting for most of the tasks, but may be useful in some circumstances.</li>
+					<li><strong>Default background color:</strong> Indicates the background color. <a href="#color-indication-explanation">See how to indicate colors</a></li>
+					<li><strong>Default writing color:</strong> Indicates the color of the writing. <a href="#color-indication-explanation">See how to indicate colors</a></li>
+					<li><strong>Default font size:</strong> Indicates the font size</li>
+					<li><strong>Record clock on time keyword:</strong> If you include this in your header, DMDX will include the time of each clockon in your experiment. The first clockon will be set as 0 and all later will be relative to that.</li>
 				</ul>
 			</section>
 			<section>
 				<h2 id="response-devices-title">1.2. Response devices</h2>
-				<p>Explain</p>
+				<p>In this part the method used to record responses is used. The method must be one of the ones below.</p>
 				<ul>
-					<li><strong>PIO12:</strong> Explain</li>
-					<li><strong>Keyboard:</strong> Explain</li>
-					<li><strong>Mouse:</strong> Explain</li>
-					<li><strong>DigitalVOX:</strong> Explain</li>
-					<li><strong>Record vocal:</strong> Explain</li>
+					<li><strong>PIO12:</strong> The response box</li>
+					<li><strong>Keyboard:</strong> The keyboard</li>
+					<li><strong>Mouse:</strong> The mouse</li>
+					<li><strong>DigitalVOX:</strong> A digital voice activated switch</li>
+					<li><strong>Record vocal:</strong> Saves verbal responses as .wav files</li>
 				</ul>
 			</section>
 			
@@ -63,31 +70,31 @@
 			<h1 id="body-page-title">2. Body page</h1>
 			<section>
 				<h2 id="item-pannel-title">2.1. Item pannel</h2>
-				<p>Explain</p>
+				<p>When an item is selected into the timeline, this pannel is charged with all the data of the selected item. That data can be set and is formed by the next fields:</p>
 				<ul>
 					<li><strong>ID:</strong> Explain</li>
-					<li><strong>Expected response:</strong> Explain</li>
-					<li><strong>No randomise:</strong> Explain</li>
-					<li><strong>Start timer in stimulus:</strong> Explain</li>
-					<li><strong>Save:</strong> Explain</li>
-					<li><strong>Duplicate:</strong> Explain</li>
-					<li><strong>Delete:</strong> Explain</li>
-					<li><strong>Stimulus list:</strong> Explain</li>
-					<li><strong>Message (on message items only):</strong> Explain</li>
+					<li><strong>Expected response:</strong> Indicates the response that is expected from the user. Can be a Positive response (a yes), a negative response (no), no response at all or any response.</li>
+					<li><strong>No randomise:</strong> If we have selected to randomize the items of the experiment, this option indicates not to include the selected item into that randomization.</li>
+					<li><strong>Start timer in stimulus:</strong> This option indicates where to start the timer. In the list of stimulus below, a clock icon is shown to indicate the stimulus in which will be started.</li>
+					<li><strong>Save:</strong> Clicking this button, the changes made in the item pannel will be saved.</li>
+					<li><strong>Duplicate:</strong> This button creates a copy of the item selected and is added to the end of the list of items.</li>
+					<li><strong>Delete:</strong> Deletes the selected item from the list of items. This action can not be undone.</li>
+					<li><strong>Stimulus list:</strong> Shows all the stimulus included in the selected item. Clicking over one of this stimulus the data of the selected one will be shown into the <a href="#stimulus-pannel-title">stimulus pannel</a>.</li>
+					<li><strong>Message (on message items only):</strong> This field indicates the message of the message item.</li>
 				</ul>
 			</section>
 			<section>
 				<h2 id="loop-pannel-title">2.2. Loop pannel</h2>
-				<p>Explain</p>
+				<p>When a loop is selected into the timeline, this pannel is charged with all the data of the selected loop. That data can be set and is formed by the next fields:</p>
 				<ul>
-					<li><Strong>Number of items:</Strong> Explain</li>
-					<li><Strong>Number of iterations:</Strong> Explain</li>
-					<li><Strong>Possition of the first item:</Strong> Explain</li>
+					<li><Strong>Number of items:</Strong> Indicates how many items are included into the selected loop. Those items are indicated into the timeline occupying the same temporal range of the loop.</li>
+					<li><Strong>Number of iterations:</Strong> Indicates the number of iterations that the loop will make.</li>
+					<li><Strong>Possition of the first item:</Strong> Indicates the first item included into the loop. This attributes does not concern to the id of the item but to the possition of that item. This attribute can also be changed <a href="#loop-timeline-explanation">dragging</a> into the timeline</li>
 				</ul>
 			</section>
 			<section>
 				<h2 id="add-stimulus-pannel-title">2.3. "Add stimulus" pannel</h2>
-				<p>Explain</p>
+				<p>In this pannel all the types of the stimulus that can be added to an item are shown. To add them, we have to drag and drop the wanted icon to the list of stimulus when one item is selected. This action can only be done with <u>normal items</u>.</p>
 			</section>
 			<section>
 				<h2 id="stimulus-pannel-title">2.4. Stimulus pannel</h2>
@@ -134,10 +141,24 @@
 				<ul>
 					<li><strong>Item:</strong> Explain</li>
 					<li><strong>Message Item:</strong> Explain</li>
-					<li><strong>Loop:</strong> Explain</li>
+					<li id="loop-timeline-explanation"><strong>Loop:</strong> Explain</li>
 				</ul>
 			</section>
 		</section>
+		<section>
+			<h1>3. Others</h1>
+			<ul>
+				<li id="ticks-explanation"><strong>Tick:</strong> A tick is the unit used by DMDX to time screen displays and the time it takes the cathode ray on the monitor to scanthe tube.
+					<p>11.80 milliseconds on the desktop machines in the testing rooms</p>
+					<p>16.67 milliseconds on the portable machines</p></li>
+				<li id="color-indication-explanation"><strong>Colors indication:</strong> The colors must be indicated in RGB scale. This is done with three numbers from 0 to 255 been the first number the amount of red, the second the omount of green and the third the amount of blue. Some examples:
+					<p>255000000 is red</p>
+					<p>000255000 is green</p>
+					<p>255255255 is white</p>
+					<p>000000000 is black</p></li>
+			</ul>
+		</section>
 	</section>
+	<footer>This page has been made with the help of this <a href="#">tutorial</a></footer>
 </body>
 </html>
