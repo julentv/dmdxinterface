@@ -25,7 +25,7 @@
 		</ul>
 	</nav>
 	<section id="content">
-		<section>
+		<section class="h1-section">
 			<h1 id="configuration-page-title">1. Configuration page</h1>
 			<p>In this page, the global options of the experiment can be chosen. These options are indicated in the configuration file as a headline. Here, those options are explained one by one.</p>
 			<section>
@@ -35,7 +35,7 @@
 					<li><strong>File name:</strong> Is the name that the file will have</li>
 					<li><strong>Output to ascii:</strong> Indicates if is wanted to output the data of the experiment to an Ascii text file.</li>
 					<li><strong>Continuous running:</strong> Without this option, DMDX will pause after each item and wait for the subject to request the next item.</li>
-					<li><strong>Standard frame duration:</strong> This option indicates how long to display each stimulus for. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
+					<li id="standrad-duration-explanation"><strong>Standard frame duration:</strong> This option indicates how long to display each stimulus for. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
 					<li><strong>Delay:</strong> Indicates the delay from end of one item to the start of the next item. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
 					<li><strong>Time out:</strong> This option tells DMDX how lon to wait for subjects to make a response. Measured in <u>milliseconds</u>.</li>
 					<li><strong>Video mode:</strong> The parameters of this field indicates the following: <ol>
@@ -66,7 +66,7 @@
 			
 		</section>
 		
-		<section>
+		<section class="h1-section">
 			<h1 id="body-page-title">2. Body page</h1>
 			<section>
 				<h2 id="item-pannel-title">2.1. Item pannel</h2>
@@ -98,55 +98,59 @@
 			</section>
 			<section>
 				<h2 id="stimulus-pannel-title">2.4. Stimulus pannel</h2>
-				<p>Explain</p>
+				<p>In this pannel the data of the stimulus selected in the list of stimulus (on the intem pannel) is shown. The edition of that data is allowed in the pannel.</p>
 				<h3>2.4.1. General options</h3>
-				<p>Explain</p>
+				<p>This options are common for all the stimulus tipes (images, audio and text)</p>
 				<ul>
-					<li><strong>Text: </strong>Explain</li>
-					<li><strong>Type: </strong>Explain</li>
-					<li><strong>Duration: </strong>Explain</li>
-					<li><strong>Screen line: </strong>Explain</li>
-					<li><strong>Clear screen: </strong>Explain</li>
-					<li><strong>Not erase the previous screen: </strong>Explain</li>
-					<li><strong>Is blank interval: </strong>Explain</li>
-					<li><strong>Synchronise with text: </strong>Explain</li>
+					<li><strong>Text: </strong>Is the text shown in the text stimulus. For the audio and image stimulus, this field indicates the name of the file to open (without the extension). I.E: If we want to show a jpg image called "image.jpg", we only have to write in the text field the word "image"</li>
+					<li><strong>Type: </strong>Is the type of the stimulus. Can be from this types: text, bmp image, jpg image or wav(audio)</li>
+					<li><strong>Duration: </strong>is the total duration of the stimulus in <a href="#ticks-explanation">ticks</a>. By default the duration for each item is the indicated at the <a href="#standrad-duration-explanation">configuration page</a></li>
+					<li><strong>Screen line: </strong>Indicates the position on the screen to show the item, been 0 the center. The possitive numbers indicates the number of lines above the center and the negatives the number of lines below.</li>
+					<li><strong>Clear screen: </strong>Indicates to clear the screen after the end of one stimulus. If not selected, the stimulus will continue on the screen until the next starts.</li>
+					<li><strong>Not erase the previous screen: </strong>Indicates not to erase the previous screen when the selected one starts.</li>
+					<li><strong>Is blank interval: </strong>Indicates if the selected stimulus is one in blanck (with no content) or not.</li>
+					<li><strong>Synchronise with text: </strong>Indicates to synchronise the selected stimulus with the next one.</li>
 				</ul>
 				<h3>2.4.1. Specific options (for images)</h3>
-				<p>Explain</p>
+				<p>These options are only shown in the stimulus pannel when a image stimulus is selected.</p>
 				<ul>
-					<li><strong>Top/Left position:</strong> Explain</li>
+					<li><strong>Top/Left position:</strong> The coordinates of the top left corner of the image. The point "(0,0)" is the top left corner of the screen.</li>
 				</ul>
 				<h3>2.4.1. Specific options (for audio)</h3>
-				<p>Explain</p>
+				<p>These options are only shown in the stimulus pannel when an audio (WAV) stimulus is selected.</p>
 				<ul>
-					<li><strong>Audio channel:</strong> Explain</li>
+					<li><strong>Audio channel:</strong> Indicates the channel to play the audio file for. Can be: left, right or both.</li>
 				</ul>
 			</section>
 			<section>
 				<h2 id="control-pannel-title">2.5. Control pannel</h2>
-				<p>Explain</p>
+				<p>This pannel contains the control options of the page.</p>
 				<ul>
-					<li><strong>New Item:</strong>Explain</li>
-					<li><strong>New Message Item:</strong>Explain</li>
-					<li><strong>New Loop:</strong>Explain</li>
-					<li><strong>Preview:</strong>Explain</li>
-					<li><strong>Back to settings:</strong>Explain</li>
-					<li><strong>Save the document:</strong>Explain</li>
-					<li><strong>Download the document:</strong>Explain</li>
+					<li><strong>New Item:</strong> Adds a new item to the list of items. This item is visible in the timeline and when selecting it, it's data is presented in the <a href="#item-pannel-title">item pannel</a></li>
+					<li><strong>New Message Item:</strong>Adds a new message item to the list of items. This item is visible in the timeline and when selecting it, it's data is presented in the <a href="#item-pannel-title">item pannel</a></li>
+					<li><strong>New Loop:</strong>Adds a new loop to the list of loops. This loop is visible in the timeline and when selecting it, it's data is presented in the <a href="#loop-pannel-title">loop pannel</a></li>
+					<li><strong>Preview:</strong> When this option is selected a new window is opened with a demo preview of the resulting experiment. This preview is just an <u>aproximation</u> to the result.</li>
+					<li><strong>Back to settings:</strong> Takes you to the <a href="#main-options-title">main options page</a>.</li>
+					<li><strong>Save the document:</strong>Saves the document on the database</li>
+					<li><strong>Download the document:</strong>Download the document generated from the <u>data saved in the database</u> (with the button above).</li>
 				</ul>
 			</section>
 			<section>
 				<h2 id="timeline-title">2.6. Timeline</h2>
-				<p>Explain</p>
+				<p>The timeline shows all the items and loops of the experiment in a very visual way. The duration of each component is visible because of the numbers in the lower line that indicates the <a href="#ticks-explanation">ticks</a> of the experiment.</p>
+				<p>The components of the timeline can be moved acros the timeline, changing so the data of the components. When clicking over each component, the data of the selected one is shown on the <a href="#item-pannel-title">item pannel</a> or the <a href="#loop-pannel-title">loop pannel</a> depending on whether is an item or a loop the selected component.</p>
 				<ul>
-					<li><strong>Item:</strong> Explain</li>
-					<li><strong>Message Item:</strong> Explain</li>
-					<li id="loop-timeline-explanation"><strong>Loop:</strong> Explain</li>
+					<li><strong>Item:</strong> Are the most common type of component on the experiment and is shown in the timeline like a bar, that goes from the first <a href="#ticks-explanation">ticks</a> to the last. All the items are secuencially placed into the timeline together with the message items.</li>
+					<li><strong>Message Item:</strong> Are items that don't expect a response from the subject, are used only to present information. Are presented in the timeline like a message, and are secuantially placed together with the items.</li>
+					<li id="loop-timeline-explanation"><strong>Loop:</strong> The loops are an structure that makes, a specific number of secuencial items, to repeat a determined number of times. The items that are going to be repeated are the ones thet ocupes the same time interval in the timeline. Are presented in the timeline like a green bar with the icon of a loop.</li>
 				</ul>
 			</section>
 		</section>
-		<section>
+		
+		
+		<section class="h1-section">
 			<h1>3. Others</h1>
+			<p>Here are included the descriptions of same words.</p>
 			<ul>
 				<li id="ticks-explanation"><strong>Tick:</strong> A tick is the unit used by DMDX to time screen displays and the time it takes the cathode ray on the monitor to scanthe tube.
 					<p>11.80 milliseconds on the desktop machines in the testing rooms</p>

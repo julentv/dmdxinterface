@@ -4,3 +4,17 @@ html, body{
 	height:100%;
 	width:100%;
 }
+#index-list{
+	list-style-type: none;
+}
+#index-list .index-level2{
+	margin-left:10px;
+}
+h1{
+	font-size:30px;
+	padding-top:20px;
+}
+.h1-section{
+	padding-top:30px;
+	padding-left:10px;
+}
