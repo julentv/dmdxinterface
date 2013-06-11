@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="description" content="DMDX configuration files header page">
+	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
+	<meta name="author" content="Julen Telleria">
+	<title>DMDX Interface header</title>
+	
+	<%= stylesheet_link_tag "headerstyle" %>
+</head>
+<body>
+		
+<h1>Header creation page</h1>
+
+<form name="header_form" action="header_edition" method="POST">
+<div id="center-pannel">
+	<div id="main-options-pannel">
+		<input type="hidden" id="file_id" name="file_id" value="<%= @conf_file.id %>">
+		<h2>Main Options</h2>
+	    <p>File name <input type="text" id="file_name" name="file_name" size="25" value="<%= @conf_file.name %>"></p>
+	    <% if @conf_file_header.output_data_to_ascii==true %>
+			<p>Output to ascii <input type="checkbox" name="output_to_ascii" value="true" checked></p>
+		<% else %>
+			<p>Output to ascii <input type="checkbox" name="output_to_ascii" value="true"></p>
+		<% end %>
+		<% if @conf_file_header.continuous_running==true %>
+			<p>Continuous running <input type="checkbox" name="continuous_running" value="true" checked></p>
+		<% else %>
+			<p>Continuous running <input type="checkbox" name="continuous_running" value="true"></p>
+		<% end %>
+		<p>Standard frame duration <input type="number" id="standard_frame_duration_text"  name="standard_frame_duration_text" value="<%= @conf_file_header.standard_frame_duration %>" min="0" max="999" required></p>
+		<p>Delay <input type="number" id="delay" name="delay"  value="<%= @conf_file_header.delay %>" min="0" max="999" required></p>
+		<p>Time out <input type="number" id="time_out" name="time_out" size="5" value="<%= @conf_file_header.time_out %>" min="0" max="999" required></p>
+		<p>Video mode <input type="number" id="video_mode1" name="video_mode1" size="5" value="30" min="0" max="10000" required><input type="number" id="video_mode2" name="video_mode2" size="5" value="30" min="0" max="10000" required><input type="number" id="video_mode3" name="video_mode3" size="5" value="30" min="0" max="10000" required>
+			<input type="number" id="video_mode4" name="video_mode4" size="5" value="30" min="0" max="10000" required><input type="number" id="video_mode5" name="video_mode5" size="5" value="30" min="0" max="10000" required></p>
+		<% if @conf_file_header.no_feed_back==true %>
+			<p>No feed back <input type="checkbox" name="no_feed_back" value="true" checked></p>
+		<% else %>
+			<p>No feed back <input type="checkbox" name="no_feed_back" value="true"></p>
+		<% end %>
+		
+		<p>Default background color <input type="number" id="default_background_color" name="default_background_color" size="5" value="<%= @conf_file_header.default_background_color %>" min="0" max="255255255" required></p>
+		<p>Default writing color <input type="number" id="default_writing_color" name="default_writing_color" size="5" value="<%= @conf_file_header.default_writing_color %>" min="0" max="255255255" required></p>
+		<p>Default font size <input type="number" id="default_font_size" name="default_font_size" size="5" value="<%= @conf_file_header.default_font_size %>" min="0" max="999" required></p>
+		<% if @conf_file_header.record_clock_on_time_keyword==1 %>
+			<p>Record clock on time keyword <input type="checkbox" name="record_clock" value="true" checked></p>
+		<% else %>
+			<p>Record clock on time keyword <input type="checkbox" name="record_clock" value="true"></p>
+		<% end %>
+		
+	</div>
+	
+	<div id="response-devices-selection-pannel">
+		<h2>Response devices:</h2>
+		<% if @conf_file_header.id_pio12==true %>
+			<p>PIO12<input type="checkbox" name="id_pio12" value="true" checked></p>
+		<% else %>
+			<p>PIO12<input type="checkbox" name="id_pio12" value="true"></p>
+		<% end %>
+		<% if @conf_file_header.id_keyboard==true %>
+			<p>Keyboard<input type="checkbox" name="keyboard" value="true" checked></p>
+		<% else %>
+			<p>Keyboard<input type="checkbox" name="keyboard" value="true"></p>
+		<% end %>
+		<% if @conf_file_header.id_mouse==true %>
+			<p>Mouse<input type="checkbox" name="mouse" value="false" checked></p>
+		<% else %>
+			<p>Mouse<input type="checkbox" name="mouse" value="false"></p>
+		<% end %>
+		<% if @conf_file_header.id_digital_vox==true %>
+			<p>digitalVOX<input type="checkbox" name="digitalvox" value="true" checked></p>
+		<% else %>
+			<p>digitalVOX<input type="checkbox" name="digitalvox" value="true"></p>
+		<% end %>
+		<% if @conf_file_header.id_record_vocal==true %>
+			<p>Record vocal<input type="checkbox" name="record_vocal" value="true" checked></p>
+		<% else %>
+			<p>Record vocal<input type="checkbox" name="record_vocal" value="true"></p>
+		<% end %>
+	</div>
+	<div id="button-pannel">
+		<INPUT type="submit" value="Continue"> <INPUT type="reset" value="Reset">
+	</div>
+    
+</div>
+
+
+</form>
+
+</body>
+</html>

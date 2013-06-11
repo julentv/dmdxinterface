@@ -897,7 +897,7 @@ function saveDocument(docId){
     //var text={json_data : JSON.stringify({"one": "Singular sensation","two": "Beady little eyes","three": "Little birds pitch by my doorstep"})};
 	//alert(jsonText);
 	$.ajax({
-    url: 'save',
+    url: '/body/save',
     type: 'POST',
     data: jsonText,
     async: false,
@@ -913,7 +913,7 @@ function saveDocument(docId){
 function downloadDocument(docId){
 	var jsonText ={id:docId};
 	$.ajax({
-    url: 'download',
+    url: '/body/download',
     type: 'POST',
     data: jsonText,
     async: false,

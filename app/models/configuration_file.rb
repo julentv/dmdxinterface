@@ -8,7 +8,7 @@ class ConfigurationFile < ActiveRecord::Base
   def initialize(file_name)
     super()
     self.name = file_name
-    self.configuration_file_header = ConfigurationFileHeader.new(self)
+    self.configuration_file_header = ConfigurationFileHeader.new()
   end
   
   #Creation of the file
@@ -16,6 +16,10 @@ class ConfigurationFile < ActiveRecord::Base
     @header_string=self.configuration_file_header.to_s
     @bodyString=self.createBodyString
     @bodyString=@bodyString[0, @bodyString.size-2]
+    if @bodyString==nil
+     @bodyString="" 
+    end
+    
     @file_name = "public/files/"+self.name+".rtf"
     File.open(@file_name, "w") do |f|     
     f.write(@header_string+"\n"+@bodyString)   

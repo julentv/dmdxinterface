@@ -2,7 +2,12 @@ class BodyController < ApplicationController
   require 'json'
   layout false
   def index
-    @conf_file=ConfigurationFile.find(1)
+    if params[:id]==nil
+     @conf_file=ConfigurationFile.find(1)
+    else
+     @conf_file=ConfigurationFile.find(params[:id])   
+    end
+    
     render 'index'
   end
   def timeline
@@ -32,8 +37,8 @@ class BodyController < ApplicationController
   def settings
     if params[:id]==nil
       redirect_to '/header/index'
-     else
+    else
        redirect_to '/header/index?id='+params[:id]
-     end
+    end
   end
 end

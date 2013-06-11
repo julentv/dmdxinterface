@@ -3,9 +3,8 @@ class ConfigurationFileHeader < ActiveRecord::Base
   attr_accessible :continuous_running, :default_background_color, :default_font_size, :default_writing_color, :delay, :id_digital_vox, :id_keyboard, :id_mouse, :id_pio12, :id_record_vocal, :no_feed_back, :output_data_to_ascii, :record_clock_on_time_keyword, :standard_frame_duration, :time_out
   #attr_writer :continuous_running, :default_background_color, :default_font_size, :default_writing_color, :delay, :id_digital_vox, :id_keyboard, :id_mouse, :id_pio12, :id_record_vocal, :no_feed_back, :output_data_to_ascii, :record_clock_on_time_keyword, :standard_frame_duration, :time_out
   
-  def initialize(configuration_file)
+  def initialize()
     super()
-    self.configuration_file=configuration_file
     self.continuous_running=false
     self.default_background_color=255255255
     self.default_font_size=17

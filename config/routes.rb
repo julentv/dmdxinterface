@@ -2,6 +2,7 @@ Dmdxinterface::Application.routes.draw do
   get "header/index"
   get "header/file_creation"
   post "header/header_creation"
+  post "header/header_edition"
   post "header/prueba"
 
   get "home/index"
@@ -10,6 +11,7 @@ Dmdxinterface::Application.routes.draw do
 
 
   get "body/index"
+  get "body/index/:id" =>'body#index'
   get "body/timeline"
   get "body/preview"
   get "body/settings"
