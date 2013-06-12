@@ -61,7 +61,9 @@ class Item < ActiveRecord::Base
     end
     item_string
   end
-  
+  def to_json
+    {'expected_response'=>self.expected_response, 'item_number'=>self.item_number, 'no_randomise'=>self.no_randomise, 'text'=>self.text, 'start_timer_before_stimulus'=>self.start_timer_before_stimulus, 'stimulus'=>'not yet'}
+  end
   def create_from_json(json_ob)
     self.item_number=json_ob["id"]
     self.expected_response=json_ob["expectedResponse"]

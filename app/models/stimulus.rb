@@ -66,7 +66,9 @@ class Stimulus < ActiveRecord::Base
     self.synchronise_with_next=json_ob["synchroniseWithNext"]
 
   end
-  
+  def to_json
+    
+  end
   #convert the stimulus to string
   def to_s
     if self.is_blank_interval

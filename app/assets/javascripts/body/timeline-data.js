@@ -84,7 +84,7 @@ var selectedLoopNumber=-1;
 /**
  *  Called when the Visualization API is loaded.
  */
-function drawVisualization() {
+function drawVisualization(){
     
     //insert the first item to the array
 	itemArray[0]= new Item("1", "");

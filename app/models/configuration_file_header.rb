@@ -23,6 +23,9 @@ class ConfigurationFileHeader < ActiveRecord::Base
     self.id_pio12=false
     self.id_record_vocal=false
   end
+  def to_json
+    {'continuous_running'=>self.continuous_running, 'default_background_color'=>self.default_background_color, 'default_font_size'=>self.default_font_size, 'default_writing_color'=>self.default_writing_color, 'delay'=>self.delay, 'no_feed_back'=>self.no_feed_back, 'output_data_to_ascii'=>self.output_data_to_ascii, 'record_clock_on_time_keyword'=>self.record_clock_on_time_keyword, 'standard_frame_duration'=>self.standard_frame_duration, 'time_out'=>self.time_out, 'id_digital_vox'=>self.id_digital_vox, 'id_keyboard'=>self.id_keyboard, 'id_mouse'=>self.id_mouse, 'id_pio12'=>self.id_pio12, 'id_record_vocal'=>self.id_record_vocal}
+  end
   
   #this method generates the string wich is the header of the configuration file
   def to_s

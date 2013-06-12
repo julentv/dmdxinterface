@@ -2,7 +2,7 @@ class ConfigurationFile < ActiveRecord::Base
   has_one :configuration_file_header
   has_many :items, :dependent => :destroy
   has_many :loops, :dependent => :destroy
-  attr_accessible :name, :configuration_file_header, :items
+  attr_accessible :name, :configuration_file_header
 
   #Contructor
   def initialize(file_name)
@@ -100,6 +100,13 @@ class ConfigurationFile < ActiveRecord::Base
     #File.open(@file_name, "w") do |f|     
     #f.write(@header_string+" "+@body_string)   
     #end
+  end
+  def to_json
+    itemsJson=Array.new
+    self.items.each do |item|
+      itemsJson.push(item.to_json)
+    end
+    {'id'=>self.id, 'name'=>self.name, 'configuration_file_header'=>self.configuration_file_header.to_json, 'items'=>itemsJson, 'loops'=>'not yet'}
   end
   
   def to_s

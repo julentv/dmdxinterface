@@ -5,7 +5,8 @@ class BodyController < ApplicationController
     if params[:id]==nil
      @conf_file=ConfigurationFile.find(1)
     else
-     @conf_file=ConfigurationFile.find(params[:id])   
+     @conf_file=ConfigurationFile.find(params[:id])
+     @conf_file_json=@conf_file.to_json
     end
     
     render 'index'
