@@ -62,7 +62,11 @@ class Item < ActiveRecord::Base
     item_string
   end
   def to_json
-    {'expected_response'=>self.expected_response, 'item_number'=>self.item_number, 'no_randomise'=>self.no_randomise, 'text'=>self.text, 'start_timer_before_stimulus'=>self.start_timer_before_stimulus, 'stimulus'=>'not yet'}
+    stimulusJson=Array.new
+    self.stimulus.each do |stimulu|
+      stimulusJson.push(stimulu.to_json)
+    end
+    {'expected_response'=>self.expected_response, 'item_number'=>self.item_number, 'no_randomise'=>self.no_randomise, 'text'=>self.text, 'start_timer_before_stimulus'=>self.start_timer_before_stimulus, 'stimulus'=>stimulusJson}
   end
   def create_from_json(json_ob)
     self.item_number=json_ob["id"]

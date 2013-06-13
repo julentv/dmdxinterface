@@ -26,6 +26,21 @@ function Item (itemid, text){
 		return (duplicatedItem);
 	}
 }
+//converts a json object in a item object
+Item.fromJSON=function(jsonObject){
+	
+	var item=new Item(jsonObject.item_number,jsonObject.text);
+	item.expectedResponse=jsonObject.expected_response;
+	item.startTimerBeforeStimulus=jsonObject.start_timer_before_stimulus;
+	item.noRandomise=jsonObject.no_randomise;
+	//the stimulus
+	var stimulusArray=jsonObject.stimulus;
+	for(var i=0,ii=stimulusArray.length;i<ii;i++){
+		item.stimulusArray.push(Stimulus.fromJSON(stimulusArray[i]));
+	}
+	
+	return(item);
+}
 //stimulus class
 function Stimulus(text, type){
 	this.text = text;
@@ -56,6 +71,22 @@ function Stimulus(text, type){
 		return (duplicatedStimulus);
 	}
 }
+//converts a json object in a stimulus object
+Stimulus.fromJSON=function(jsonObject){
+	//the order?????????????????????
+	var stimulus=new Stimulus(jsonObject.text, jsonObject.stimulus_type);
+	
+	stimulus.duration=jsonObject.duration;
+	stimulus.topPosition=jsonObject.top_possition;
+	stimulus.leftPosition=jsonObject.left_possition;
+	stimulus.channel=jsonObject.channel;
+	stimulus.clearScreen=jsonObject.clear_screen;
+	stimulus.notErasePrevious=jsonObject.not_erase_previous;
+	stimulus.presentInLine=jsonObject.present_in_line;
+	stimulus.isBlankInterval=jsonObject.is_blank_interval;
+	stimulus.synchroniseWithNext=jsonObject.synchronise_with_next;
+	return(stimulus);
+}
 //loop class
 function Loop (firstItem){
 	//the order of the first item in the loop
@@ -63,6 +94,14 @@ function Loop (firstItem){
 	this.numberOfItems=1;
 	this.numberOfIterations=1;
 	//not possible to duplicate
+}
+//converts a json object in a stimulus object
+Loop.fromJSON=function(jsonObject){
+	var loop= new Loop(jsonObject);
+	loop.firstItem=jsonObject.first_item;
+	loop.numberOfItems=jsonObject.number_of_items;
+	loop.numberOfIterations=jsonObject.number_of_iterations;
+	return(loop);
 }
 
 //start of the timeline methods
@@ -81,13 +120,27 @@ var itemNumber=-1;
 var selectedStimulusNumber=-1;
 var selectedLoopNumber=-1;
 
+function proyectLoad(){
+	var items=jsonConfigurationFile.items;
+	var loops=jsonConfigurationFile.loops;
+	for(var i=0, ii=items.length;i<ii;i++){
+		newItem(Item.fromJSON(items[i]));
+	}
+	for(var i=0, ii=loops.length;i<ii;i++){
+		addLoop(Loop.fromJSON(loops[i]));
+	}
+}
+
 /**
  *  Called when the Visualization API is loaded.
  */
 function drawVisualization(){
     
     //insert the first item to the array
-	itemArray[0]= new Item("1", "");
+    itemArray[0]= new Item("1", "");
+    
+    
+	
     
 	// Create and populate a data table.
 	// data = new google.visualization.DataTable();
@@ -101,8 +154,8 @@ function drawVisualization(){
     // data.addRows([
       // [new Date(t.getTime()+0), new Date(t.getTime()+1), itemArray[0].name],
     // ]);
-    
     data = [{ 'start':new Date(t.getTime()+0), 'end':new Date(t.getTime()+1),'content':itemArray[0].name}];
+    
     
 
 	// specify options
@@ -124,17 +177,28 @@ function drawVisualization(){
 	// Draw our timeline with the created data and options
 	timeline.draw(data, options);
 
-google.visualization.events.addListener(timeline, 'add', newItem);	
-google.visualization.events.addListener(timeline, 'select', onselect);
-google.visualization.events.addListener(timeline, 'delete', deleteItem);
-google.visualization.events.addListener(timeline, 'change', onItemDrag);
+	google.visualization.events.addListener(timeline, 'add', newItem);	
+	google.visualization.events.addListener(timeline, 'select', onselect);
+	google.visualization.events.addListener(timeline, 'delete', deleteItem);
+	google.visualization.events.addListener(timeline, 'change', onItemDrag);
+	if(jsonConfigurationFile.items.length>0){
+		console.log("inside item adittion");
+		console.log(jsonConfigurationFile.items.length);
+		proyectLoad();
+		itemNumber=0;
+		deleteItem();
+		itemNumber=-1;
+		timeline.setSelection([]);
+	}
 	
 }
 /**
  * function to add a new item
  */
 function newItem(itemToAdd){
+	console.log(itemToAdd);
 	if(itemToAdd==null){
+		console.log("canceled");
 		//if no called from the new item button
 		timeline.cancelAdd();
 	}else{
@@ -219,18 +283,28 @@ function calculateLastItem(){
 /**
  * Function to add new loops
  */
-function addLoop(){
+function addLoop(loopToAdd){
 	//the first item of the loop
-	var firstItemNumber=0;
-	var newloop= new Loop(firstItemNumber);
+	if(loopToAdd==null){
+		var newloop= new Loop(0);
+	}else{
+		var newloop=loopToAdd;
+	}
+	
+	
 	loopArray.push(newloop);
 	var dataContent="<img src='/assets/icons/loop.png' style='width:32px; height:32px; vertical-align: middle'> Loop";
 	
-	var firstItem = timeline.getItem(firstItemNumber);
+	var firstItem = timeline.getItem(newloop.firstItem);
+	var lastItemPossition=newloop.firstItem+newloop.numberOfItems-1
+	if (lastItemPossition>timeline.getData().length-1){
+		lastItemPossition=timeline.getData().length-1;
+	}
+	var lastItem = timeline.getItem(lastItemPossition);
 	var start = new Date (firstItem.start.getTime());
-	var end = new Date (firstItem.start.getTime());
+	var end = new Date (lastItem.end.getTime());
 	start.setMilliseconds(start.getMilliseconds());
-	end.setMilliseconds(end.getMilliseconds()+1);
+	end.setMilliseconds(end.getMilliseconds());
 	timeline.addItem({
 		'start' : start,
 		'content' : dataContent,

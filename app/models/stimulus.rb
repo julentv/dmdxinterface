@@ -67,7 +67,9 @@ class Stimulus < ActiveRecord::Base
 
   end
   def to_json
-    
+    {'channel'=>self.channel, 'duration'=>self.duration, 'clear_screen'=>self.clear_screen, 'is_blank_interval'=>self.is_blank_interval, 'top_possition'=>self.top_possition, 'text'=>self.text,
+      'synchronise_with_next'=>self.synchronise_with_next, 'left_possition'=>self.left_possition,'not_erase_previous'=>self.not_erase_previous, 'stimulus_type'=>self.stimulus_type, 
+      'order'=>self.order, 'present_in_line'=>self.present_in_line}
   end
   #convert the stimulus to string
   def to_s

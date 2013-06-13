@@ -9,28 +9,23 @@
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<%= javascript_include_tag "timeline.js" %>
 	
+	<script>
+	//obtain the data of the proyect
+		<% if @conf_file_json.nil? %>
+			var jsonConfigurationFile=null;
+		<% else %>
+			var jsonConfigurationFile=<%= @conf_file_json.html_safe %>;
+		<% end %>
+	</script>
 	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
 	<%= javascript_include_tag "body/timeline-data.js" %>
 	<%= stylesheet_link_tag "timeline" %>
 	<%= stylesheet_link_tag "bodystyle" %>
-	<script>
-		function showJson(){
-			<% if @conf_file_json.nil? %>
-				var jsonConfigurationFile=null;
-			<% else %>
-				var jsonConfigurationFile=<%= @conf_file_json %>;
-			<% end %>
-			if(jsonConfigurationFile==null){
-				alert("is null!!");
-			}else{
-				alert(jsonConfigurationFile);
-			}
-		}
-	</script>
+	
 	
 </head>
 
-<body onload="showJson()">
+<body>
 	<h1>Document id=
 		<%= if @conf_file!=nil
 			@conf_file.id

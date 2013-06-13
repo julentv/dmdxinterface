@@ -12,6 +12,10 @@ class Loop < ActiveRecord::Base
     self.number_of_iterations=json_ob["numberOfIterations"]  
   end
   
+  def to_json
+    {'first_item'=>self.first_item, 'number_of_items'=>self.number_of_items, 'number_of_iterations'=>self.number_of_iterations}
+  end
+  
   def to_s_before(counterNumber)
     @counterNumber=counterNumber
     string="<SetCounter Counter"+@counterNumber.to_s+"="+self.number_of_iterations.to_s+">\n"

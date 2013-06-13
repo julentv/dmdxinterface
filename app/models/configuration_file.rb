@@ -106,7 +106,11 @@ class ConfigurationFile < ActiveRecord::Base
     self.items.each do |item|
       itemsJson.push(item.to_json)
     end
-    {'id'=>self.id, 'name'=>self.name, 'configuration_file_header'=>self.configuration_file_header.to_json, 'items'=>itemsJson, 'loops'=>'not yet'}
+    loopsJson=Array.new
+    self.loops.each do |loop|
+      loopsJson.push(loop.to_json)
+    end
+    {'id'=>self.id, 'name'=>self.name, 'configuration_file_header'=>self.configuration_file_header.to_json, 'items'=>itemsJson, 'loops'=>loopsJson}.to_json
   end
   
   def to_s
