@@ -55,7 +55,7 @@
 					<li>
 						<button id="item-save-button" disabled type="button" onclick="saveItem();">Save</button>
 						<button id="item-duplicate-button" disabled type="button" onclick="duplicateItem();">Duplicate</button>
-						<button id="item-delete-button" disabled type="button" onclick="deleteItem()">Delete</button>
+						<button id="item-delete-button" disabled type="button" onclick="deleteItem();">Delete</button>
 					</li>
 					
 				</ul>
@@ -97,7 +97,7 @@
 					<li>Synchronise with text: <input id="synchronise" type="checkbox" name="synchronise" disabled value="true"></li>
 					
 					<div id="specific-fields-area"></div>
-					<li><button id="stimulus-save-button" disabled type="button" onclick="saveStimulus();">Save Stimulus</button><button id="stimulus-save-button" disabled type="button" onclick="">Delete Stimulus</button></li>
+					<li><button id="stimulus-save-button" disabled type="button" onclick="saveStimulus();">Save Stimulus</button><button id="stimulus-delete-button" disabled type="button" onclick="deleteStimulus();">Delete Stimulus</button></li>
 				</ul>
 			</div>
 		</div>
@@ -120,6 +120,7 @@
 		
 		<li onmouseover="this.style.cursor='pointer'" onclick="saveDocument(<%= @conf_file.id %>);"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="downloadDocument(<%= @conf_file.id %>);"><%= image_tag("icons/download.png", :class => "control-panel-icon") %>Download the document</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="window.open('/home/help', '_blank').focus();"><%= image_tag("icons/question.png", :class => "control-panel-icon") %>Help page</li>
 		</ul>
 	</div>
 	

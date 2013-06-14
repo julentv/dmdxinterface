@@ -139,9 +139,6 @@ function drawVisualization(){
     //insert the first item to the array
     itemArray[0]= new Item("1", "");
     
-    
-	
-    
 	// Create and populate a data table.
 	// data = new google.visualization.DataTable();
 	// data.addColumn('datetime', 'start');
@@ -182,8 +179,6 @@ function drawVisualization(){
 	google.visualization.events.addListener(timeline, 'delete', deleteItem);
 	google.visualization.events.addListener(timeline, 'change', onItemDrag);
 	if(jsonConfigurationFile.items.length>0){
-		console.log("inside item adittion");
-		console.log(jsonConfigurationFile.items.length);
 		proyectLoad();
 		itemNumber=0;
 		deleteItem();
@@ -196,9 +191,7 @@ function drawVisualization(){
  * function to add a new item
  */
 function newItem(itemToAdd){
-	console.log(itemToAdd);
 	if(itemToAdd==null){
-		console.log("canceled");
 		//if no called from the new item button
 		timeline.cancelAdd();
 	}else{
@@ -232,6 +225,7 @@ function newItem(itemToAdd){
 			'end' : end
 		}); 
 		numberOfItems = numberOfItems + 1;
+		timeline.setSelection([]);
 	}
 	
 }
@@ -286,7 +280,13 @@ function calculateLastItem(){
 function addLoop(loopToAdd){
 	//the first item of the loop
 	if(loopToAdd==null){
-		var newloop= new Loop(0);
+		console.log(itemNumber);
+		if(itemNumber>=0){
+			var newloop= new Loop(itemNumber);
+		}else{
+			var newloop= new Loop(0);
+		}
+		
 	}else{
 		var newloop=loopToAdd;
 	}
@@ -302,7 +302,12 @@ function addLoop(loopToAdd){
 	}
 	var lastItem = timeline.getItem(lastItemPossition);
 	var start = new Date (firstItem.start.getTime());
-	var end = new Date (lastItem.end.getTime());
+	if(lastItem.end==null){
+		var end = new Date (lastItem.start.getTime()+1);
+	}else{
+		var end = new Date (lastItem.end.getTime());
+	}
+	
 	start.setMilliseconds(start.getMilliseconds());
 	end.setMilliseconds(end.getMilliseconds());
 	timeline.addItem({
@@ -340,6 +345,7 @@ function onItemDrag(){
 		}
 		loopArray[numberOfLoops].firstItem=startItemFound;
 		organizeTimeLine();
+		timeline.setSelection([{row:numberOfLoops+itemArray.length}]);
 	}else{
 		//not a loop
 		itemNumber=itemNumber-numberOfLoops;
@@ -355,6 +361,8 @@ function onItemDrag(){
 			timeline.setSelection([{row:itemNumber}]);
 			onselect();
 			organizeTimeLine();
+			timeline.setSelection([{row:itemNumber}]);
+			
 		}else{
 			//normal movements
 			for(var i=0, ii=itemArray.length;i<ii&&!found;i++){
@@ -384,17 +392,17 @@ function onItemDrag(){
 						itemArray.splice(itemNumber, 1);
 						itemNumber=i+1;
 						itemArray.splice(itemNumber, 0,movedItem);
-						timeline.setSelection([{row:itemNumber}]);
-						onselect();
 						organizeTimeLine();
+						timeline.setSelection([{row:itemNumber}]);
+						//onselect();
 					}else if(i>itemNumber){
 						//move to the right
 						itemArray.splice(itemNumber, 1);
 						itemNumber=i;
 						itemArray.splice(itemNumber, 0,movedItem);
-						timeline.setSelection([{row:itemNumber}]);
-						onselect();
 						organizeTimeLine();
+						timeline.setSelection([{row:itemNumber}]);
+						//onselect();
 					}else{
 						//if i==itemNumber do nothing
 						timeline.cancelChange();
@@ -444,7 +452,6 @@ function onselect(){
 	
 	if(selection==""){
 		//no item selected
-		
 		itemNumber=-1;
 		selectedLoopNumber=-1;
 		//set the fields
@@ -476,7 +483,7 @@ function onselect(){
 			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='first-item-possition' min='1' value='"+selectedLoop.numberOfIterations+"'>";
 			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
 			outputStimulusList.innerHTML="";
-			deleteItemButton.setAttribute('disabled');
+			deleteItemButton.removeAttribute('disabled');
 			noRandomizeLine.innerHTML="Possition of the first item: <input id='possition-first-item' type='number' name='first-item-possition' min='1' max='"+itemArray.length+"' value='"+(selectedLoop.firstItem+1)+"'>";
 			startTimerLine.innerHTML="";
 		}else{
@@ -598,15 +605,25 @@ function deleteItem(){
 			timeline.deleteItem(itemNumber);
 			numberOfItems=numberOfItems-1;
 			organizeTimeLine();
+			timeline.setSelection([]);
+			onselect();
 		}else{
 			alert("The document must have at least one item.");
 		}
 		
 	}else{
-		alert("No item selected!");
+		if(selectedLoopNumber>=0){
+			console.log("itemNumber"+selectedLoopNumber);
+			loopArray.splice(selectedLoopNumber, 1);
+			organizeTimeLine();
+			timeline.setSelection([]);
+			onselect();
+		}else{
+			alert("No item selected!");
+		}
+		
 	}
 }
-
 /**
  * The function called when clicked the save button of the item pannel
  */
@@ -638,7 +655,6 @@ function saveItem(){
 		
 		var selectedLoop=loopArray[selectedLoopNumber];
 		//var seloop=loopArray[selectedLoopNumber];
-		//console.log(document.getElementById("id-input").value);
 		selectedLoop.numberOfItems=document.getElementById("id-input").value;
 		selectedLoop.numberOfIterations=document.getElementById("loop-number-iterations").value;
 		var firstpos=document.getElementById("possition-first-item").value-1;
@@ -700,6 +716,7 @@ function showStimulusData(stimulus){
 	var stimulusTextField = document.getElementById("stimulus-text-field");
 	var stimulusTypeField = document.getElementById("stimulus-type-field");
 	var stimulusSaveButton = document.getElementById("stimulus-save-button");
+	var stimulusDeleteButton = document.getElementById("stimulus-delete-button");
 	var stimulusPannelHeader = document.getElementById("stimulus-pannel-header");
 	var stimulusDurationField = document.getElementById("stimulus-duration-field");
 	var specificFieldsArea = document.getElementById("specific-fields-area");
@@ -716,6 +733,7 @@ function showStimulusData(stimulus){
 		stimulusTypeField.setAttribute('disabled');
 		stimulusTypeField.value="text";
 		stimulusSaveButton.setAttribute('disabled');
+		stimulusDeleteButton.setAttribute('disabled');
 		stimulusPannelHeader.innerHTML="No stimulus selected";
 		stimulusDurationField.setAttribute('disabled');
 		stimulusDurationField.value="";
@@ -736,6 +754,7 @@ function showStimulusData(stimulus){
 		stimulusTypeField.value=stimulus.type;
 		stimulusTypeField.removeAttribute("disabled");
 		stimulusSaveButton.removeAttribute("disabled");
+		stimulusDeleteButton.removeAttribute("disabled");
 		stimulusPannelHeader.innerHTML="Stimulus X";
 		stimulusDurationField.removeAttribute("disabled");
 		stimulusDurationField.value=stimulus.duration;
@@ -818,6 +837,14 @@ function saveStimulus(){
 	}
 	
 }
+function deleteStimulus(){
+	itemArray[itemNumber].stimulusArray.splice(selectedStimulusNumber,1);
+	selectedStimulusNumber=-1;
+	showStimulusData(null);
+	stimulusListGeneration();
+	generateTimerSelect();
+	organizeTimeLine();
+}
 
 /**
  * reorganize the timeline function of the duration of the stimulus of each item.
@@ -886,25 +913,36 @@ function organizeTimeLine(){
 	}
 	//add the loops
 	
-	for(var i=0, ii=loopArray.length;i<ii;i++){
+	for(var i=0;i<loopArray.length;i++){
 		var dataContent="<img src='/assets/icons/loop.png' style='width:32px; height:32px; vertical-align: middle'> Loop";
 		var firstItemNumber=loopArray[i].firstItem;
-		var lastItemNumber=(parseInt(firstItemNumber)+parseInt(loopArray[i].numberOfItems))-1;
-		if(lastItemNumber>=timeline.getData().length){
-			lastItemNumber=timeline.getData().length-1;
+		if(firstItemNumber>=itemArray.length){
+			//there must be at least a number of items equal to the first item of the loop. Else, the loop is erased
+			loopArray.splice(i,1);
+			i=i-1;
+		}else{
+			var lastItemNumber=(parseInt(firstItemNumber)+parseInt(loopArray[i].numberOfItems))-1;
+			if(lastItemNumber>=itemArray.length){
+				lastItemNumber=itemArray.length-1;
+			}
+			var start = new Date (timeline.getItem(firstItemNumber).start.getTime());
+			if(timeline.getItem(lastItemNumber).end==null){
+				var end = new Date (timeline.getItem(lastItemNumber).start.getTime()+1);
+			}else{
+				var end = new Date (timeline.getItem(lastItemNumber).end.getTime());
+			}
+			
+			timeline.addItem({
+				'start' : start,
+				'content' : dataContent,
+				'end' : end,
+				'className':'loopBox'
+			}); 
 		}
-		console.log("first item"+firstItemNumber+"lastItem"+lastItemNumber);
-		var start = new Date (timeline.getItem(firstItemNumber).start.getTime());
-		var end = new Date (timeline.getItem(lastItemNumber).end.getTime());
-		timeline.addItem({
-			'start' : start,
-			'content' : dataContent,
-			'end' : end,
-			'className':'loopBox'
-		}); 
+		
 	}
 	//?? this will change ??
-	timeline.setSelection([{row:itemNumber}]);
+	timeline.setSelection([]);
 }
 
 
