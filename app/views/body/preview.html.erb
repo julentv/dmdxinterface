@@ -5,9 +5,26 @@
 	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
 	<meta name="author" content="Julen Telleria">
 	<title>DMDX Interface Preview</title>
+	<%= stylesheet_link_tag "previewstyle" %>
+	<%= javascript_include_tag "body/timeline-classes-data.js" %>
+	<%= javascript_include_tag "body/preview.js" %>
+	<script>
+	//obtain the data of the proyect
+		<% if @conf_file_json.nil? %>
+			var jsonConfigurationFile=null;
+		<% else %>
+			var jsonConfigurationFile=<%= @conf_file_json.html_safe %>;
+		<% end %>
+		proyectLoad();
+	</script>
 </head>
 
 <body>
-	<h1>Preview window</h1>
+	<div id="writtin-pannel">
+		<h1 id="test">Preview window</h1>
+		<button onclick="startPreview();">Start preview</button>	
+	</div>
+	
+	
 </body>
 </html>

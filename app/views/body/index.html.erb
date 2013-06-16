@@ -18,6 +18,7 @@
 		<% end %>
 	</script>
 	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
+	<%= javascript_include_tag "body/timeline-classes-data.js" %>
 	<%= javascript_include_tag "body/timeline-data.js" %>
 	<%= stylesheet_link_tag "timeline" %>
 	<%= stylesheet_link_tag "bodystyle" %>
@@ -111,7 +112,7 @@
 		<li onmouseover="this.style.cursor='pointer'" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
 		<li onmouseover="this.style.cursor='pointer'" onclick="addLoop();"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %>New loop</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow();"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
+		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow(<%= @conf_file.id %>);"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
 		<% if @conf_file!=nil %>
 			<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/body/settings?id=<%= @conf_file.id %>'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
 		<% else %>
