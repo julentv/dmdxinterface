@@ -107,6 +107,8 @@ class ConfigurationFile < ActiveRecord::Base
       itemsJson.push(item.to_json)
     end
     loopsJson=Array.new
+    #order the loops by first item
+    self.loops.sort!{|a,b| a.first_item<=>b.first_item}
     self.loops.each do |loop|
       loopsJson.push(loop.to_json)
     end

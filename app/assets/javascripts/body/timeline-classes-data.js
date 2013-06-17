@@ -62,7 +62,7 @@ function Stimulus(text, type){
 	this.channel="2";
 	this.clearScreen=true;
 	this.notErasePrevious=false;
-	this.presentInLine=5;
+	this.presentInLine=0;
 	this.isBlankInterval=false;
 	this.synchroniseWithNext=false;
 	

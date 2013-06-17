@@ -874,6 +874,7 @@ function addStimulus(ev){
 				stimulusListGeneration();
 				organizeTimeLine();
 				generateTimerSelect();
+				timeline.setSelection([{row:itemNumber}]);
 			}
 		}else{
 			alert("Can`t add a stimulus to a message item");
