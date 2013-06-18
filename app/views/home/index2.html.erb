@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="description" content="DMDX configuration files creation page">
+	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
+	<meta name="author" content="Julen Telleria">
+	<title>DMDX Interface</title>
+	<%= stylesheet_link_tag "homestyle2" %>
+	<script>
+		function loadFromId(){
+			var id=document.getElementById("configuration_file_id").value;
+			window.location.href='/body/index?id='+id;
+		}
+	</script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<h1>Welcome to <span id="dmdx-dmpart">DM</span><span id="dmdx-dxpart">DX</span> Interface</h1>
+		<h2>Create your <span id="dmdx-dmpart">DM</span><span id="dmdx-dxpart">DX</span> configuration files easily</h2>
+		<p><button type="button" autofocus onclick="window.location.href='/header/index'">Start</button></p>
+		<input id="configuration_file_id" type="text" name="quantity" value="">
+		<button type="button" onclick="loadFromId();">Load</button>
+		<!-- <p><a href="/home/trial">Trial</a></p> -->
+		
+		<footer><a href="http://www.u.arizona.edu/~kforster/dmdx/dmdx.htm">DMDX web</a> <a href="#">Tutorial</a> <a href="#">Other</a></footer>
+	</div>
+</body>
+</html>

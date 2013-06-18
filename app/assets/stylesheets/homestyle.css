@@ -1,45 +1,226 @@
-html, body{
+/* FONTS –––––––––––––––––––––*/
+@font-face {
+ font-family:'BrandonGrotesque-Regular';
+src: url('/assets/Brandon_reg.otf');
+}
+
+@font-face {
+ font-family:'BrandonGrotesque-Bold';
+src: url('/assets/Brandon_bld.otf');
+}
+
+@font-face {
+ font-family:'BrandonGrotesque-Light';
+src: url('/assets/Brandon_light.otf');
+}
+/* MAIN ––––––––––––––––––––– */
+html{
 	margin:0;
 	padding:0;
 	height:100%;
 	width:100%;
 }
-/*header*/
-#dmdx-dmpart{
-	font-size:1em;
-	color:#800000;
-	font-family:"Courier New";
-	font-weight:bold;
+body {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	color:#222;
+	font-size:16px;
+	margin:0;
 }
-#dmdx-dxpart{
-	font-size:1em;
-	color:#ff0000;
-	font-family:"Arial";
-	font-style:italic;
+#home {
+	display:none;
+	width:1000px;
+	margin:0 auto;
+	padding:0 20px;
+	height:570px;
 }
+p {line-height:24px;}
+p a, small a, span.show {text-decoration:none; border-bottom:1px solid #76a7f7;}
+p a:hover, small a:hover, span.show:hover {border-bottom:1px solid #1b6cf2; cursor:pointer}
+a, span.show {color:#1b6cf2;}
+.clear {clear:both;}
+img {border:none;}
+img.fade {display:none;}
 
-
-/*body*/
-#wrapper {
-	min-height:100%;
+/* HEADERS ––––––––––––––––––––– */
+h1 {
 	position:relative;
-	float:left;
-	width:100%;
-	margin-left:0px;
-}
-h1{
-	color:orange;
-}
-footer{
-	padding:5px 0px 5px 0px;
-	width:100%;
-	position:absolute;
-	bottom:0;
-	left:0;
-	background:#ee5;
+	font-family:BrandonGrotesque-Bold, Futura, Verdana, serif;
+	font-size:76px;
+	text-transform:uppercase;
 	text-align:center;
+	height:80px;
+	padding-top:30px;
+}
+h2 {
+	position:relative;
+	top:10px;
+	font-size:22px;
+	text-align:center;
+	border-top:1px solid #CCC;
+	border-bottom:1px solid #CCC;
+	padding:22px 0;
+}
+h3 {
+	font-family:BrandonGrotesque-Bold, Futura, Verdana, serif;
+	font-size:20px;
+	text-transform:uppercase;
+	margin:0;
+	padding:0;
+}
+h4 {
+	font-family:BrandonGrotesque-Bold, Futura, Verdana, serif;
+	font-size:16px;
+	text-transform:uppercase;
+	margin:0;
+	padding:0;
+	line-height:22px;
+}
+h5 {
+	font-family:BrandonGrotesque-Bold, Futura, Verdana, serif;
+	font-size:48px;
+	text-transform:uppercase;
+	margin:0;
+	margin-bottom:-8px;
+	padding:0;
+}
+h6 {
+	font-family:BrandonGrotesque-Light, Futura, Verdana, serif;
+	font-size:26px;
+	text-transform:uppercase;
+	margin:0;
+	padding:0;
+	color:#999;
+}
+h2, h3, h4, h5, h6 {font-weight:normal;}
+
+/* TOP ––––––––––––––––––––– */
+.top {
+	position:relative;
+	top:60px;
+	width:300px;
+	margin:0 auto;
+	text-align:center;
+}
+.top span {
+	font-family:BrandonGrotesque-Regular, Futura, Verdana, serif;
+	font-size:24px;
+	color:#BBB;
+	margin-top:42px;
+}
+.top span.left {width:76px; float:left;}
+.top span.right {width:70px; float:right;}
+
+/* NAV ––––––––––––––––––––– */
+#nav ul {
+	display: inline;
+	list-style: none;
+}
+#nav li {
 	float:left;
+	width:220px;
+	height:100px;
+	margin-top:50px;
+	margin-right:40px;
 }
-footer a{
-	margin-left:4em;
+#nav li.last {margin-right:0;}
+#nav h3 {margin-bottom:0; height:26px;}
+#nav p {margin-top:6px;}
+#nav a.disabled {
+    color:#111;
+	border-bottom:0;
+    cursor:text;
 }
+
+/* FOOTER ––––––––––––––––––––– */
+.footer {
+	width:1000px;
+	float:left;
+	text-align:center;
+	margin-top:40px;
+	margin-bottom:20px;
+}
+.footer small {
+	font-size:12px;
+	font-family:"Lucida Grande";
+	color:#ccc;
+}
+#content .footer {margin:0;}
+#content .footer small {color:#ccc;}
+
+/*My styles*/
+#buttons-pannel{
+	text-align:center;
+}
+#buttons-pannel p{
+	margin:0px 0px 0px 0px;
+	padding:5px 0px 5px 0px;
+}
+button.css3button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #302f30;
+	padding: 6px 19px;
+	background: -moz-linear-gradient(
+		top,
+		#f7f7f4 0%,
+		#c4c0b6);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#f7f7f4),
+		to(#c4c0b6));
+	-moz-border-radius: 19px;
+	-webkit-border-radius: 19px;
+	border-radius: 19px;
+	border: 3px solid #5c595c;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.4),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
+
+
+button.css3button:active { 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #7d787d;
+	padding: 6px 19px;
+	background: -moz-linear-gradient(
+		top,
+		#c4c0b6 0%,
+		#f7f7f4);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#c4c0b6),
+		to(#f7f7f4));
+	-moz-border-radius: 19px;
+	-webkit-border-radius: 19px;
+	border-radius: 19px;
+	border: 3px solid #5c595c;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.4),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
+
+
+button.css3button:hover {
+  cursor:pointer;
+}
+
+

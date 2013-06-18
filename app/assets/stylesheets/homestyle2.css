@@ -1,0 +1,45 @@
+html, body{
+	margin:0;
+	padding:0;
+	height:100%;
+	width:100%;
+}
+/*header*/
+#dmdx-dmpart{
+	font-size:1em;
+	color:#800000;
+	font-family:"Courier New";
+	font-weight:bold;
+}
+#dmdx-dxpart{
+	font-size:1em;
+	color:#ff0000;
+	font-family:"Arial";
+	font-style:italic;
+}
+
+
+/*body*/
+#wrapper {
+	min-height:100%;
+	position:relative;
+	float:left;
+	width:100%;
+	margin-left:0px;
+}
+h1{
+	color:orange;
+}
+footer{
+	padding:5px 0px 5px 0px;
+	width:100%;
+	position:absolute;
+	bottom:0;
+	left:0;
+	background:#ee5;
+	text-align:center;
+	float:left;
+}
+footer a{
+	margin-left:4em;
+}

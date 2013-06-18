@@ -6,24 +6,48 @@
 	<meta name="author" content="Julen Telleria">
 	<title>DMDX Interface</title>
 	<%= stylesheet_link_tag "homestyle" %>
-	<script>
+		<script>
 		function loadFromId(){
 			var id=document.getElementById("configuration_file_id").value;
 			window.location.href='/body/index?id='+id;
 		}
 	</script>
 </head>
-
 <body>
-	<div id="wrapper">
-		<h1>Welcome to <span id="dmdx-dmpart">DM</span><span id="dmdx-dxpart">DX</span> Interface</h1>
-		<h2>Create your <span id="dmdx-dmpart">DM</span><span id="dmdx-dxpart">DX</span> configuration files easily</h2>
-		<p><button type="button" autofocus onclick="window.location.href='/header/index'">Start</button></p>
-		<input id="configuration_file_id" type="text" name="quantity" value="">
-		<button type="button" onclick="loadFromId();">Load</button>
-		<!-- <p><a href="/home/trial">Trial</a></p> -->
-		
-		<footer><a href="http://www.u.arizona.edu/~kforster/dmdx/dmdx.htm">DMDX web</a> <a href="#">Tutorial</a> <a href="#">Other</a></footer>
+	<div id="home" style="display: block;">
+		<div class="top">
+			<span class="left">2012</span>
+			<a href="/"><%= image_tag("icons/docs.png", :class => "control-panel-icon", :width=>"90") %></a>
+			<span class="right">2013</span>
+		</div>
+		<h1>DMDX Interface</h1>
+		<h2>Create your DMDX configuration files easily.</h2>
+		<div id="buttons-pannel"><p>Create a <button type="button" name="" value="" class="css3button" onclick="window.location.href='/header/index'">New Proyect</button></p>
+		<p>or</p>
+		<p>Insert the id: <input id="configuration_file_id" type="text" name="quantity" value=""> and <button type="button" name="" value="" class="css3button" onclick="loadFromId();">Load a proyect</button></p></div>
+		<div id="nav">
+			<ul>
+				<li>
+					<h3>DMDX</h3>
+					<p>The official <a href="http://www.u.arizona.edu/~kforster/dmdx/dmdx.htm" target="_blank">DMDX</a> web site.</p>
+				</li>
+				<li>
+					<h3>Help</h3>
+					<p>If you need any help to use our system you can <a href="/home/help">start here</a>.</p>
+				</li>
+				<li>
+					<h3>Deusto</h3>
+					<p>The web site of the <a href="http://www.deusto.es/" target="_blank">Deusto University</a></p>
+				</li>
+				<li class="last">
+					<h3>References</h3>
+					<p>In this <a href="#">page</a> you can see the references to the external sources used in the proyect.</p>
+				</li>
+			</ul>
+		</div>
+		<div class="footer" id="topfooter">
+			<small>Made by Julen Telleria</small>
+		</div>
 	</div>
 </body>
 </html>
