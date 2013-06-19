@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="description" content="DMDX configuration files creation page">
+	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
+	<meta name="author" content="Julen Telleria">
+	<title>DMDX Interface</title>
+	<%= stylesheet_link_tag "comonstyle" %>
+	<%= stylesheet_link_tag "header2style" %>
+		<script>
+		function loadFromId(){
+			var id=document.getElementById("configuration_file_id").value;
+			window.location.href='/body/index?id='+id;
+		}
+	</script>
+</head>
+<body>
+	<div id="home" style="display: block;">
+		<div class="top">
+			<span class="left">2012</span>
+			<a href="/"><%= image_tag("icons/docs.png", :class => "control-panel-icon", :width=>"90") %></a>
+			<span class="right">2013</span>
+		</div>
+		<h1>DMDX Interface</h1>
+		<h2>Global configuration options</h2>
+	</div>
+	<div id="content">
+			<div class="global-options">
+				<div class="wrap">
+					<form name="header_form" action="header_creation" method="POST">
+					<div class="grop-of-options">
+						<h3>Global options</h3>
+						<div class="awards">
+							<p>File name <input type="text" id="file_name" name="file_name" size="25" value="File001"></p>
+							<p>Output to ascii <input type="checkbox" name="output_to_ascii" value="true"></p>
+							<p>Continuous running <input type="checkbox" name="continuous_running" value="true"></p>
+							<p>Standard frame duration <input type="number" id="standard_frame_duration_text"  name="standard_frame_duration_text" value="30" min="0" max="999" required></p>
+							<p>Delay <input type="number" id="delay" name="delay"  value="30" min="0" max="999" required></p>
+							<p>Time out <input type="number" id="time_out" name="time_out" size="5" value="30" min="0" max="999" required></p>
+							<p>Video mode <input type="number" id="video_mode1" name="video_mode1" size="5" value="30" min="0" max="10000" required><input type="number" id="video_mode2" name="video_mode2" size="5" value="30" min="0" max="10000" required><input type="number" id="video_mode3" name="video_mode3" size="5" value="30" min="0" max="10000" required>
+								<input type="number" id="video_mode4" name="video_mode4" size="5" value="30" min="0" max="10000" required><input type="number" id="video_mode5" name="video_mode5" size="5" value="30" min="0" max="10000" required></p>
+							<p>No feed back <input type="checkbox" name="no_feed_back" value="true"></p>
+							<p>Default background color <input type="number" id="default_background_color" name="default_background_color" size="5" value="30" min="0" max="255255255" required></p>
+							<p>Default writing color <input type="number" id="default_writing_color" name="default_writing_color" size="5" value="30" min="0" max="255255255" required></p>
+							<p>Default font size <input type="number" id="default_font_size" name="default_font_size" size="5" value="30" min="0" max="999" required></p>
+							<p>Record clock on time keyword <input type="checkbox" name="record_clock" value="true"></p>
+						</div>
+					</div>
+					<div class="clear"></div>
+					<div id="response-devices-group" class="grop-of-options">
+						<h3>Response devices selection</h3>
+						<div class="awards">
+							<p>PIO12<input type="checkbox" name="id_pio12" value="true"></p>
+							<p>Keyboard<input type="checkbox" name="keyboard" value="true"></p>
+							<p>Mouse<input type="checkbox" name="mouse" value="true"></p>
+							<p>digitalVOX<input type="checkbox" name="digitalvox" value="true"></p>
+							<p>Record vocal<input type="checkbox" name="record_vocal" value="true"></p>	
+						</div>
+					</div>
+					
+					<div class="clear"></div>
+					<div id="buttons" class="grop-of-options">
+						<button type="submit" name="" value="" class="css3button">Continue</button>
+						<button type="reset" name="" value="" class="css3button">Reset</button>
+						<button type="button" name="" value="" style="float: right;" class="css3button" onclick="window.location.href='/'">Cancel</button>
+					</div>
+				</div>
+				</form>
+			</div>	
+		</div>
+</body>
+</html>

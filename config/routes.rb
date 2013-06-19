@@ -1,5 +1,6 @@
 Dmdxinterface::Application.routes.draw do
   get "header/index"
+  get "header/index2"
   get "header/file_creation"
   post "header/header_creation"
   post "header/header_edition"

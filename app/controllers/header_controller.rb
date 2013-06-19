@@ -10,6 +10,17 @@ class HeaderController < ApplicationController
     end
     
   end
+  def index2
+    if params[:id]==nil
+      render 'index2'
+    else
+      @conf_file=ConfigurationFile.find(params[:id])
+      @conf_file_header=@conf_file.configuration_file_header
+      render 'index_params'
+    end
+    
+  end
+  
   def file_creation
     #@conf_file = ConfigurationFile.new("file001")
     #@conf_file.create_file
