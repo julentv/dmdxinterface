@@ -76,6 +76,36 @@ button.css3button:active {
 		0px -1px 0px rgba(000,000,000,0.4),
 		0px 1px 0px rgba(255,255,255,0.3);
 }
+button.css3button:disabled { 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #7d787d;
+	padding: 6px 19px;
+	background: -moz-linear-gradient(
+		top,
+		#c4c0b6 0%,
+		#f7f7f4);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#c4c0b6),
+		to(#f7f7f4));
+	-moz-border-radius: 19px;
+	-webkit-border-radius: 19px;
+	border-radius: 19px;
+	border: 3px solid #5c595c;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.4),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
 
 
 button.css3button:hover {

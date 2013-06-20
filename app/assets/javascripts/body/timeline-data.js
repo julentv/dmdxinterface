@@ -893,7 +893,7 @@ function addStimulus(ev){
  * Opens the preview Window
  */
 function previewWindow(docId){
-	open('preview?id='+docId,'Preview','top=600,left=600,width=600,resizable=no,height=400,name=_blank');
+	open('/body/preview?id='+docId,'Preview','top=600,left=600,width=600,resizable=no,height=400,name=_blank');
 } 
 
 /**

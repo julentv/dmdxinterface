@@ -18,6 +18,7 @@ function proyectLoad(){
 }
 //Preview
 function startPreview(){
+	document.getElementById("startButton").setAttribute('disabled');
 	canvasP = document.getElementById("writtin-pannel");
 	canvasP_context = canvasP.getContext("2d");
 	canvasP_context.fillStyle = '#000';
@@ -99,6 +100,7 @@ function setMessage(){
 		//the preview is over
 		canvasP_context.clearRect(0, 0, canvasP.width, canvasP.height);
 		canvasP_context.fillText("Finished", canvasTextWidth, canvasTextHeigth);
+		document.getElementById("startButton").removeAttribute('disabled');
 	}
 	
 }

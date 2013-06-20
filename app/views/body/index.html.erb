@@ -8,7 +8,6 @@
 	
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<%= javascript_include_tag "timeline.js" %>
-	
 	<script>
 	//obtain the data of the proyect
 		<% if @conf_file_json.nil? %>
@@ -22,17 +21,46 @@
 	<%= javascript_include_tag "body/timeline-data.js" %>
 	<%= stylesheet_link_tag "timeline" %>
 	<%= stylesheet_link_tag "bodystyle" %>
+	<%= stylesheet_link_tag "menu" %>
 	
 	
 </head>
 
 <body>
-	<h1>Document id=
+	<!-- <h1>Document id=
 		<%= if @conf_file!=nil
 			@conf_file.id
 		else
 			"-"
-			end %></h1>
+			end %></h1>-->
+<div id="menu">
+    <ul class="menu">
+        <li><a href="#" class="parent"><span>New</span></a>
+            <ul>
+                <li><a href="javascript:void(0);" onclick="newItem(-1);"><span>Item</span></a></li>
+                <li><a href="javascript:void(0);" onclick="newMessageItem();"><span>Message Item</span></a></li>
+                <li><a href="javascript:void(0);" onclick="addLoop();"><span>Loop</span></a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="parent"><span>Options</span></a>
+            <ul>
+                <li><a href="javascript:void(0);" onclick="window.location.href='/body/settings?id=<%= @conf_file.id %>'"><span>Global settings</span></a></li>
+                <li><a href="javascript:void(0);" onclick="saveDocument(<%= @conf_file.id %>);"><span>Save</span></a></li>
+                <li><a href="javascript:void(0);" onclick="downloadDocument(<%= @conf_file.id %>);"><span>Download document</span></a></li>
+            </ul>
+        </li>
+        <li><a href="javascript:void(0);" onclick="previewWindow(<%= @conf_file.id %>);"><span>Preview</span></a></li>
+        <li><a href="javascript:void(0);" onclick="window.open('/home/help', '_blank').focus();"><span>Help</span></a></li>
+	<li class="last"><a class="last"><span class="last">Proyect id=<%= if @conf_file!=nil
+			@conf_file.id
+		else
+			"-"
+			end %><span></a>	
+			</li>
+    </ul>
+</div>	
+
+<!-- start of pannels -->	
 	<div id="left-pannel">
 		<div id="item-configuration">
 			<div id="item-data">
@@ -106,7 +134,7 @@
 		<div id="mytimeline"></div>	
 	</div>
 	
-	<div id="right-pannel">
+	<div id="right-pannel" hidden>
 		<h3>Control panel</h3>
 		<ul id="control-panel-list" class="not-icon-ul">
 		<li onmouseover="this.style.cursor='pointer'" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>

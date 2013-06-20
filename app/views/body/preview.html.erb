@@ -5,6 +5,7 @@
 	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
 	<meta name="author" content="Julen Telleria">
 	<title>DMDX Interface Preview</title>
+	<%= stylesheet_link_tag "comonstyle" %>
 	<%= stylesheet_link_tag "previewstyle" %>
 	<%= javascript_include_tag "body/timeline-classes-data.js" %>
 	<%= javascript_include_tag "body/preview.js" %>
@@ -21,6 +22,8 @@
 
 <body>
 	<div><canvas id="writtin-pannel" width=900 height=600></canvas></div>
-	<div id="button-paragraph"><button onclick="startPreview();">Start</button></div>
+	<div id="button-paragraph">
+		<button id="startButton"onclick="startPreview();" class="css3button">Start</button>
+	</div>
 </body>
 </html>
