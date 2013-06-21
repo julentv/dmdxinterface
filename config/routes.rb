@@ -4,7 +4,7 @@ Dmdxinterface::Application.routes.draw do
   get "header/file_creation"
   post "header/header_creation"
   post "header/header_edition"
-  post "header/prueba"
+  get "header/prueba"
 
   get "home/index"
   get "home/help"

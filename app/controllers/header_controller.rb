@@ -21,9 +21,17 @@ class HeaderController < ApplicationController
     render 'index'
   end
   def prueba
-    @conf_file = ConfigurationFile.new("patooo")
-    @conf_file.save
-    render 'success'
+     if params[:id]==nil
+      render 'index2'
+    else
+      @conf_file=ConfigurationFile.find(params[:id])
+      
+      if @conf_file.configuration_file_header.nil?
+        @conf_file.configuration_file_header= ConfigurationFileHeader.new()
+      end
+      @conf_file_header=@conf_file.configuration_file_header
+      render 'index_params2'
+    end
   end
   
   

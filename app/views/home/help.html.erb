@@ -5,164 +5,195 @@
 	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
 	<meta name="author" content="Julen Telleria">
 	<title>DMDX Interface help</title>
+	<%= stylesheet_link_tag "comonstyle" %>
 	<%= stylesheet_link_tag "helpstyle" %>
 </head>
 
 <body>
-	<h1>Index</h1>
-	<nav id="index">
-		<ul id="index-list">
-			<li class="index-level1"><a href="#configuration-page-title">1. Configuration page</a></li>
-				<li class="index-level2"><a href="#main-options-title">1.1. Main Options</a></li>
-				<li class="index-level2"><a href="#response-devices-title">1.2. Response devices</a></li>
-			<li class="index-level1"><a href="#body-page-title">2. Body page</a></li>
-				<li class="index-level2"><a href="#item-pannel-title">2.1. Item pannel</a></li>
-				<li class="index-level2"><a href="#loop-pannel-title">2.2. Loop pannel</a></li>
-				<li class="index-level2"><a href="#add-stimulus-pannel-title">2.3. "Add stimulus" pannel</a></li>
-				<li class="index-level2"><a href="#stimulus-pannel-title">2.4. Stimulus pannel</a></li>
-				<li class="index-level2"><a href="#control-pannel-title">2.5. Control pannel</a></li>
-				<li class="index-level2"><a href="#timeline-title">2.6. Timeline</a></li>
-		</ul>
-	</nav>
-	<section id="content">
-		<section class="h1-section">
-			<h1 id="configuration-page-title">1. Configuration page</h1>
-			<p>In this page, the global options of the experiment can be chosen. These options are indicated in the configuration file as a headline. Here, those options are explained one by one.</p>
-			<section>
-				<h2 id="main-options-title">1.1 Main Options</h2>
-				<p>Here are included the most basic configuration options of the experiment. Those options are explaind below.</p>
-				<ul>
-					<li><strong>File name:</strong> Is the name that the file will have</li>
-					<li><strong>Output to ascii:</strong> Indicates if is wanted to output the data of the experiment to an Ascii text file.</li>
-					<li><strong>Continuous running:</strong> Without this option, DMDX will pause after each item and wait for the subject to request the next item.</li>
-					<li id="standrad-duration-explanation"><strong>Standard frame duration:</strong> This option indicates how long to display each stimulus for. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
-					<li><strong>Delay:</strong> Indicates the delay from end of one item to the start of the next item. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
-					<li><strong>Time out:</strong> This option tells DMDX how lon to wait for subjects to make a response. Measured in <u>milliseconds</u>.</li>
-					<li><strong>Video mode:</strong> The parameters of this field indicates the following: <ol>
-						<li>Number of pixels horizontally</li>
-						<li>Number of pixels vertically</li>
-						<li>Number of scan lines</li>
-						<li>Number of bits of colour</li>
-						<li>Refresh rate</li>
-					</ol></li>
-					<li><strong>No feed back:</strong> Indicates not to provide feedback on subjects response times and errors. Without this option, DMDX will display messages during the experiment, what can be too distracting for most of the tasks, but may be useful in some circumstances.</li>
-					<li><strong>Default background color:</strong> Indicates the background color. <a href="#color-indication-explanation">See how to indicate colors</a></li>
-					<li><strong>Default writing color:</strong> Indicates the color of the writing. <a href="#color-indication-explanation">See how to indicate colors</a></li>
-					<li><strong>Default font size:</strong> Indicates the font size</li>
-					<li><strong>Record clock on time keyword:</strong> If you include this in your header, DMDX will include the time of each clockon in your experiment. The first clockon will be set as 0 and all later will be relative to that.</li>
-				</ul>
-			</section>
-			<section>
-				<h2 id="response-devices-title">1.2. Response devices</h2>
-				<p>In this part the method used to record responses is used. The method must be one of the ones below.</p>
-				<ul>
-					<li><strong>PIO12:</strong> The response box</li>
-					<li><strong>Keyboard:</strong> The keyboard</li>
-					<li><strong>Mouse:</strong> The mouse</li>
-					<li><strong>DigitalVOX:</strong> A digital voice activated switch</li>
-					<li><strong>Record vocal:</strong> Saves verbal responses as .wav files</li>
-				</ul>
-			</section>
+	<div id="home" style="display: block;">
+		<div class="top top-right">
+			<span class="left">2012</span>
+			<%= image_tag("icons/question.png", :class => "control-panel-icon", :width=>"40") %>
+			<span class="right">2013</span>
+		</div>
+		<div class="top-left">
+		<h3>DMDX Interface</h3>
+		</div>
+		<div class="clear"></div>
+		<h2>Help page</h2>
+	</div>
+	<div id="content">
+		<div class="global-options">
+		<div class="wrap">
+			<div class="grop-of-options">
+				<h3>Index</h3>
+				<div id="global-options-section" class="awards">
+					<ul id="index-list">
+						<li class="index-level1"><a href="#configuration-page-title">1. Configuration page</a></li>
+							<li class="index-level2"><a href="#main-options-title">1.1. Main Options</a></li>
+							<li class="index-level2"><a href="#response-devices-title">1.2. Response devices</a></li>
+						<li class="index-level1"><a href="#body-page-title">2. Body page</a></li>
+							<li class="index-level2"><a href="#item-pannel-title">2.1. Item pannel</a></li>
+							<li class="index-level2"><a href="#loop-pannel-title">2.2. Loop pannel</a></li>
+							<li class="index-level2"><a href="#add-stimulus-pannel-title">2.3. "Add stimulus" pannel</a></li>
+							<li class="index-level2"><a href="#stimulus-pannel-title">2.4. Stimulus pannel</a></li>
+							<li class="index-level2"><a href="#control-pannel-title">2.5. Control pannel</a></li>
+							<li class="index-level2"><a href="#timeline-title">2.6. Timeline</a></li>
+						<li class="index-level1"><a href="#others-title">3. Others</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="clear"></div>
 			
-		</section>
-		
-		<section class="h1-section">
-			<h1 id="body-page-title">2. Body page</h1>
-			<section>
-				<h2 id="item-pannel-title">2.1. Item pannel</h2>
-				<p>When an item is selected into the timeline, this pannel is charged with all the data of the selected item. That data can be set and is formed by the next fields:</p>
-				<ul>
-					<li><strong>ID:</strong> Explain</li>
-					<li><strong>Expected response:</strong> Indicates the response that is expected from the user. Can be a Positive response (a yes), a negative response (no), no response at all or any response.</li>
-					<li><strong>No randomise:</strong> If we have selected to randomize the items of the experiment, this option indicates not to include the selected item into that randomization.</li>
-					<li><strong>Start timer in stimulus:</strong> This option indicates where to start the timer. In the list of stimulus below, a clock icon is shown to indicate the stimulus in which will be started.</li>
-					<li><strong>Save:</strong> Clicking this button, the changes made in the item pannel will be saved.</li>
-					<li><strong>Duplicate:</strong> This button creates a copy of the item selected and is added to the end of the list of items.</li>
-					<li><strong>Delete:</strong> Deletes the selected item from the list of items. This action can not be undone.</li>
-					<li><strong>Stimulus list:</strong> Shows all the stimulus included in the selected item. Clicking over one of this stimulus the data of the selected one will be shown into the <a href="#stimulus-pannel-title">stimulus pannel</a>.</li>
-					<li><strong>Message (on message items only):</strong> This field indicates the message of the message item.</li>
-				</ul>
-			</section>
-			<section>
-				<h2 id="loop-pannel-title">2.2. Loop pannel</h2>
-				<p>When a loop is selected into the timeline, this pannel is charged with all the data of the selected loop. That data can be set and is formed by the next fields:</p>
-				<ul>
-					<li><Strong>Number of items:</Strong> Indicates how many items are included into the selected loop. Those items are indicated into the timeline occupying the same temporal range of the loop.</li>
-					<li><Strong>Number of iterations:</Strong> Indicates the number of iterations that the loop will make.</li>
-					<li><Strong>Possition of the first item:</Strong> Indicates the first item included into the loop. This attributes does not concern to the id of the item but to the possition of that item. This attribute can also be changed <a href="#loop-timeline-explanation">dragging</a> into the timeline</li>
-				</ul>
-			</section>
-			<section>
-				<h2 id="add-stimulus-pannel-title">2.3. "Add stimulus" pannel</h2>
-				<p>In this pannel all the types of the stimulus that can be added to an item are shown. To add them, we have to drag and drop the wanted icon to the list of stimulus when one item is selected. This action can only be done with <u>normal items</u>.</p>
-			</section>
-			<section>
-				<h2 id="stimulus-pannel-title">2.4. Stimulus pannel</h2>
-				<p>In this pannel the data of the stimulus selected in the list of stimulus (on the intem pannel) is shown. The edition of that data is allowed in the pannel.</p>
-				<h3>2.4.1. General options</h3>
-				<p>This options are common for all the stimulus tipes (images, audio and text)</p>
-				<ul>
-					<li><strong>Text: </strong>Is the text shown in the text stimulus. For the audio and image stimulus, this field indicates the name of the file to open (without the extension). I.E: If we want to show a jpg image called "image.jpg", we only have to write in the text field the word "image"</li>
-					<li><strong>Type: </strong>Is the type of the stimulus. Can be from this types: text, bmp image, jpg image or wav(audio)</li>
-					<li><strong>Duration: </strong>is the total duration of the stimulus in <a href="#ticks-explanation">ticks</a>. By default the duration for each item is the indicated at the <a href="#standrad-duration-explanation">configuration page</a></li>
-					<li><strong>Screen line: </strong>Indicates the position on the screen to show the item, been 0 the center. The possitive numbers indicates the number of lines above the center and the negatives the number of lines below.</li>
-					<li><strong>Clear screen: </strong>Indicates to clear the screen after the end of one stimulus. If not selected, the stimulus will continue on the screen until the next starts.</li>
-					<li><strong>Not erase the previous screen: </strong>Indicates not to erase the previous screen when the selected one starts.</li>
-					<li><strong>Is blank interval: </strong>Indicates if the selected stimulus is one in blanck (with no content) or not.</li>
-					<li><strong>Synchronise with text: </strong>Indicates to synchronise the selected stimulus with the next one.</li>
-				</ul>
-				<h3>2.4.1. Specific options (for images)</h3>
-				<p>These options are only shown in the stimulus pannel when a image stimulus is selected.</p>
-				<ul>
-					<li><strong>Top/Left position:</strong> The coordinates of the top left corner of the image. The point "(0,0)" is the top left corner of the screen.</li>
-				</ul>
-				<h3>2.4.1. Specific options (for audio)</h3>
-				<p>These options are only shown in the stimulus pannel when an audio (WAV) stimulus is selected.</p>
-				<ul>
-					<li><strong>Audio channel:</strong> Indicates the channel to play the audio file for. Can be: left, right or both.</li>
-				</ul>
-			</section>
-			<section>
-				<h2 id="control-pannel-title">2.5. Control pannel</h2>
-				<p>This pannel contains the control options of the page.</p>
-				<ul>
-					<li><strong>New Item:</strong> Adds a new item to the list of items. This item is visible in the timeline and when selecting it, it's data is presented in the <a href="#item-pannel-title">item pannel</a></li>
-					<li><strong>New Message Item:</strong>Adds a new message item to the list of items. This item is visible in the timeline and when selecting it, it's data is presented in the <a href="#item-pannel-title">item pannel</a></li>
-					<li><strong>New Loop:</strong>Adds a new loop to the list of loops. This loop is visible in the timeline and when selecting it, it's data is presented in the <a href="#loop-pannel-title">loop pannel</a></li>
-					<li><strong>Preview:</strong> When this option is selected a new window is opened with a demo preview of the resulting experiment. This preview is just an <u>aproximation</u> to the result.</li>
-					<li><strong>Back to settings:</strong> Takes you to the <a href="#main-options-title">main options page</a>.</li>
-					<li><strong>Save the document:</strong>Saves the document on the database</li>
-					<li><strong>Download the document:</strong>Download the document generated from the <u>data saved in the database</u> (with the button above).</li>
-				</ul>
-			</section>
-			<section>
-				<h2 id="timeline-title">2.6. Timeline</h2>
-				<p>The timeline shows all the items and loops of the experiment in a very visual way. The duration of each component is visible because of the numbers in the lower line that indicates the <a href="#ticks-explanation">ticks</a> of the experiment.</p>
-				<p>The components of the timeline can be moved acros the timeline, changing so the data of the components. When clicking over each component, the data of the selected one is shown on the <a href="#item-pannel-title">item pannel</a> or the <a href="#loop-pannel-title">loop pannel</a> depending on whether is an item or a loop the selected component.</p>
-				<ul>
-					<li><strong>Item:</strong> Are the most common type of component on the experiment and is shown in the timeline like a bar, that goes from the first <a href="#ticks-explanation">ticks</a> to the last. All the items are secuencially placed into the timeline together with the message items.</li>
-					<li><strong>Message Item:</strong> Are items that don't expect a response from the subject, are used only to present information. Are presented in the timeline like a message, and are secuantially placed together with the items.</li>
-					<li id="loop-timeline-explanation"><strong>Loop:</strong> The loops are an structure that makes, a specific number of secuencial items, to repeat a determined number of times. The items that are going to be repeated are the ones thet ocupes the same time interval in the timeline. Are presented in the timeline like a green bar with the icon of a loop.</li>
-				</ul>
-			</section>
-		</section>
-		
-		
-		<section class="h1-section">
-			<h1>3. Others</h1>
-			<p>Here are included the descriptions of same words.</p>
-			<ul>
-				<li id="ticks-explanation"><strong>Tick:</strong> A tick is the unit used by DMDX to time screen displays and the time it takes the cathode ray on the monitor to scanthe tube.
-					<p>11.80 milliseconds on the desktop machines in the testing rooms</p>
-					<p>16.67 milliseconds on the portable machines</p></li>
-				<li id="color-indication-explanation"><strong>Colors indication:</strong> The colors must be indicated in RGB scale. This is done with three numbers from 0 to 255 been the first number the amount of red, the second the omount of green and the third the amount of blue. Some examples:
-					<p>255000000 is red</p>
-					<p>000255000 is green</p>
-					<p>255255255 is white</p>
-					<p>000000000 is black</p></li>
-			</ul>
-		</section>
-	</section>
-	<footer>This page has been made with the help of this <a href="#">tutorial</a></footer>
+			<div class="grop-of-options">
+				<h3 id="configuration-page-title">1. Configuration page</h3>
+				<div id="global-options-section" class="awards">
+					<p>In this page, the global options of the experiment can be chosen. These options are indicated in the configuration file as a headline. Here, those options are explained one by one.</p>
+					<section>
+						<h2 id="main-options-title">1.1 Main Options</h2>
+						<p>Here are included the most basic configuration options of the experiment. Those options are explaind below.</p>
+						<ul>
+							<li><strong>File name:</strong> Is the name that the file will have</li>
+							<li><strong>Output to ascii:</strong> Indicates if is wanted to output the data of the experiment to an Ascii text file.</li>
+							<li><strong>Continuous running:</strong> Without this option, DMDX will pause after each item and wait for the subject to request the next item.</li>
+							<li id="standrad-duration-explanation"><strong>Standard frame duration:</strong> This option indicates how long to display each stimulus for. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
+							<li><strong>Delay:</strong> Indicates the delay from end of one item to the start of the next item. Is measured in <a href="#ticks-explanation">ticks</a>.</li>
+							<li><strong>Time out:</strong> This option tells DMDX how lon to wait for subjects to make a response. Measured in <u>milliseconds</u>.</li>
+							<li><strong>Video mode:</strong> The parameters of this field indicates the following: <ol>
+								<li>Number of pixels horizontally</li>
+								<li>Number of pixels vertically</li>
+								<li>Number of scan lines</li>
+								<li>Number of bits of colour</li>
+								<li>Refresh rate</li>
+							</ol></li>
+							<li><strong>No feed back:</strong> Indicates not to provide feedback on subjects response times and errors. Without this option, DMDX will display messages during the experiment, what can be too distracting for most of the tasks, but may be useful in some circumstances.</li>
+							<li><strong>Default background color:</strong> Indicates the background color. <a href="#color-indication-explanation">See how to indicate colors</a></li>
+							<li><strong>Default writing color:</strong> Indicates the color of the writing. <a href="#color-indication-explanation">See how to indicate colors</a></li>
+							<li><strong>Default font size:</strong> Indicates the font size</li>
+							<li><strong>Record clock on time keyword:</strong> If you include this in your header, DMDX will include the time of each clockon in your experiment. The first clockon will be set as 0 and all later will be relative to that.</li>
+						</ul>
+					</section>
+					<section>
+						<h2 id="response-devices-title">1.2. Response devices</h2>
+						<p>In this part the method used to record responses is used. The method must be one of the ones below.</p>
+						<ul>
+							<li><strong>PIO12:</strong> The response box</li>
+							<li><strong>Keyboard:</strong> The keyboard</li>
+							<li><strong>Mouse:</strong> The mouse</li>
+							<li><strong>DigitalVOX:</strong> A digital voice activated switch</li>
+							<li><strong>Record vocal:</strong> Saves verbal responses as .wav files</li>
+						</ul>
+					</section>
+				</div>
+			</div>
+			<div class="clear"></div>
+			
+			<div class="grop-of-options">
+				<h3 id="body-page-title">2. Body page</h3>
+				<div id="global-options-section" class="awards">
+					<section>
+						<h2 id="item-pannel-title">2.1. Item pannel</h2>
+						<p>When an item is selected into the timeline, this pannel is charged with all the data of the selected item. That data can be set and is formed by the next fields:</p>
+						<ul>
+							<li><strong>ID:</strong> Explain</li>
+							<li><strong>Expected response:</strong> Indicates the response that is expected from the user. Can be a Positive response (a yes), a negative response (no), no response at all or any response.</li>
+							<li><strong>No randomise:</strong> If we have selected to randomize the items of the experiment, this option indicates not to include the selected item into that randomization.</li>
+							<li><strong>Start timer in stimulus:</strong> This option indicates where to start the timer. In the list of stimulus below, a clock icon is shown to indicate the stimulus in which will be started.</li>
+							<li><strong>Save:</strong> Clicking this button, the changes made in the item pannel will be saved.</li>
+							<li><strong>Duplicate:</strong> This button creates a copy of the item selected and is added to the end of the list of items.</li>
+							<li><strong>Delete:</strong> Deletes the selected item from the list of items. This action can not be undone.</li>
+							<li><strong>Stimulus list:</strong> Shows all the stimulus included in the selected item. Clicking over one of this stimulus the data of the selected one will be shown into the <a href="#stimulus-pannel-title">stimulus pannel</a>.</li>
+							<li><strong>Message (on message items only):</strong> This field indicates the message of the message item.</li>
+						</ul>
+					</section>
+					<section>
+						<h2 id="loop-pannel-title">2.2. Loop pannel</h2>
+						<p>When a loop is selected into the timeline, this pannel is charged with all the data of the selected loop. That data can be set and is formed by the next fields:</p>
+						<ul>
+							<li><Strong>Number of items:</Strong> Indicates how many items are included into the selected loop. Those items are indicated into the timeline occupying the same temporal range of the loop.</li>
+							<li><Strong>Number of iterations:</Strong> Indicates the number of iterations that the loop will make.</li>
+							<li><Strong>Possition of the first item:</Strong> Indicates the first item included into the loop. This attributes does not concern to the id of the item but to the possition of that item. This attribute can also be changed <a href="#loop-timeline-explanation">dragging</a> into the timeline</li>
+						</ul>
+					</section>
+					<section>
+						<h2 id="add-stimulus-pannel-title">2.3. "Add stimulus" pannel</h2>
+						<p>In this pannel all the types of the stimulus that can be added to an item are shown. To add them, we have to drag and drop the wanted icon to the list of stimulus when one item is selected. This action can only be done with <u>normal items</u>.</p>
+					</section>
+					<section>
+						<h2 id="stimulus-pannel-title">2.4. Stimulus pannel</h2>
+						<p>In this pannel the data of the stimulus selected in the list of stimulus (on the intem pannel) is shown. The edition of that data is allowed in the pannel.</p>
+						</br>
+						<h3 class="especial-header">2.4.1. General options</h3>
+						<p>This options are common for all the stimulus tipes (images, audio and text)</p>
+						<ul>
+							<li><strong>Text: </strong>Is the text shown in the text stimulus. For the audio and image stimulus, this field indicates the name of the file to open (without the extension). I.E: If we want to show a jpg image called "image.jpg", we only have to write in the text field the word "image"</li>
+							<li><strong>Type: </strong>Is the type of the stimulus. Can be from this types: text, bmp image, jpg image or wav(audio)</li>
+							<li><strong>Duration: </strong>is the total duration of the stimulus in <a href="#ticks-explanation">ticks</a>. By default the duration for each item is the indicated at the <a href="#standrad-duration-explanation">configuration page</a></li>
+							<li><strong>Screen line: </strong>Indicates the position on the screen to show the item, been 0 the center. The possitive numbers indicates the number of lines above the center and the negatives the number of lines below.</li>
+							<li><strong>Clear screen: </strong>Indicates to clear the screen after the end of one stimulus. If not selected, the stimulus will continue on the screen until the next starts.</li>
+							<li><strong>Not erase the previous screen: </strong>Indicates not to erase the previous screen when the selected one starts.</li>
+							<li><strong>Is blank interval: </strong>Indicates if the selected stimulus is one in blanck (with no content) or not.</li>
+							<li><strong>Synchronise with text: </strong>Indicates to synchronise the selected stimulus with the next one.</li>
+						</ul>
+						</br>
+						<h3 class="especial-header">2.4.1. Specific options (for images)</h3>
+						<p>These options are only shown in the stimulus pannel when a image stimulus is selected.</p>
+						<ul>
+							<li><strong>Top/Left position:</strong> The coordinates of the top left corner of the image. The point "(0,0)" is the top left corner of the screen.</li>
+						</ul>
+						</br>
+						<h3 class="especial-header">2.4.1. Specific options (for audio)</h3>
+						<p>These options are only shown in the stimulus pannel when an audio (WAV) stimulus is selected.</p>
+						<ul>
+							<li><strong>Audio channel:</strong> Indicates the channel to play the audio file for. Can be: left, right or both.</li>
+						</ul>
+					</section>
+					<section>
+						<h2 id="control-pannel-title">2.5. Control pannel</h2>
+						<p>This pannel contains the control options of the page.</p>
+						<ul>
+							<li><strong>New Item:</strong> Adds a new item to the list of items. This item is visible in the timeline and when selecting it, it's data is presented in the <a href="#item-pannel-title">item pannel</a></li>
+							<li><strong>New Message Item:</strong>Adds a new message item to the list of items. This item is visible in the timeline and when selecting it, it's data is presented in the <a href="#item-pannel-title">item pannel</a></li>
+							<li><strong>New Loop:</strong>Adds a new loop to the list of loops. This loop is visible in the timeline and when selecting it, it's data is presented in the <a href="#loop-pannel-title">loop pannel</a></li>
+							<li><strong>Preview:</strong> When this option is selected a new window is opened with a demo preview of the resulting experiment. This preview is just an <u>aproximation</u> to the result.</li>
+							<li><strong>Back to settings:</strong> Takes you to the <a href="#main-options-title">main options page</a>.</li>
+							<li><strong>Save the document:</strong>Saves the document on the database</li>
+							<li><strong>Download the document:</strong>Download the document generated from the <u>data saved in the database</u> (with the button above).</li>
+						</ul>
+					</section>
+					<section>
+						<h2 id="timeline-title">2.6. Timeline</h2>
+						<p>The timeline shows all the items and loops of the experiment in a very visual way. The duration of each component is visible because of the numbers in the lower line that indicates the <a href="#ticks-explanation">ticks</a> of the experiment.</p>
+						<p>The components of the timeline can be moved acros the timeline, changing so the data of the components. When clicking over each component, the data of the selected one is shown on the <a href="#item-pannel-title">item pannel</a> or the <a href="#loop-pannel-title">loop pannel</a> depending on whether is an item or a loop the selected component.</p>
+						<ul>
+							<li><strong>Item:</strong> Are the most common type of component on the experiment and is shown in the timeline like a bar, that goes from the first <a href="#ticks-explanation">ticks</a> to the last. All the items are secuencially placed into the timeline together with the message items.</li>
+							<li><strong>Message Item:</strong> Are items that don't expect a response from the subject, are used only to present information. Are presented in the timeline like a message, and are secuantially placed together with the items.</li>
+							<li id="loop-timeline-explanation"><strong>Loop:</strong> The loops are an structure that makes, a specific number of secuencial items, to repeat a determined number of times. The items that are going to be repeated are the ones thet ocupes the same time interval in the timeline. Are presented in the timeline like a green bar with the icon of a loop.</li>
+						</ul>
+					</section>
+				</div>
+			</div>
+			<div class="clear"></div>
+			
+			<div class="grop-of-options">
+				<h3 id="others-title">3. Others</h3>
+				<div id="global-options-section" class="awards">
+					<p>Here are included the descriptions of same words.</p>
+					<ul>
+						<li id="ticks-explanation"><strong>Tick:</strong> A tick is the unit used by DMDX to time screen displays and the time it takes the cathode ray on the monitor to scanthe tube.
+							<p>11.80 milliseconds on the desktop machines in the testing rooms</p>
+							<p>16.67 milliseconds on the portable machines</p></li>
+						<li id="color-indication-explanation"><strong>Colors indication:</strong> The colors must be indicated in RGB scale. This is done with three numbers from 0 to 255 been the first number the amount of red, the second the omount of green and the third the amount of blue. Some examples:
+							<p>255000000 is red</p>
+							<p>000255000 is green</p>
+							<p>255255255 is white</p>
+							<p>000000000 is black</p></li>
+					</ul>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		</div>
+	</div>
 </body>
 </html>

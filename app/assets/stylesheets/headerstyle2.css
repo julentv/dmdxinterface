@@ -123,7 +123,7 @@ h2, h3, h4, h5, h6 {font-weight:normal;}
 	height:100%
 }
 .awards p {
-	margin:5px 0 0 0;
+	margin:2px 0 0 0;
 	padding: 0 20px;
 }
 
@@ -144,12 +144,3 @@ h3 a{
 	background-color:#F6F6F6;
 	/*-webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px*/
 }
-#index-list{
-	list-style-type: none;
-}
-#index-list .index-level2{
-	margin-left:10px;
-}
-.especial-header{
- 	padding-left:5px;
- }

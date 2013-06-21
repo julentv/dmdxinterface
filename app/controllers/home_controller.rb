@@ -7,11 +7,6 @@ layout false
     render 'help'
   end
   def trial
-    example = Stimulus.new(0,0)
-    
-    example.item.expected_response_no
-    example.item.save
-    example.save
-    render 'index'
+    render 'help2'
   end
 end
