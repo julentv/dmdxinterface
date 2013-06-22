@@ -240,6 +240,7 @@ function onItemDrag(){
 		loopArray[numberOfLoops].firstItem=startItemFound;
 		organizeTimeLine();
 		timeline.setSelection([{row:numberOfLoops+itemArray.length}]);
+		onselect();
 	}else{
 		//not a loop
 		itemNumber=itemNumber-numberOfLoops;
@@ -309,9 +310,9 @@ function onItemDrag(){
 				itemArray.splice(itemNumber, 1);
 				itemNumber=itemArray.length;
 				itemArray.splice(itemNumber, 0,movedItem);
-				timeline.setSelection([{row:itemNumber}]);
 				onselect();
 				organizeTimeLine();
+				timeline.setSelection([{row:itemNumber}]);
 			}
 		}
 	}
@@ -485,6 +486,7 @@ function duplicateItem(){
 		if(selItem.text==""){
 			newItem(selItem.duplicate());
 			organizeTimeLine();
+			timeline.setSelection([{row:itemNumber}]);
 		}else{
 			newMessageItem(selItem.duplicate());
 		}
@@ -546,7 +548,6 @@ function saveItem(){
 		
 	}else if(selectedLoopNumber>=0){
 		//is a loop
-		
 		var selectedLoop=loopArray[selectedLoopNumber];
 		//var seloop=loopArray[selectedLoopNumber];
 		selectedLoop.numberOfItems=document.getElementById("id-input").value;
@@ -560,6 +561,7 @@ function saveItem(){
 			selectedLoop.firstItem=firstpos;
 		}
 		organizeTimeLine();
+		timeline.setSelection([{row:itemArray.length+selectedLoopNumber}]);
 	}
 }
 
@@ -728,6 +730,8 @@ function saveStimulus(){
 	if(previousDuration!=stimulus.duration){
 		//reorganize the timeline
 		organizeTimeLine();
+		timeline.setSelection([{row:itemNumber}]);
+		
 	}
 	
 }
@@ -738,6 +742,7 @@ function deleteStimulus(){
 	stimulusListGeneration();
 	generateTimerSelect();
 	organizeTimeLine();
+	timeline.setSelection([{row:itemNumber}]);
 }
 
 /**

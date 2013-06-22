@@ -100,6 +100,7 @@ function setMessage(){
 		//the preview is over
 		canvasP_context.clearRect(0, 0, canvasP.width, canvasP.height);
 		canvasP_context.fillText("Finished", canvasTextWidth, canvasTextHeigth);
+		proyectLoad();
 		document.getElementById("startButton").removeAttribute('disabled');
 	}
 	
