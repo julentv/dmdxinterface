@@ -17,7 +17,7 @@
 	</script>
 	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
 	<%= javascript_include_tag "body/timeline-classes-data.js" %>
-	<%= javascript_include_tag "body/timeline-data.js" %>
+	<%= javascript_include_tag "body/timeline-data2.js" %>
 	<%= stylesheet_link_tag "comonstyle" %>
 	<%= stylesheet_link_tag "timeline" %>
 	<%= stylesheet_link_tag "bodystyle2" %>
@@ -73,7 +73,7 @@
 							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %></span></h3>
 						<div id="global-options-section" class="awards">
 							<div id="item-left">
-								<p id="id-list-line">ID: <span class="form-inputs" id="item-id-field">-</span></p>
+								<p class="grey" id="id-list-line">ID: <span class="form-inputs" id="item-id-field">-</span></p>
 								<p id="expected-response-list-line">Expected response: 
 									<select class="form-inputs" disabled id="expected-response-field">
 									  <option value="+">Positive response</option>
@@ -82,7 +82,7 @@
 									  <option value="=">Any response</option>
 									</select>
 								</p>
-								<p id="no-randomise-line">No randomise: <input class="form-inputs" id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></p>
+								<p class="grey" id="no-randomise-line">No randomise: <input class="form-inputs" id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></p>
 								<p id="start-timer-stimulus-line">Start timer in stimulus: 
 									<select class="form-inputs" disabled id="timer-selection-field">
 									  <option value='0'>1</option>
@@ -102,6 +102,40 @@
 						</div>
 					</div>
 						<div class="clear"></div>
+						
+						<div class="grop-of-options">
+						<h3>Stimulus pannel <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %>
+							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %></span></h3>
+						<div id="global-options-section" class="awards">
+							<div id="stimulus-left">
+								<p class="grey">Text: <input id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
+								<p>Type: 
+									<select id="stimulus-type-field" onchange="stimulusTypeChange(this)" disabled>
+									  <option value="text">Text</option>
+									  <option value="bmp">BMP Image</option>
+									  <option value="jpg">JPEG Image</option>
+									  <option value="wav">WAV</option>
+									</select>
+								</p>
+								<p class="grey">Duration (seconds?tics?): <input id="stimulus-duration-field" disabled type="number" name="quantity" min="1" max="100" value=""></p>
+								<p>Screen line: <input id="stimulus-present-line" disabled type="number" name="quantity" min="-100" max="100" value="0"></p>
+								<p class="grey">Clear screen: <input id="clear_screen" type="checkbox" name="clear_screen" disabled value="true"></p>
+								
+							</div>
+							<div id="stimulus-right">
+								<p>Not erase the previous screen: <input id="not_erase" type="checkbox" name="not_erase" disabled value="true"></p>
+								
+								<p class="grey">Is blank interval: <input id="is_blank" type="checkbox" name="is_blank" disabled value="true"></p>
+								<!-- only fo audio??? -->
+								<p>Synchronise with text: <input id="synchronise" type="checkbox" name="synchronise" disabled value="true"></p>
+								
+								<div id="specific-fields-area"></div>
+							</div>
+						</div>
+						
+					</div>
+						<div class="clear"></div>
+						
 						<div class="grop-of-options">
 							<h3>Item pannel</h3>
 							<div id="global-options-section" class="awards">

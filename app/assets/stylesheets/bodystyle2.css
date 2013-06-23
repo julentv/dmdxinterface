@@ -200,3 +200,21 @@ div.timeline-frame{
 	margin:10px 10px 0 30px;
 	padding:0px;
 }
+#add-stimulus-icon{
+	max-width:20px;
+}
+#add-stimulus-icon{
+	cursor:pointer;
+}
+/*stimulus pannel*/
+#stimulus-left{
+	float:left;
+	width:450px;
+}
+#stimulus-right{
+	float:right;
+	border-left:2px solid #eee;
+	width:438px;
+	height:140px;
+	margin:auto 0px;
+}
