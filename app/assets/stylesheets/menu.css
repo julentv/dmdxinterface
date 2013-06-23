@@ -22,10 +22,10 @@
 /* menu::base */
 div#menu {
     height:41px;
-    background: -moz-linear-gradient(#eee, #999);
-	background: -ms-linear-gradient(#eee, #999);
-	background: -o-linear-gradient(#eee, #999);
-	background: -webkit-linear-gradient(#eee, #999);
+    background: -moz-linear-gradient(#eee, #bbb);
+	background: -ms-linear-gradient(#eee, #bbb);
+	background: -o-linear-gradient(#eee, #bbb);
+	background: -webkit-linear-gradient(#eee, #bbb);
 	margin-bottom:7px;
 	margin-top:5px;
 }
@@ -64,16 +64,16 @@ div#menu a {
 }
 div#menu a:hover, div#menu a:hover span { color: #fff; }
 div#menu a:hover { color: rgb(218,219,222); }
-div#menu ul li a:hover{
+/*div#menu ul li a:hover{
 	text-shadow: 0.1em 0.1em #333;
-}
+}*/
 div#menu ul li a.last:hover{
 	text-shadow: 0 0 0;
 }
 
 div#menu span {
     display: block;
-    cursor: pointer;
+    cursor: default;
     background-repeat: no-repeat;
     background-position: 95% 0;
 }
@@ -143,9 +143,9 @@ div#menu ul ul span {
     _padding-right: 20px;
     color: rgb(169,169,169);
 }
-div#menu ul ul a:hover span {
+/*div#menu ul ul a:hover span {
     color: #fff;
-}
+}*/
 div#menu ul ul li.last { background: none; }
 div#menu ul ul li {
     width: 100%;

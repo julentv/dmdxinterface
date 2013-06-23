@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="description" content="DMDX configuration files creation page">
+	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
+	<meta name="author" content="Julen Telleria">
+	<title>DMDX Interface</title>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<%= javascript_include_tag "timeline.js" %>
+	<script>
+	//obtain the data of the proyect
+		<% if @conf_file_json.nil? %>
+			var jsonConfigurationFile=null;
+		<% else %>
+			var jsonConfigurationFile=<%= @conf_file_json.html_safe %>;
+		<% end %>
+	</script>
+	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
+	<%= javascript_include_tag "body/timeline-classes-data.js" %>
+	<%= javascript_include_tag "body/timeline-data.js" %>
+	<%= stylesheet_link_tag "comonstyle" %>
+	<%= stylesheet_link_tag "timeline" %>
+	<%= stylesheet_link_tag "bodystyle2" %>
+	<%= stylesheet_link_tag "menu" %>
+	<script>
+		function buttonMouseOver(element){
+			element.style.opacity=0.4;
+		}
+		function buttonMouseOut(element){
+			element.style.opacity=1;
+		}
+	</script>
+</head>
+<body>
+	
+	<div id="home" style="display: block;">
+		<div class="top top-right">
+			<span class="left">2012</span>
+			<%= image_tag("icons/settings.png", :width=>"40") %>
+			<span class="right">2013</span>
+		</div>
+		<div class="top-left">
+		<h3>DMDX Interface</h3>
+		</div>
+		<div class="clear"></div>
+		<h2>Item definition page</h2>
+	</div>
+	<div id="content">
+			<div class="global-options">
+				<div id="menu">
+				    <ul class="menu">
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/play.png", :class => "control-panel-icon", :style =>"max-width:30px") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="window.open('/home/help', '_blank').focus();"><%= image_tag("icons/question.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick=""><%= image_tag("icons/download.png", :class => "control-panel-icon", :style =>"max-width:20px") %></li>
+				        
+						<li><a href="javascript:void(0);"><span>Proyect id=<%= if @conf_file!=nil
+								@conf_file.id
+							else
+								"-"
+								end %><span></a>	
+						</li>
+						<li class="last"><a class="last"><span>http://www.dmdxinterface.com/body/id?=1</span></a></li>
+				    </ul>
+				</div>	
+				
+				<div class="wrap">
+					<div class="grop-of-options">
+						<h3>Item pannel <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %>
+							<%= image_tag("icons/copy.png", :class=>"item-icons", :style =>"max-width:35px", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %>
+							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %></span></h3>
+						<div id="global-options-section" class="awards">
+							<div id="item-left">
+								<p id="id-list-line">ID: <span class="form-inputs" id="item-id-field">-</span></p>
+								<p id="expected-response-list-line">Expected response: 
+									<select class="form-inputs" disabled id="expected-response-field">
+									  <option value="+">Positive response</option>
+									  <option value="-">Negative response</option>
+									  <option value="^">No response</option>
+									  <option value="=">Any response</option>
+									</select>
+								</p>
+								<p id="no-randomise-line">No randomise: <input class="form-inputs" id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></p>
+								<p id="start-timer-stimulus-line">Start timer in stimulus: 
+									<select class="form-inputs" disabled id="timer-selection-field">
+									  <option value='0'>1</option>
+									</select>
+								</p>
+							</div>
+							<div id="item-right">
+								<p>Stimulus (0)</p>
+								<ol id="stimulus-order-list">
+									<li>asd</li>
+									<li>asd</li>
+									<li>asd</li>
+									<li>asd</li>
+									<li>asd</li>
+								</ol>
+							</div>
+						</div>
+					</div>
+						<div class="clear"></div>
+						<div class="grop-of-options">
+							<h3>Item pannel</h3>
+							<div id="global-options-section" class="awards">
+								<!-- Timeline -->
+								<div id="mytimeline"></div>	
+							</div>
+							<div class="clear"></div>
+						<div id="final-buttons-pannel" class="grop-of-options">
+							<button type="button" name="" value="" class="css3button" onclick="">Global options</button>
+							<button type="button" name="" value="" style="float: right;" class="css3button" onclick="">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+</body>
+</html>

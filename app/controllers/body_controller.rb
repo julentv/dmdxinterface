@@ -12,7 +12,9 @@ class BodyController < ApplicationController
     render 'index'
   end
   def timeline
-    render 'timeline'
+    @conf_file=ConfigurationFile.find(1)
+    @conf_file_json=@conf_file.to_json
+    render 'index2'
   end
   def preview
     if params[:id]==nil

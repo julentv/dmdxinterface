@@ -8,6 +8,8 @@ dowload --> <a href="http://thenounproject.com/noun/download/#icon-No435" target
 timer --> <a href="http://thenounproject.com/noun/clock/#icon-No1164" target="_blank">Clock</a> designed by <a href="http://thenounproject.com/BWH" target="_blank">Brandon Hopkins</a> from The Noun Project
 question mark --> <a href="http://thenounproject.com/noun/question/#icon-No15356" target="_blank">Question</a> designed by <a href="http://thenounproject.com/SuperAtic" target="_blank">SuperAtic LABS</a> from The Noun Project
 loop --> <a href="http://thenounproject.com/noun/loop/#icon-No2843" target="_blank">Loop</a> designed by <a href="http://thenounproject.com/somerandomdude" target="_blank">P.J. Onori</a> from The Noun Project
+copy --> <a href="http://thenounproject.com/noun/copy/#icon-No3000" target="_blank">Copy</a> designed by <a href="http://thenounproject.com/amarchadgar" target="_blank">Amar Chadgar</a> from The Noun Project
+cross --><a href="http://thenounproject.com/noun/cross/#icon-No15471" target="_blank">Cross</a> designed by <a href="http://thenounproject.com/hspencer" target="_blank">Herbert Spencer</a> from The Noun Project
 
 start page
 documents--><a href="http://thenounproject.com/noun/document/#icon-No4769" target="_blank">Document</a> designed by <a href="http://thenounproject.com/mariavaragilal" target="_blank">Maria Varagilal</a> from The Noun Project
