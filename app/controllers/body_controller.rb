@@ -41,7 +41,7 @@ class BodyController < ApplicationController
   def download
     @conf_file=ConfigurationFile.find(params[:id])
     @conf_file.createFile()
-    render :text => "downloaded!"
+    send_file "public/files/"+@conf_file.name+".rtf"
   end
   def settings
     if params[:id]==nil

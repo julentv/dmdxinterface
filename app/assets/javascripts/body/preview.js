@@ -1,20 +1,27 @@
 //global variables
-var itemArray = new Array ();
-var loopArray = new Array ();
+var itemArray
+var loopArray
 var canvasP;
 var canvasP_context;
 var canvasTextWidth=450;
 var canvasTextHeigth=300;
 //load the data
 function proyectLoad(){
+	itemArray = new Array ();
+	loopArray = new Array ();
 	var items=jsonConfigurationFile.items;
 	var loops=jsonConfigurationFile.loops;
+	console.log("number of items:"+items.length);
+	console.log("number of loops:"+loops.length);
 	for(var i=0, ii=items.length;i<ii;i++){
 		itemArray.push(Item.fromJSON(items[i]));
 	}
 	for(var i=0, ii=loops.length;i<ii;i++){
 		loopArray.push(Loop.fromJSON(loops[i]));
+		
 	}
+	console.log("number of items2:"+itemArray.length);
+	console.log("number of loops2:"+loopArray.length);
 }
 //Preview
 function startPreview(){
@@ -37,7 +44,6 @@ var loopIterationsArray=new Array();
 
 function setMessage(){
 	if(currentItemNumber<itemArray.length){
-		
 		//any loop begins?
 		//for(var i=0;i<loopArray.length;i++)
 		console.log(loopArray.length);
@@ -100,6 +106,7 @@ function setMessage(){
 		//the preview is over
 		canvasP_context.clearRect(0, 0, canvasP.width, canvasP.height);
 		canvasP_context.fillText("Finished", canvasTextWidth, canvasTextHeigth);
+		currentItemNumber=0;
 		proyectLoad();
 		document.getElementById("startButton").removeAttribute('disabled');
 	}
@@ -120,7 +127,7 @@ function showStimulus(stimulus){
 }
 function showMessageItem(messageItem){
 	var textToShow=messageItem.text;
-	milliseconds=5000;
+	milliseconds=3000;
 	canvasP_context.clearRect(0, 0, canvasP.width, canvasP.height);
 	canvasP_context.fillText(textToShow, canvasTextWidth, canvasTextHeigth);
 }

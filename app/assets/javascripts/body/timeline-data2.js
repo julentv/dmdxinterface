@@ -329,11 +329,8 @@ function onselect(){
 	showStimulusData(null);
 	
 	//obtain the fields
-	var itemSaveButton = document.getElementById("item-save-button");
-	var duplicateItemButton = document.getElementById("item-duplicate-button");
-	var deleteItemButton = document.getElementById("item-delete-button");
 	
-	var outputNameField = document.getElementById("item-name-field");
+	var outputNameField = document.getElementById("item-pannel-title");
 	var outputIdField = document.getElementById("id-list-line");
 	var outputExpectedField = document.getElementById("expected-response-list-line");
 	
@@ -350,14 +347,12 @@ function onselect(){
 		itemNumber=-1;
 		selectedLoopNumber=-1;
 		//set the fields
-		itemSaveButton.setAttribute('disabled');
-		duplicateItemButton.setAttribute('disabled');
-		outputNameField.innerHTML = "No item selected";
+		outputNameField.innerHTML = "Item pannel";
 		outputIdField.innerHTML = "ID: <span id='item-id-field'>-</span>";
 		outputExpectedField.innerHTML="Expected response: <select disabled id='expected-response-field'><option value='+'>Positive response</option><option value='-'>Negative response</option><option value='^'>No response</option><option value='='>Any response</option></select>";
-		stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
+		var typeSelect="<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>"
+		stimulusNumberP.innerHTML ="<p style='padding-right:0px;' id='stimulus-number-p'>Stimulus (0)<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span></p>";
 		outputStimulusList.innerHTML="";
-		deleteItemButton.setAttribute('disabled');
 		noRandomizeLine.innerHTML="No randomise: <input id='no_randomise' type='checkbox' name='no_randomise' disabled value='true'>";
 		startTimerLine.innerHTML="Start timer in stimulus:<select disabled id='timer-selection-field'><option value='0'>1</option></select>";
 		generateTimerSelect();
@@ -365,20 +360,17 @@ function onselect(){
 		//item selected
 		itemNumber=selection[0].row;
 		var numberOfLoops=calculateNumberOfLoopsBefore(itemNumber);
-		itemSaveButton.removeAttribute("disabled");
 		if(timeline.getData()[itemNumber].className=="loopBox"){
 			//is a loop
 			selectedLoopNumber=numberOfLoops;
 			itemNumber=-1;
 			var selectedLoop=loopArray[selectedLoopNumber];
 			//fields setting
-			outputNameField.innerHTML="Loop";
-			duplicateItemButton.setAttribute('disabled');
+			outputNameField.innerHTML="Loop pannel";
 			outputIdField.innerHTML = "Number of items: "+"<input id='id-input' type='number' min='1' value='"+selectedLoop.numberOfItems+"'>";
 			outputExpectedField.innerHTML="Number of iterations: <input id='loop-number-iterations' type='number' name='first-item-possition' min='1' value='"+selectedLoop.numberOfIterations+"'>";
-			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: -</p>";
+			stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Stimulus (0) <span style='float:right'><img src='/assets/icons/add.png' style='max-width:25px;'></span></p>";
 			outputStimulusList.innerHTML="";
-			deleteItemButton.removeAttribute('disabled');
 			noRandomizeLine.innerHTML="Possition of the first item: <input id='possition-first-item' type='number' name='first-item-possition' min='1' max='"+itemArray.length+"' value='"+(selectedLoop.firstItem+1)+"'>";
 			startTimerLine.innerHTML="";
 		}else{
@@ -393,9 +385,7 @@ function onselect(){
 			var selItem=itemArray[itemNumber];
 			noRandomize.removeAttribute("disabled");
 			noRandomize.checked=selItem.noRandomise;
-			duplicateItemButton.removeAttribute("disabled");
-			deleteItemButton.removeAttribute("disabled");
-			outputNameField.innerHTML = selItem.name;
+			outputNameField.innerHTML = "Item pannel";
 			outputIdField.innerHTML = "ID: "+"<input id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 			
 			if(selItem.text!=""){
@@ -459,7 +449,7 @@ function generateTimerSelect(){
 function stimulusListGeneration(){
 	//the number of items
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
-	stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Number of stimulus: "+itemArray[itemNumber].stimulusArray.length+"</p>";
+	stimulusNumberP.innerHTML ="<p id='stimulus-number-p'>Stimulus ("+itemArray[itemNumber].stimulusArray.length+") <span style='float:right''>add</span></p>";
 	//the list
 	var outputStimulusList = document.getElementById("stimulus-order-list");
 	var selectedStimulus=itemArray[itemNumber];
@@ -490,6 +480,8 @@ function duplicateItem(){
 		}else{
 			newMessageItem(selItem.duplicate());
 		}
+	}else{
+		alert("Nothing to duplicate!");
 	}
 }
 
@@ -562,6 +554,8 @@ function saveItem(){
 		}
 		organizeTimeLine();
 		timeline.setSelection([{row:itemArray.length+selectedLoopNumber}]);
+	}else{
+		alert("Nothing to save!");
 	}
 }
 
@@ -587,8 +581,8 @@ function selectStimulus(ev){
 		listItems[i].className="";
 	}
 	//highlight the selected one
-	ev.className="stimulus-order-list-selected";
-	ev.removeAttribute("onmouseover")
+	//ev.className="stimulus-order-list-selected";
+	ev.removeAttribute("onmouseover");
 	ev.removeAttribute("onmouseout");
 	
 	//obtain the number of the list that has been selected
@@ -611,9 +605,6 @@ function selectStimulus(ev){
 function showStimulusData(stimulus){
 	var stimulusTextField = document.getElementById("stimulus-text-field");
 	var stimulusTypeField = document.getElementById("stimulus-type-field");
-	var stimulusSaveButton = document.getElementById("stimulus-save-button");
-	var stimulusDeleteButton = document.getElementById("stimulus-delete-button");
-	var stimulusPannelHeader = document.getElementById("stimulus-pannel-header");
 	var stimulusDurationField = document.getElementById("stimulus-duration-field");
 	var specificFieldsArea = document.getElementById("specific-fields-area");
 	var stimulusLine = document.getElementById("stimulus-present-line");
@@ -621,6 +612,7 @@ function showStimulusData(stimulus){
 	var notErase = document.getElementById("not_erase");
 	var isBlank = document.getElementById("is_blank");
 	var synchronize = document.getElementById("synchronise");
+	var optionButtons = document.getElementById("stimulus-option-icons");
 	
 	if(stimulus==null){
 		//empty
@@ -628,9 +620,6 @@ function showStimulusData(stimulus){
 		stimulusTextField.setAttribute('disabled');
 		stimulusTypeField.setAttribute('disabled');
 		stimulusTypeField.value="text";
-		stimulusSaveButton.setAttribute('disabled');
-		stimulusDeleteButton.setAttribute('disabled');
-		stimulusPannelHeader.innerHTML="No stimulus selected";
 		stimulusDurationField.setAttribute('disabled');
 		stimulusDurationField.value="";
 		selectedStimulusNumber=-1;
@@ -638,10 +627,9 @@ function showStimulusData(stimulus){
 		stimulusLine.setAttribute('disabled');
 	    clearScreen.setAttribute('disabled');
 	    notErase.setAttribute('disabled');
-	    
+	    optionButtons.setAttribute('hidden');
 	    isBlank.setAttribute('disabled');
 	    synchronize.setAttribute('disabled');
-		
 		
 	}else{
 		//no empty
@@ -649,9 +637,6 @@ function showStimulusData(stimulus){
 		stimulusTextField.value=stimulus.text;
 		stimulusTypeField.value=stimulus.type;
 		stimulusTypeField.removeAttribute("disabled");
-		stimulusSaveButton.removeAttribute("disabled");
-		stimulusDeleteButton.removeAttribute("disabled");
-		stimulusPannelHeader.innerHTML="Stimulus X";
 		stimulusDurationField.removeAttribute("disabled");
 		stimulusDurationField.value=stimulus.duration;
 		stimulusTypeChange(stimulusTypeField);
@@ -659,7 +644,8 @@ function showStimulusData(stimulus){
 	    clearScreen.removeAttribute("disabled");
 	    notErase.removeAttribute("disabled");
 	    isBlank.removeAttribute("disabled");
-	    synchronize.removeAttribute("disabled");
+	    optionButtons.removeAttribute('hidden');
+	    synchronize.removeAttribute('disabled');
 		stimulusLine.value=stimulus.presentInLine;
 		clearScreen.checked=stimulus.clearScreen;
 	    notErase.checked=stimulus.notErasePrevious;
@@ -914,7 +900,7 @@ function saveDocument(docId){
     data: jsonText,
     async: false,
     success: function(msg) {
-        alert(msg);
+       //alert(msg);
     },
     error: function (xhr, ajaxOptions, thrownError) {
         alert(xhr.status);

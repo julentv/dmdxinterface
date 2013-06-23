@@ -197,14 +197,39 @@ div.timeline-frame{
 #stimulus-order-list{
 	max-height:68%;
 	overflow-y:auto;
+	overflow-y:visible;
 	margin:10px 10px 0 30px;
-	padding:0px;
+	padding:0px 0px 0px 20px;
 }
 #add-stimulus-icon{
 	max-width:20px;
 }
 #add-stimulus-icon{
 	cursor:pointer;
+}
+.small-icon{
+	padding:0 0 0 0;
+	margin: 0 0 0 0;
+	width:15px;
+	position:relative;
+    left:-40px;
+    top:2px;
+}
+#selected-stimulus-line{
+	position:relative;
+    left:-15.5px;
+}
+.stimulus-order-list-over{
+	cursor:pointer;
+    background-color:#eee;
+}
+#add-stimulus-icon:hover{
+	cursor:pointer;
+}
+#stimulus-creation-type{
+	position:relative;
+    top:-7px;
+    margin-right:5px;
 }
 /*stimulus pannel*/
 #stimulus-left{
@@ -217,4 +242,7 @@ div.timeline-frame{
 	width:438px;
 	height:140px;
 	margin:auto 0px;
+}
+#stimulus-option-icons{
+	float:right;
 }

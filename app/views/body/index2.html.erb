@@ -7,6 +7,8 @@
 	<title>DMDX Interface</title>
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<%= javascript_include_tag "timeline.js" %>
+	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
+	<%= javascript_include_tag "jquery-ui.js" %>
 	<script>
 	//obtain the data of the proyect
 		<% if @conf_file_json.nil? %>
@@ -14,14 +16,18 @@
 		<% else %>
 			var jsonConfigurationFile=<%= @conf_file_json.html_safe %>;
 		<% end %>
+	
+  </script>
 	</script>
-	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
+	
 	<%= javascript_include_tag "body/timeline-classes-data.js" %>
 	<%= javascript_include_tag "body/timeline-data2.js" %>
+	<%= stylesheet_link_tag "jquery-ui" %>
 	<%= stylesheet_link_tag "comonstyle" %>
 	<%= stylesheet_link_tag "timeline" %>
 	<%= stylesheet_link_tag "bodystyle2" %>
 	<%= stylesheet_link_tag "menu" %>
+	
 	<script>
 		function buttonMouseOver(element){
 			element.style.opacity=0.4;
@@ -49,12 +55,12 @@
 			<div class="global-options">
 				<div id="menu">
 				    <ul class="menu">
-				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %></li>
-				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %></li>
-				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %></li>
-				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);"><%= image_tag("icons/play.png", :class => "control-panel-icon", :style =>"max-width:30px") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="addLoop();"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="previewWindow(<%= @conf_file.id %>);"><%= image_tag("icons/play.png", :class => "control-panel-icon", :style =>"max-width:30px") %></li>
 				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="window.open('/home/help', '_blank').focus();"><%= image_tag("icons/question.png", :class => "control-panel-icon") %></li>
-				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick=""><%= image_tag("icons/download.png", :class => "control-panel-icon", :style =>"max-width:20px") %></li>
+				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="window.open('/body/download/<%= @conf_file.id %>', '_blank').focus();"><%= image_tag("icons/download.png", :class => "control-panel-icon", :style =>"max-width:20px") %></li>
 				        
 						<li><a href="javascript:void(0);"><span>Proyect id=<%= if @conf_file!=nil
 								@conf_file.id
@@ -68,9 +74,9 @@
 				
 				<div class="wrap">
 					<div class="grop-of-options">
-						<h3>Item pannel <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %>
-							<%= image_tag("icons/copy.png", :class=>"item-icons", :style =>"max-width:35px", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %>
-							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %></span></h3>
+						<h3><span id="item-pannel-title">Item pannel</span> <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveItem();") %>
+							<%= image_tag("icons/copy.png", :class=>"item-icons", :style =>"max-width:35px", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"duplicateItem();") %>
+							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteItem();") %></span></h3>
 						<div id="global-options-section" class="awards">
 							<div id="item-left">
 								<p class="grey" id="id-list-line">ID: <span class="form-inputs" id="item-id-field">-</span></p>
@@ -81,6 +87,12 @@
 									  <option value="^">No response</option>
 									  <option value="=">Any response</option>
 									</select>
+									<select id='stimulus-creation-type'>
+									  <option value='text'>Text</option>
+									  <option value='jpg'>Image (jpg)</option>
+									  <option value='bmp'>Image (bmp)</option>
+									  <option value='wav'>Audio (wav)</option>
+									</select>
 								</p>
 								<p class="grey" id="no-randomise-line">No randomise: <input class="form-inputs" id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></p>
 								<p id="start-timer-stimulus-line">Start timer in stimulus: 
@@ -90,13 +102,8 @@
 								</p>
 							</div>
 							<div id="item-right">
-								<p>Stimulus (0)</p>
+								<p id='stimulus-number-p'>Stimulus (0)<span style="float:right">add</span></p>
 								<ol id="stimulus-order-list">
-									<li>asd</li>
-									<li>asd</li>
-									<li>asd</li>
-									<li>asd</li>
-									<li>asd</li>
 								</ol>
 							</div>
 						</div>
@@ -104,8 +111,8 @@
 						<div class="clear"></div>
 						
 						<div class="grop-of-options">
-						<h3>Stimulus pannel <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %>
-							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);") %></span></h3>
+						<h3>Stimulus pannel <span id="stimulus-option-icons" hidden><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveStimulus();") %>
+							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteStimulus();") %></span></h3>
 						<div id="global-options-section" class="awards">
 							<div id="stimulus-left">
 								<p class="grey">Text: <input id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
@@ -144,8 +151,8 @@
 							</div>
 							<div class="clear"></div>
 						<div id="final-buttons-pannel" class="grop-of-options">
-							<button type="button" name="" value="" class="css3button" onclick="">Global options</button>
-							<button type="button" name="" value="" style="float: right;" class="css3button" onclick="">Save</button>
+							<button type="button" name="" value="" class="css3button" onclick="window.location.href='/body/settings?id=<%= @conf_file.id %>'">Global options</button>
+							<button id="save-button" type="button" name="" value="" style="float: right;" class="css3button" onclick="saveDocument(<%= @conf_file.id %>);">Save</button>
 						</div>
 					</div>
 				</div>
