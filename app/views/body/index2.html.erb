@@ -18,7 +18,6 @@
 		<% end %>
 	
   </script>
-	</script>
 	
 	<%= javascript_include_tag "body/timeline-classes-data.js" %>
 	<%= javascript_include_tag "body/timeline-data2.js" %>
@@ -55,7 +54,7 @@
 			<div class="global-options">
 				<div id="menu">
 				    <ul class="menu">
-				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %></li>
+				    	<li class="icon-buttons" onmouseover="$('#example').tooltip('show');buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %></li>
 				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %></li>
 				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="addLoop();"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %></li>
 				    	<li class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="previewWindow(<%= @conf_file.id %>);"><%= image_tag("icons/play.png", :class => "control-panel-icon", :style =>"max-width:30px") %></li>
@@ -87,12 +86,6 @@
 									  <option value="^">No response</option>
 									  <option value="=">Any response</option>
 									</select>
-									<select id='stimulus-creation-type'>
-									  <option value='text'>Text</option>
-									  <option value='jpg'>Image (jpg)</option>
-									  <option value='bmp'>Image (bmp)</option>
-									  <option value='wav'>Audio (wav)</option>
-									</select>
 								</p>
 								<p class="grey" id="no-randomise-line">No randomise: <input class="form-inputs" id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></p>
 								<p id="start-timer-stimulus-line">Start timer in stimulus: 
@@ -102,7 +95,12 @@
 								</p>
 							</div>
 							<div id="item-right">
-								<p id='stimulus-number-p'>Stimulus (0)<span style="float:right">add</span></p>
+							<p style='padding-right:0px;' id='stimulus-number-p'>Stimulus (0)
+								<span style='float:right'>
+									<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>
+									<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'>
+								</span></p>
+		
 								<ol id="stimulus-order-list">
 								</ol>
 							</div>
@@ -115,26 +113,26 @@
 							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteStimulus();") %></span></h3>
 						<div id="global-options-section" class="awards">
 							<div id="stimulus-left">
-								<p class="grey">Text: <input id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
+								<p class="grey">Text: <input class="form-inputs" id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
 								<p>Type: 
-									<select id="stimulus-type-field" onchange="stimulusTypeChange(this)" disabled>
+									<select class="form-inputs" id="stimulus-type-field" onchange="stimulusTypeChange(this)" disabled>
 									  <option value="text">Text</option>
 									  <option value="bmp">BMP Image</option>
 									  <option value="jpg">JPEG Image</option>
 									  <option value="wav">WAV</option>
 									</select>
 								</p>
-								<p class="grey">Duration (seconds?tics?): <input id="stimulus-duration-field" disabled type="number" name="quantity" min="1" max="100" value=""></p>
-								<p>Screen line: <input id="stimulus-present-line" disabled type="number" name="quantity" min="-100" max="100" value="0"></p>
-								<p class="grey">Clear screen: <input id="clear_screen" type="checkbox" name="clear_screen" disabled value="true"></p>
+								<p class="grey">Duration: <input class="form-inputs" id="stimulus-duration-field" disabled type="number" name="quantity" min="1" max="100" value=""></p>
+								<p>Screen line: <input class="form-inputs" id="stimulus-present-line" disabled type="number" name="quantity" min="-100" max="100" value="0"></p>
+								<p class="grey">Clear screen: <input class="form-inputs" id="clear_screen" type="checkbox" name="clear_screen" disabled value="true"></p>
 								
 							</div>
 							<div id="stimulus-right">
-								<p>Not erase the previous screen: <input id="not_erase" type="checkbox" name="not_erase" disabled value="true"></p>
+								<p>Not erase the previous screen: <input class="form-inputs" id="not_erase" type="checkbox" name="not_erase" disabled value="true"></p>
 								
-								<p class="grey">Is blank interval: <input id="is_blank" type="checkbox" name="is_blank" disabled value="true"></p>
+								<p class="grey">Is blank interval: <input class="form-inputs" id="is_blank" type="checkbox" name="is_blank" disabled value="true"></p>
 								<!-- only fo audio??? -->
-								<p>Synchronise with text: <input id="synchronise" type="checkbox" name="synchronise" disabled value="true"></p>
+								<p>Synchronise with text: <input class="form-inputs" id="synchronise" type="checkbox" name="synchronise" disabled value="true"></p>
 								
 								<div id="specific-fields-area"></div>
 							</div>
