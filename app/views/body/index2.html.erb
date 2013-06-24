@@ -40,9 +40,9 @@
 	
 	<div id="home" style="display: block;">
 		<div class="top top-right">
-			<span class="left">2012</span>
+			<span class="left">DMDX</span>
 			<%= image_tag("icons/settings.png", :width=>"40") %>
-			<span class="right">2013</span>
+			<span class="right">WWW</span>
 		</div>
 		<div class="top-left">
 		<h3>DMDX Interface</h3>
@@ -73,7 +73,7 @@
 				
 				<div class="wrap">
 					<div class="grop-of-options">
-						<h3><span id="item-pannel-title">Item pannel</span> <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveItem();") %>
+						<h3><span id="item-pannel-title">Item</span> <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveItem();") %>
 							<%= image_tag("icons/copy.png", :class=>"item-icons", :style =>"max-width:35px", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"duplicateItem();") %>
 							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteItem();") %></span></h3>
 						<div id="global-options-section" class="awards">
@@ -95,7 +95,7 @@
 								</p>
 							</div>
 							<div id="item-right">
-							<p style='padding-right:0px;' id='stimulus-number-p'>Stimulus (0)
+							<p style='padding-right:0px;' id='stimulus-number-p'>Stimuli (0)
 								<span style='float:right'>
 									<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>
 									<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'>
@@ -109,7 +109,7 @@
 						<div class="clear"></div>
 						
 						<div class="grop-of-options">
-						<h3>Stimulus pannel <span id="stimulus-option-icons" hidden><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveStimulus();") %>
+						<h3>Stimulus <span id="stimulus-option-icons" hidden><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveStimulus();") %>
 							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteStimulus();") %></span></h3>
 						<div id="global-options-section" class="awards">
 							<div id="stimulus-left">
@@ -142,7 +142,7 @@
 						<div class="clear"></div>
 						
 						<div class="grop-of-options">
-							<h3>Item pannel</h3>
+							<h3>Timeline</h3>
 							<div id="global-options-section" class="awards">
 								<!-- Timeline -->
 								<div id="mytimeline"></div>	

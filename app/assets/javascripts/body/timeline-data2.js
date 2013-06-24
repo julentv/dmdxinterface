@@ -347,11 +347,11 @@ function onselect(){
 		itemNumber=-1;
 		selectedLoopNumber=-1;
 		//set the fields
-		outputNameField.innerHTML = "Item pannel";
+		outputNameField.innerHTML = "Item";
 		outputIdField.innerHTML = "ID: <span class='form-inputs' id='item-id-field'>-</span>";
 		outputExpectedField.innerHTML="Expected response: <select class='form-inputs' disabled id='expected-response-field'><option value='+'>Positive response</option><option value='-'>Negative response</option><option value='^'>No response</option><option value='='>Any response</option></select>";
 		var typeSelect="<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>"
-		stimulusNumberP.innerHTML ="Stimulus (0)<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span>";
+		stimulusNumberP.innerHTML ="Stimuli (0)<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span>";
 		outputStimulusList.innerHTML="";
 		noRandomizeLine.innerHTML="No randomise: <input class='form-inputs' id='no_randomise' type='checkbox' name='no_randomise' disabled value='true'>";
 		startTimerLine.innerHTML="Start timer in stimulus:<select disabled class='form-inputs' id='timer-selection-field'><option value='0'>1</option></select>";
@@ -366,11 +366,11 @@ function onselect(){
 			itemNumber=-1;
 			var selectedLoop=loopArray[selectedLoopNumber];
 			//fields setting
-			outputNameField.innerHTML="Loop pannel";
+			outputNameField.innerHTML="Loop";
 			outputIdField.innerHTML = "Number of items: "+"<input class='form-inputs' id='id-input' type='number' min='1' value='"+selectedLoop.numberOfItems+"'>";
 			outputExpectedField.innerHTML="Number of iterations: <input class='form-inputs' id='loop-number-iterations' type='number' name='first-item-possition' min='1' value='"+selectedLoop.numberOfIterations+"'>";
 			var typeSelect="<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>"
-			stimulusNumberP.innerHTML ="Stimulus (0)<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span>";
+			stimulusNumberP.innerHTML ="Stimuli (0)<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span>";
 			outputStimulusList.innerHTML="";
 			noRandomizeLine.innerHTML="Possition of the first item: <input class='form-inputs' id='possition-first-item' type='number' name='first-item-possition' min='1' max='"+itemArray.length+"' value='"+(selectedLoop.firstItem+1)+"'>";
 			startTimerLine.innerHTML="";
@@ -386,7 +386,7 @@ function onselect(){
 			var selItem=itemArray[itemNumber];
 			noRandomize.removeAttribute("disabled");
 			noRandomize.checked=selItem.noRandomise;
-			outputNameField.innerHTML = "Item pannel";
+			outputNameField.innerHTML = "Item";
 			outputIdField.innerHTML = "ID: "+"<input class='form-inputs' id='id-input' type='text' size='10' value='"+selItem.id+"'>";
 			
 			if(selItem.text!=""){
@@ -453,7 +453,7 @@ function stimulusListGeneration(){
 	//the number of items
 	var stimulusNumberP = document.getElementById("stimulus-number-p");
 	var typeSelect="<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>"
-	stimulusNumberP.innerHTML ="Stimulus ("+itemArray[itemNumber].stimulusArray.length+")<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span>";
+	stimulusNumberP.innerHTML ="Stimuli ("+itemArray[itemNumber].stimulusArray.length+")<span style='float:right'>"+typeSelect+"<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'></span>";
 	//the list
 	var outputStimulusList = document.getElementById("stimulus-order-list");
 	var selectedStimulus=itemArray[itemNumber];
