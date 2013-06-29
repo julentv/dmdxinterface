@@ -246,3 +246,74 @@ div.timeline-frame{
 #stimulus-option-icons{
 	float:right;
 }
+.tooltip{
+	-webkit-transition-delay: 0s;
+	-webkit-transition-duration: 0.15s;
+	-webkit-transition-property: opacity;
+	-webkit-transition-timing-function: linear;
+	color: rgb(51, 51, 51);
+	display: block;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	left: 276.5px;
+	line-height: 15px;
+	margin-left: 3px;
+	opacity: 0.8;
+	padding-bottom: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 0px;
+	position: absolute;
+	transition-delay: 0s;
+	transition-duration: 0.15s;
+	transition-property: opacity;
+	transition-timing-function: linear;
+	visibility: visible;
+	width: 105px;
+	z-index: 1030;
+}
+.tooltip-arrow{
+	border-bottom-color: rgba(0, 0, 0, 0);
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	border-left-color: rgba(0, 0, 0, 0);
+	border-left-style: solid;
+	border-left-width: 5px;
+	border-right-color: rgba(0, 0, 0, 0);
+	border-right-style: solid;
+	border-right-width: 5px;
+	border-top-color: rgb(0, 0, 0);
+	border-top-style: solid;
+	border-top-width: 5px;
+	bottom: -5px;
+	color: rgb(51, 51, 51);
+	display: block;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	left: 45%;
+	line-height: 15px;
+	margin-left: -5px;
+	position: absolute;
+	visibility: visible;
+}
+.tooltip-inner{
+	background-color: rgb(0, 0, 0);
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	color: rgb(255, 255, 255);
+	display: block;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	line-height: 15px;
+	max-width: 200px;
+	padding-bottom: 8px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 8px;
+	text-align: center;
+	text-decoration: none;
+	visibility: visible;
+	width: 89px;
+}

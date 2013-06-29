@@ -621,19 +621,19 @@ function showStimulusData(stimulus){
 	if(stimulus==null){
 		//empty
 		stimulusTextField.value="-";
-		stimulusTextField.setAttribute('disabled');
-		stimulusTypeField.setAttribute('disabled');
+		stimulusTextField.setAttribute('disabled', "");
+		stimulusTypeField.setAttribute('disabled', "");
 		stimulusTypeField.value="text";
-		stimulusDurationField.setAttribute('disabled');
+		stimulusDurationField.setAttribute('disabled', "");
 		stimulusDurationField.value="";
 		selectedStimulusNumber=-1;
 		specificFieldsArea.innerHTML="";
-		stimulusLine.setAttribute('disabled');
-	    clearScreen.setAttribute('disabled');
-	    notErase.setAttribute('disabled');
-	    optionButtons.setAttribute('hidden');
-	    isBlank.setAttribute('disabled');
-	    synchronize.setAttribute('disabled');
+		stimulusLine.setAttribute('disabled', "");
+	    clearScreen.setAttribute('disabled', "");
+	    notErase.setAttribute('disabled', "");
+	    optionButtons.setAttribute('hidden', "");
+	    isBlank.setAttribute('disabled', "");
+	    synchronize.setAttribute('disabled', "");
 		
 	}else{
 		//no empty
