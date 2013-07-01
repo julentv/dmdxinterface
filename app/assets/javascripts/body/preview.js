@@ -101,7 +101,6 @@ function setMessage(){
 				setMessage();
 			}
 		}
-		
 	}else{
 		//the preview is over
 		canvasP_context.clearRect(0, 0, canvasP.width, canvasP.height);
@@ -120,11 +119,37 @@ function showStimulus(stimulus){
 		canvasP_context.clearRect(0, 0, canvasP.width, canvasP.height);
 	}
 	if(!stimulus.isBlankInterval){
-		var heightToshow=canvasTextHeigth-(stimulus.presentInLine*50)
-		canvasP_context.fillText(textToShow, canvasTextWidth, heightToshow);	
+		
+		if(stimulus.type=='jpg'){
+			//image stimulus
+			canvasP_context.textBaseline = 'top';
+			var img=document.getElementById("image-icon");
+			canvasP_context.drawImage(img, (900-img.width)/2, (600-img.height)/2);
+			canvasP_context.fillText(textToShow+".jpg", canvasTextWidth, (600+img.height)/2);
+			canvasP_context.textBaseline = 'middle';
+		}else if(stimulus.type=='bmp'){
+			canvasP_context.textBaseline = 'top';
+			var img=document.getElementById("image-icon");
+			canvasP_context.drawImage(img, (900-img.width)/2, (600-img.height)/2);
+			canvasP_context.fillText(textToShow+".bmp", canvasTextWidth, (600+img.height)/2);
+			canvasP_context.textBaseline = 'middle';
+		}else if(stimulus.type=='wav'){
+			//audio stimulus
+			canvasP_context.textBaseline = 'top';
+			var img=document.getElementById("audio-icon");
+			canvasP_context.drawImage(img, (900-img.width)/2, (600-img.height)/2);
+			canvasP_context.fillText(textToShow+".jpg", canvasTextWidth, (600+img.height)/2);
+			canvasP_context.textBaseline = 'middle';
+		}else{
+			//text stimulus
+			var heightToshow=canvasTextHeigth-(stimulus.presentInLine*50)
+			canvasP_context.fillText(textToShow, canvasTextWidth, heightToshow);
+		}
+		
 	}
 	
 }
+
 function showMessageItem(messageItem){
 	var textToShow=messageItem.text;
 	milliseconds=3000;
