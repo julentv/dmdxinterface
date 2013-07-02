@@ -1,0 +1,17 @@
+ssh -i julenit.pem -2 ubuntu@ec2-54-247-143-97.eu-west-1.compute.amazonaws.com
+
+sitios:
+/etc/apache2/sites-available/
+/var/www/
+
+Server reload:
+sudo service apache2 reload
+git@github.com:julentv/dmdxinterface.git
+
+
+una vez copiado:
+sudo bundle install
+sudo bundle install --deployment --without development test
+sudo bundle exec rake db:migrate RAILS_ENV=production
+sudo bundle exec rake assets:precompile RAILS_ENV=production
+sudo touch /var/www/testapp/tmp/restart.txt
