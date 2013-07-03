@@ -4,13 +4,17 @@ class HeaderController < ApplicationController
     if params[:id]==nil
       render 'index'
     else
-      @conf_file=ConfigurationFile.find(params[:id])
-      
-      if @conf_file.configuration_file_header.nil?
-        @conf_file.configuration_file_header= ConfigurationFileHeader.new()
+      begin
+        @conf_file=ConfigurationFile.find(params[:id])
+        if @conf_file.configuration_file_header.nil?
+          @conf_file.configuration_file_header= ConfigurationFileHeader.new()
+        end
+        @conf_file_header=@conf_file.configuration_file_header
+        render 'index_params'
+      rescue
+        redirect_to '/'
       end
-      @conf_file_header=@conf_file.configuration_file_header
-      render 'index_params'
+      
     end
     
   end
