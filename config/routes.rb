@@ -7,7 +7,7 @@ Dmdxinterface::Application.routes.draw do
 
   get "home/index"
   get "home/help"
-  get "home/trial"
+  get "home/references_page"
 
 
   get "body/index"

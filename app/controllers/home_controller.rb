@@ -6,7 +6,7 @@ layout false
   def help
     render 'help'
   end
-  def trial
-    render 'help2'
+  def references_page
+    render 'references'
   end
 end
