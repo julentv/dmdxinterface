@@ -225,18 +225,25 @@ function onItemDrag(){
 		itemNumber=-1;
 		//calculate the item that is the first of the loop
 		var itemStartData = timeline.getItem(selectedRow).start.getMilliseconds();
+		console.log(timeline.options.min);
+		console.log("item start milliseconds: "+timeline.getItem(selectedRow).start);
 		var startItemFound=-1;
-		
-		for(var i=0, ii=timeline.getData().length;i<ii&&startItemFound==-1;i++){
-			//look for the item in which the loop starts
-			if(itemStartData<=timeline.getItem(i).start.getMilliseconds()&&timeline.getData()[i].className!="loopBox"){
-				startItemFound=i;
+		if(timeline.getItem(selectedRow).start>=timeline.options.min){
+			for(var i=0, ii=timeline.getData().length;i<ii&&startItemFound==-1;i++){
+				//look for the item in which the loop starts
+				if(itemStartData<=timeline.getItem(i).start.getMilliseconds()&&timeline.getData()[i].className!="loopBox"){
+					startItemFound=i;
+				}
 			}
+			if(startItemFound==-1){
+				//the item has not been found, so is bigger than the bigest item
+				startItemFound=itemArray.length-1;
+			}
+		}else{
+			//the loop has been moved to the left of the minimum position
+			startItemFound=0;
 		}
-		if(startItemFound==-1){
-			//the item has not been found, so is bigger than the bigest item
-			startItemFound=itemArray.length-1;
-		}
+		
 		loopArray[numberOfLoops].firstItem=startItemFound;
 		organizeTimeLine();
 		timeline.setSelection([{row:numberOfLoops+itemArray.length}]);

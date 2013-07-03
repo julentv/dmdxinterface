@@ -4,12 +4,16 @@ class BodyController < ApplicationController
   def index
     if params[:id]==nil
      @conf_file=ConfigurationFile.find(1)
+     render 'index'
     else
-     @conf_file=ConfigurationFile.find(params[:id])
-     @conf_file_json=@conf_file.to_json
+      begin
+        @conf_file=ConfigurationFile.find(params[:id])
+        @conf_file_json=@conf_file.to_json
+        render 'index'
+      rescue
+        redirect_to '/'
+      end
     end
-    
-    render 'index2'
   end
   def timeline
     @conf_file=ConfigurationFile.find(1)

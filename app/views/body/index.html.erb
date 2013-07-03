@@ -4,10 +4,11 @@
 	<meta name="description" content="DMDX configuration files creation page">
 	<meta name="keywords" content="HTML5,CSS,DMDX,Psicologist">
 	<meta name="author" content="Julen Telleria">
-	<title>DMDX Interface body</title>
-	
+	<title>DMDX Interface</title>
 	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 	<%= javascript_include_tag "timeline.js" %>
+	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
+	<%= javascript_include_tag "jquery-ui.js" %>
 	<script>
 	//obtain the data of the proyect
 		<% if @conf_file_json.nil? %>
@@ -15,143 +16,147 @@
 		<% else %>
 			var jsonConfigurationFile=<%= @conf_file_json.html_safe %>;
 		<% end %>
-	</script>
-	<%= javascript_include_tag "jquery-1.9.1.min.js" %>
+	
+  </script>
+	
 	<%= javascript_include_tag "body/timeline-classes-data.js" %>
-	<%= javascript_include_tag "body/timeline-data.js" %>
+	<%= javascript_include_tag "body/timeline-data2.js" %>
+	<%= javascript_include_tag "bootstrap-tooltip.js" %>
+	<!--<%= stylesheet_link_tag "jquery-ui" %> -->
+	<%= stylesheet_link_tag "comonstyle" %>
 	<%= stylesheet_link_tag "timeline" %>
 	<%= stylesheet_link_tag "bodystyle" %>
 	<%= stylesheet_link_tag "menu" %>
 	
-	
+	<script>
+		function buttonMouseOver(element){
+			element.style.opacity=0.4;
+		}
+		function buttonMouseOut(element){
+			element.style.opacity=1;
+		}
+		$(document).ready(function(){
+		    $("[rel=tooltip]").tooltip({ placement: 'top'});
+		});
+	</script>
 </head>
-
 <body>
-	<!-- <h1>Document id=
-		<%= if @conf_file!=nil
-			@conf_file.id
-		else
-			"-"
-			end %></h1>-->
-<div id="menu">
-    <ul class="menu">
-        <li><a href="#" class="parent"><span>New</span></a>
-            <ul>
-                <li><a href="javascript:void(0);" onclick="newItem(-1);"><span>Item</span></a></li>
-                <li><a href="javascript:void(0);" onclick="newMessageItem();"><span>Message Item</span></a></li>
-                <li><a href="javascript:void(0);" onclick="addLoop();"><span>Loop</span></a></li>
-            </ul>
-        </li>
-        <li><a href="#" class="parent"><span>Options</span></a>
-            <ul>
-                <li><a href="javascript:void(0);" onclick="window.location.href='/body/settings?id=<%= @conf_file.id %>'"><span>Global settings</span></a></li>
-                <li><a href="javascript:void(0);" onclick="saveDocument(<%= @conf_file.id %>);"><span>Save</span></a></li>
-                <li><a href="javascript:void(0);" onclick="downloadDocument(<%= @conf_file.id %>);"><span>Download document</span></a></li>
-            </ul>
-        </li>
-        <li><a href="javascript:void(0);" onclick="previewWindow(<%= @conf_file.id %>);"><span>Preview</span></a></li>
-        <li><a href="javascript:void(0);" onclick="window.open('/home/help', '_blank').focus();"><span>Help</span></a></li>
-	<li class="last"><a class="last"><span class="last">Proyect id=<%= if @conf_file!=nil
-			@conf_file.id
-		else
-			"-"
-			end %><span></a>	
-			</li>
-    </ul>
-</div>	
-
-<!-- start of pannels -->	
-	<div id="left-pannel">
-		<div id="item-configuration">
-			<div id="item-data">
-				<h3 id="item-name-field">No Item selected</h3>
-				<ul class="not-icon-ul">
-					<li id="id-list-line">ID: <span id="item-id-field">-</span></li>
-					<li id="expected-response-list-line">Expected response: 
-						<select disabled id="expected-response-field">
-						  <option value="+">Positive response</option>
-						  <option value="-">Negative response</option>
-						  <option value="^">No response</option>
-						  <option value="=">Any response</option>
-						</select>
-					</li>
-					<li id="no-randomise-line">No randomise: <input id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></li>
-					<li id="start-timer-stimulus-line">Start timer in stimulus: 
-						<select disabled id="timer-selection-field">
-						  <option value='0'>1</option>
-						</select>
-					</li>
-					<li>
-						<button id="item-save-button" disabled type="button" onclick="saveItem();">Save</button>
-						<button id="item-duplicate-button" disabled type="button" onclick="duplicateItem();">Duplicate</button>
-						<button id="item-delete-button" disabled type="button" onclick="deleteItem();">Delete</button>
-					</li>
-					
-				</ul>
-				<div id="stimulus-list" ondragover="allowDrop(event);" ondrop="addStimulus(event);">
-					<p id="stimulus-number-p">Number of stimulus: <span id="item-stimulus-number-field">-</span></p>
-					<ol id="stimulus-order-list">
-					</ol>	
-				</div>
-			</div>
-			<div id="stimulus-addition">
-				<h3>Add stimulus</h3>
-				
-				<img id="icon-text" src="/assets/body/text.png" alt="text icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
-				<img id="icon-bmp" src="/assets/body/bmp.png" alt="bmp icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
-				<img id="icon-jpg" src="/assets/body/jpeg.png" alt="jpeg icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
-				<img id="icon-wav" src="/assets/body/wav.png" alt="wav icon" ondragstart="dragStimulus(event)" class="stimulus-type-icon" draggable="true">
-				
-			</div>
-			<div id="stimulus-data">
-				<h3 id="stimulus-pannel-header">No stimulus selected</h3>
-				<!-- <p id="output">output</p>-->
-				<ul class="not-icon-ul">
-					<li>Text: <input id="stimulus-text-field" disabled type="text" name="quantity" value="-"></li>
-					<li>Type: 
-						<select id="stimulus-type-field" onchange="stimulusTypeChange(this)" disabled>
-						  <option value="text">Text</option>
-						  <option value="bmp">BMP Image</option>
-						  <option value="jpg">JPEG Image</option>
-						  <option value="wav">WAV</option>
-						</select>
-					</li>
-					<li>Duration (seconds?tics?): <input id="stimulus-duration-field" disabled type="number" name="quantity" min="1" max="100" value=""></li>
-					<li>Screen line: <input id="stimulus-present-line" disabled type="number" name="quantity" min="-100" max="100" value="0"></li>
-					<li>Clear screen: <input id="clear_screen" type="checkbox" name="clear_screen" disabled value="true"></li>
-					<li>Not erase the previous screen: <input id="not_erase" type="checkbox" name="not_erase" disabled value="true"></li>
-					
-					<li>Is blank interval: <input id="is_blank" type="checkbox" name="is_blank" disabled value="true"></li>
-					<!-- only fo audio??? -->
-					<li>Synchronise with text: <input id="synchronise" type="checkbox" name="synchronise" disabled value="true"></li>
-					
-					<div id="specific-fields-area"></div>
-					<li><button id="stimulus-save-button" disabled type="button" onclick="saveStimulus();">Save Stimulus</button><button id="stimulus-delete-button" disabled type="button" onclick="deleteStimulus();">Delete Stimulus</button></li>
-				</ul>
-			</div>
+	
+	<div id="home" style="display: block;">
+		<div class="top top-right">
+			<%= image_tag("icons/settings.png", :width=>"40") %>
 		</div>
-		<!-- Timeline -->
-		<div id="mytimeline"></div>	
+		<div class="top-left">
+		<h3>DMDX Interface</h3>
+		</div>
+		<div class="clear"></div>
+		<h2>Item definition page</h2>
 	</div>
-	
-	<div id="right-pannel" hidden>
-		<h3>Control panel</h3>
-		<ul id="control-panel-list" class="not-icon-ul">
-		<li onmouseover="this.style.cursor='pointer'" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %>New item</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %>New message item</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="addLoop();"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %>New loop</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="previewWindow(<%= @conf_file.id %>);"><%= image_tag("icons/play.png", :class => "control-panel-icon") %>Preview</li>
-		<% if @conf_file!=nil %>
-			<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/body/settings?id=<%= @conf_file.id %>'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
-		<% else %>
-			<li onmouseover="this.style.cursor='pointer'" onclick="window.location.href='settings'"><%= image_tag("icons/settings.png", :class => "control-panel-icon") %>Back to settings</li>
-		<% end %>
+	<div id="content">
+			<div class="global-options">
+				<div id="menu">
+				    <ul class="menu">
+				    	<li rel="tooltip" title="Add new item" class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newItem(-1);"><%= image_tag("icons/add.png", :class => "control-panel-icon") %></li>
+				    	<li rel="tooltip" title="Add new message item" class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="newMessageItem();"><%= image_tag("icons/bubble.png", :class => "control-panel-icon") %></li>
+				    	<li rel="tooltip" title="Add new loop" class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="addLoop();"><%= image_tag("icons/loop.png", :class => "control-panel-icon") %></li>
+				    	<li rel="tooltip" title="Preview" class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="previewWindow(<%= @conf_file.id %>);"><%= image_tag("icons/play.png", :class => "control-panel-icon", :style =>"max-width:30px") %></li>
+				    	<li rel="tooltip" title="Help page" class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="window.open('/home/help', '_blank').focus();"><%= image_tag("icons/question.png", :class => "control-panel-icon") %></li>
+				    	<li rel="tooltip" title="Download" class="icon-buttons" onmouseover="buttonMouseOver(this);"onmouseout="buttonMouseOut(this);" onclick="window.open('/body/download/<%= @conf_file.id %>', '_blank').focus();"><%= image_tag("icons/download.png", :class => "control-panel-icon", :style =>"max-width:20px") %></li>
+				        
+						<li><a href="javascript:void(0);"><span>Proyect id=<%= if @conf_file!=nil
+								@conf_file.id
+							else
+								"-"
+								end %><span></a>	
+						</li>
+						<li class="last"><a class="last"><span>http://www.dmdxinterface.com/body/id?=1</span></a></li>
+				    </ul>
+				</div>	
+				
+				<div class="wrap">
+					<div class="grop-of-options">
+						<h3><span id="item-pannel-title">Item</span> <span id="item-option-icons"><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveItem();") %>
+							<%= image_tag("icons/copy.png", :class=>"item-icons", :style =>"max-width:35px", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"duplicateItem();") %>
+							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteItem();") %></span></h3>
+						<div id="global-options-section" class="awards">
+							<div id="item-left">
+								<p class="grey" id="id-list-line">ID: <span class="form-inputs" id="item-id-field">-</span></p>
+								<p id="expected-response-list-line">Expected response: 
+									<select class="form-inputs" disabled id="expected-response-field">
+									  <option value="+">Positive response</option>
+									  <option value="-">Negative response</option>
+									  <option value="^">No response</option>
+									  <option value="=">Any response</option>
+									</select>
+								</p>
+								<p class="grey" id="no-randomise-line">No randomise: <input class="form-inputs" id="no_randomise" type="checkbox" name="no_randomise" disabled value="true"></p>
+								<p id="start-timer-stimulus-line">Start timer in stimulus: 
+									<select class="form-inputs" disabled id="timer-selection-field">
+									  <option value='0'>1</option>
+									</select>
+								</p>
+							</div>
+							<div id="item-right">
+							<p style='padding-right:0px;' id='stimulus-number-p'>Stimuli (0)
+								<span style='float:right'>
+									<select id='stimulus-creation-type'><option value='text'>Text</option><option value='jpg'>Image (jpg)</option><option value='bmp'>Image (bmp)</option><option value='wav'>Audio (wav)</option></select>
+									<img id='add-stimulus-icon'src='/assets/icons/add.png' onclick='addStimulus();' onmouseover='buttonMouseOver(this);' onmouseout='buttonMouseOut(this)' style='max-width:25px;'>
+								</span></p>
 		
-		<li onmouseover="this.style.cursor='pointer'" onclick="saveDocument(<%= @conf_file.id %>);"><%= image_tag("icons/save.png", :class => "control-panel-icon") %>Save the document</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="downloadDocument(<%= @conf_file.id %>);"><%= image_tag("icons/download.png", :class => "control-panel-icon") %>Download the document</li>
-		<li onmouseover="this.style.cursor='pointer'" onclick="window.open('/home/help', '_blank').focus();"><%= image_tag("icons/question.png", :class => "control-panel-icon") %>Help page</li>
-		</ul>
-	</div>
-	
+								<ol id="stimulus-order-list">
+								</ol>
+							</div>
+						</div>
+					</div>
+						<div class="clear"></div>
+						
+						<div class="grop-of-options">
+						<h3>Stimulus <span id="stimulus-option-icons" hidden><%= image_tag("icons/save.png", :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"saveStimulus();") %>
+							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteStimulus();") %></span></h3>
+						<div id="global-options-section" class="awards">
+							<div id="stimulus-left">
+								<p class="grey">Text: <input class="form-inputs" id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
+								<p>Type: 
+									<select class="form-inputs" id="stimulus-type-field" onchange="stimulusTypeChange(this)" disabled>
+									  <option value="text">Text</option>
+									  <option value="bmp">BMP Image</option>
+									  <option value="jpg">JPEG Image</option>
+									  <option value="wav">WAV</option>
+									</select>
+								</p>
+								<p class="grey">Duration: <input class="form-inputs" id="stimulus-duration-field" disabled type="number" name="quantity" min="1" max="100" value=""></p>
+								<p>Screen line: <input class="form-inputs" id="stimulus-present-line" disabled type="number" name="quantity" min="-100" max="100" value="0"></p>
+								<p class="grey">Clear screen: <input class="form-inputs" id="clear_screen" type="checkbox" name="clear_screen" disabled value="true"></p>
+								
+							</div>
+							<div id="stimulus-right">
+								<p>Not erase the previous screen: <input class="form-inputs" id="not_erase" type="checkbox" name="not_erase" disabled value="true"></p>
+								
+								<p class="grey">Is blank interval: <input class="form-inputs" id="is_blank" type="checkbox" name="is_blank" disabled value="true"></p>
+								<!-- only fo audio??? -->
+								<p>Synchronise with text: <input class="form-inputs" id="synchronise" type="checkbox" name="synchronise" disabled value="true"></p>
+								
+								<div id="specific-fields-area"></div>
+							</div>
+						</div>
+						
+					</div>
+						<div class="clear"></div>
+						
+						<div class="grop-of-options">
+							<h3>Timeline</h3>
+							<div id="global-options-section" class="awards">
+								<!-- Timeline -->
+								<div id="mytimeline"></div>	
+							</div>
+							<div class="clear"></div>
+						<div id="final-buttons-pannel" class="grop-of-options">
+							<button type="button" name="" value="" class="css3button" onclick="window.location.href='/body/settings?id=<%= @conf_file.id %>'">Global options</button>
+							<button id="save-button" type="button" name="" value="" style="float: right;" class="css3button" onclick="saveDocument(<%= @conf_file.id %>);">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
 </body>
 </html>

@@ -80,12 +80,6 @@ h2, h3, h4, h5, h6 {font-weight:normal;}
 .top-right{
 	float:right
 }
-.top {
-	top:50px;
-	width:200px;
-	text-align:center;
-	
-}
 .top span {
 	font-family:BrandonGrotesque-Regular, Futura, Verdana, serif;
 	font-size:16px;
