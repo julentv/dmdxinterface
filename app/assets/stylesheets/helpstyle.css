@@ -19,7 +19,6 @@ a, span.show {color:#1b6cf2;}
 .clear {clear:both;}
 img {border:none;}
 img.fade {display:none;}
-
 /* HEADERS ––––––––––––––––––––– */
 h1 {
 	position:relative;
@@ -40,6 +39,13 @@ h2 {
 	padding:22px 0;
 }
 h3 {
+	font-family:BrandonGrotesque-Bold, Futura, Verdana, serif;
+	font-size:20px;
+	text-transform:uppercase;
+	margin:0;
+	padding:0;
+}
+h3 a{
 	font-family:BrandonGrotesque-Bold, Futura, Verdana, serif;
 	font-size:20px;
 	text-transform:uppercase;
