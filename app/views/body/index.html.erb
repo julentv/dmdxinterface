@@ -115,7 +115,7 @@
 							<%= image_tag("icons/cross.png",  :class=>"item-icons", :onmouseover=>"buttonMouseOver(this);", :onmouseout=>"buttonMouseOut(this);", :onclick=>"deleteStimulus();") %></span></h3>
 						<div id="global-options-section" class="awards">
 							<div id="stimulus-left">
-								<p class="grey">Text: <input class="form-inputs" id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
+								<p class="grey"><span id="stimulus-text-field-def">Text:</span> <input class="form-inputs" id="stimulus-text-field" disabled type="text" name="quantity" value="-"></p>
 								<p>Type: 
 									<select class="form-inputs" id="stimulus-type-field" onchange="stimulusTypeChange(this)" disabled>
 									  <option value="text">Text</option>

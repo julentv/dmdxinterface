@@ -1,4 +1,4 @@
-ssh -i julenit.pem -2 ubuntu@ec2-54-247-143-97.eu-west-1.compute.amazonaws.com
+ssh -i julenit.pem -2 ubuntu@ec2-176-34-85-35.eu-west-1.compute.amazonaws.com
 
 sitios:
 /etc/apache2/sites-available/

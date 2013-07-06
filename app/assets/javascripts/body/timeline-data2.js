@@ -625,6 +625,7 @@ function showStimulusData(stimulus){
 	var synchronize = document.getElementById("synchronise");
 	var optionButtons = document.getElementById("stimulus-option-icons");
 	
+	
 	if(stimulus==null){
 		//empty
 		stimulusTextField.value="-";
@@ -641,6 +642,8 @@ function showStimulusData(stimulus){
 	    optionButtons.setAttribute('hidden', "");
 	    isBlank.setAttribute('disabled', "");
 	    synchronize.setAttribute('disabled', "");
+	    var textChange= document.getElementById("stimulus-text-field-def");
+	    textChange.innerHTML="Text:";
 		
 	}else{
 		//no empty
@@ -674,19 +677,24 @@ function stimulusTypeChange(component){
 	var selectedValue= component.options[component.selectedIndex].value;
 	var stimulus=itemArray[itemNumber].stimulusArray[selectedStimulusNumber]
 	var specificFieldsArea = document.getElementById("specific-fields-area");
+	var textChange= document.getElementById("stimulus-text-field-def");
 	
 	if(selectedValue=="text"){
+		textChange.innerHTML="Text:";
 		specificFieldsArea.innerHTML="";
-	}else if(selectedValue=="bmp" ||selectedValue=="jpg"){
-		var topPosition='<p class="grey">Top position: <input id="top-possition-field" type="number" name="quantity" value="'+stimulus.topPosition+'"></p>';
-		var leftPosition='<p>Left position: <input id="left-possition-field" type="number" name="quantity" value="'+stimulus.leftPosition+'"></>';
-		specificFieldsArea.innerHTML=topPosition + leftPosition;
-	}else if(selectedValue=="wav"){
-		var audioChannelSelect='<select id="audio-channel-field" onchange="stimulusTypeChange(this)"><option value="0">Left</option><option value="1">Right</option><option value="2">Both</option></select>'
-		var audioChannel='<p class="grey" >Audio channel:'+audioChannelSelect+'</p>';
-		specificFieldsArea.innerHTML=audioChannel;
-		document.getElementById("audio-channel-field").value=stimulus.channel;
-	}
+	}else{
+		textChange.innerHTML="File name:";
+		if(selectedValue=="bmp" ||selectedValue=="jpg"){
+			var topPosition='<p class="grey">Top position: <input id="top-possition-field" type="number" name="quantity" value="'+stimulus.topPosition+'"></p>';
+			var leftPosition='<p>Left position: <input id="left-possition-field" type="number" name="quantity" value="'+stimulus.leftPosition+'"></>';
+			specificFieldsArea.innerHTML=topPosition + leftPosition;
+		}else if(selectedValue=="wav"){
+			var audioChannelSelect='<select id="audio-channel-field" onchange="stimulusTypeChange(this)"><option value="0">Left</option><option value="1">Right</option><option value="2">Both</option></select>'
+			var audioChannel='<p class="grey" >Audio channel:'+audioChannelSelect+'</p>';
+			specificFieldsArea.innerHTML=audioChannel;
+			document.getElementById("audio-channel-field").value=stimulus.channel;
+		}
+	} 
 }
 
 /**
